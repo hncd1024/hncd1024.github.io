@@ -84,7 +84,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>芫荽读物</strong>
+      <strong>啊芫荽</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -185,7 +185,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="今日任务：划水"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -223,13 +223,85 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/08/12/hello-world/" target="_self">
+        <a href="/2022/08/14/Python%20PyAutoGUI/" target="_self">
+          RPA|Python PyAutoGUI自动点赞收藏&lt;每天一个划水小技巧&gt;
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/14/Python%20PyAutoGUI/" target="_self">
+        <div>
+          最近公司要求每月要在某APP中完成1000积分的积累，算下来每月要点赞+收藏文章三百多篇。像我这样积极的青年当然要想办法偷个懒~ 思路该APP恰巧有网页版（没有网页版的话PC端估计还要搭建个安卓模拟器）。最开始尝试过通过requests库获取未读文章并更新积分，不过尝试了很多浏览器的伪装依然失败了😂😂后来考虑通过PyAutoGUI库实现模拟鼠标的操作。PyAutoGUI是一个纯Python的G
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-14 10:32" pubdate>
+              2022-08-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/GUI%E8%87%AA%E5%8A%A8%E5%8C%96/" class="category-chain-item">GUI自动化</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Python/">#Python</a>
+            
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
+            
+              <a href="/tags/PyAutoGui/">#PyAutoGui</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/17/hello-world/" target="_self">
           Hello World
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/08/12/hello-world/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/17/hello-world/" target="_self">
         <div>
           Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick
         </div>
@@ -239,12 +311,42 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-12 23:58" pubdate>
-              2022-08-12
+            <time datetime="2022-07-17 17:01" pubdate>
+              2022-07-17
             </time>
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B5%8B%E8%AF%95/" class="category-chain-item">测试</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ceshi/">#ceshi</a>
+            
+              <a href="/tags/%E6%B5%8B%E8%AF%95/">#测试</a>
+            
+          </div>
         
       </div>
     </article>
@@ -340,7 +442,37 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'hitokoto'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
