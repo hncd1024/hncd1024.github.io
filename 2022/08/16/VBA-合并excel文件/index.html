@@ -16,30 +16,25 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="每天一划水，无事小神仙。今天有个需求：服务器上有个文件夹，里面按日期生成了文件夹。工作日所在的文件夹内有需要我复制下来的文件。要求每个月取一次。每月要翻三十个文件夹，找二十多个文件，让我手工复制是绝不可能的！🙂🙂🙂那必须要搞个脚本自己跑。 思路1、服务器磁盘已映射（本地可直接访问）。2、确定要批量扫描的文件夹名称（按日期命名的文件夹）。3、根据要扫描的日期，按文件夹名进行遍历，找到要复制的文">
+    <meta name="description" content="功能描述前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()Dim">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|OS实现批量扫描复制文件">
-<meta property="og:url" content="http://example.com/2022/08/15/Python%20os%20%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="VBA|合并当前目录所有的excel文件">
+<meta property="og:url" content="http://example.com/2022/08/16/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="每天一划水，无事小神仙。今天有个需求：服务器上有个文件夹，里面按日期生成了文件夹。工作日所在的文件夹内有需要我复制下来的文件。要求每个月取一次。每月要翻三十个文件夹，找二十多个文件，让我手工复制是绝不可能的！🙂🙂🙂那必须要搞个脚本自己跑。 思路1、服务器磁盘已映射（本地可直接访问）。2、确定要批量扫描的文件夹名称（按日期命名的文件夹）。3、根据要扫描的日期，按文件夹名进行遍历，找到要复制的文">
+<meta property="og:description" content="功能描述前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()Dim">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2022/08/15/LB2IrOTtkRqbmMN.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/15/Uwz6fT5xXNYyAtH.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/15/3AG1UhmXs96qiod.png">
-<meta property="article:published_time" content="2022-08-15T10:25:40.982Z">
-<meta property="article:modified_time" content="2022-08-16T10:44:18.558Z">
+<meta property="article:published_time" content="2022-08-16T13:36:44.000Z">
+<meta property="article:modified_time" content="2022-08-16T13:52:04.511Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="自动化">
-<meta property="article:tag" content="OS">
+<meta property="article:tag" content="VBA">
+<meta property="article:tag" content="Excel">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2022/08/15/LB2IrOTtkRqbmMN.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Python|OS实现批量扫描复制文件 - 啊芫荽</title>
+  <title>VBA|合并当前目录所有的excel文件 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python|OS实现批量扫描复制文件"></span>
+            <span id="subtitle" data-typed-text="VBA|合并当前目录所有的excel文件"></span>
           
         </div>
 
@@ -215,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-15 18:25" pubdate>
-          2022-08-15 18:25
+        <time datetime="2022-08-16 21:36" pubdate>
+          2022-08-16 21:36
         </time>
       </span>
     
@@ -227,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1k 字
         
       </span>
     
@@ -238,7 +233,7 @@
         
         
         
-          13 分钟
+          9 分钟
         
       </span>
     
@@ -286,17 +281,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Python|OS实现批量扫描复制文件</h1>
+            <h1 style="display: none">VBA|合并当前目录所有的excel文件</h1>
             
             
               <div class="markdown-body">
                 
-                <p>每天一划水，无事小神仙。<br><br>今天有个需求：服务器上有个文件夹，里面按日期生成了文件夹。工作日所在的文件夹内有需要我复制下来的文件。要求每个月取一次。<br><br>每月要翻三十个文件夹，找二十多个文件，让我手工复制是绝不可能的！🙂🙂🙂那必须要搞个脚本自己跑。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>1、服务器磁盘已映射（本地可直接访问）。<br><br>2、确定要批量扫描的文件夹名称（按日期命名的文件夹）。<br><br>3、根据要扫描的日期，按文件夹名进行遍历，找到要复制的文件。<br><br>4、在桌面创建一个文件夹，把找到的文件复制进去。<br></p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="效果截图"><a href="#效果截图" class="headerlink" title="效果截图"></a>效果截图</h3><p>要扫描的文件夹，不敢想象让我手工去复制要搞到什么时候~<br><img src="https://s2.loli.net/2022/08/15/LB2IrOTtkRqbmMN.png" srcset="/img/loading.gif" lazyload alt="目标文件夹"><br>代码批量执行还是很快的，输入要执行的区间即可。<br><img src="https://s2.loli.net/2022/08/15/Uwz6fT5xXNYyAtH.png" srcset="/img/loading.gif" lazyload alt="执行日志"><br>执行结果完全符合预期😁😁😁<br><img src="https://s2.loli.net/2022/08/15/3AG1UhmXs96qiod.png" srcset="/img/loading.gif" lazyload alt="执行结果"></p>
-<h3 id="源码如下"><a href="#源码如下" class="headerlink" title="源码如下"></a>源码如下</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> shutil<br><span class="hljs-comment"># from datetime import datetime</span><br><br><span class="hljs-comment"># 桌面创建文件夹</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">md</span>(<span class="hljs-params">tp=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">r&#x27;C:\\Users\\admin\\Desktop\\&#x27;</span>+tp):<br>        <span class="hljs-keyword">pass</span><br>    <span class="hljs-keyword">else</span>:<br>        os.makedirs(<span class="hljs-string">r&#x27;C:\\Users\\admin\\Desktop\\&#x27;</span>+tp)<br>    <span class="hljs-keyword">return</span><br><br><span class="hljs-comment"># 读取文件夹</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rd</span>(<span class="hljs-params">begindate,enddate</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">int</span>(begindate),<span class="hljs-built_in">int</span>(enddate)+<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">r&#x27;Z:\\gildata\\FileSync\\Download\\gz\\&#x27;</span>+<span class="hljs-built_in">str</span>(i)):<br>            <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">r&#x27;Z:\\gildata\\FileSync\\Download\\gz\\&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\\PAR_YIELDCURVE_ALL&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;.dbf&#x27;</span>):<br>                shutil.copy(<span class="hljs-string">&#x27;Z:\\gildata\\FileSync\\Download\\gz\\&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\\PAR_YIELDCURVE_ALL&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;.dbf&#x27;</span>,<span class="hljs-string">&#x27;C:\\Users\\admin\\Desktop\\收益率曲线&#x27;</span>)<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;无&#123;&#125;日的收益率曲线&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;无&#123;&#125;日的聚源数据文件夹&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 输入起止日期</span><br>    <span class="hljs-comment"># enddate = datetime.today().date().strftime(r&#x27;%Y%m%d&#x27;)</span><br>    <span class="hljs-comment"># begindate = datetime.today().date().replace(day=1).strftime(r&#x27;%Y%m%d&#x27;)</span><br>    begindate = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入开始日期（格式：20220801）:&#x27;</span>)<br>    enddate =  <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入结束日期（格式：20220831）:&#x27;</span>)<br>    <span class="hljs-comment"># 检查文件夹</span><br>    md(<span class="hljs-string">&quot;收益率曲线&quot;</span>)<br>    <span class="hljs-comment"># 遍历文件夹</span><br>    rd(begindate,enddate)<br></code></pre></td></tr></table></figure>
-<h2 id="附：OS库基本用法整理"><a href="#附：OS库基本用法整理" class="headerlink" title="附：OS库基本用法整理"></a>附：OS库基本用法整理</h2><p><font color="#dd0000">今天有点懒，回头再整理吧😂😂😂</font></p>
-
+                <h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><p>前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs VBA">Sub 合并当前目录下所有工作簿的全部工作表()<br>Dim MyPath, MyName, AWbName<br>Dim Wb As Workbook, WbN As String<br>Dim G As Long<br>Dim Num As Long<br>Dim BOX As String<br>Application.ScreenUpdating = False<br>MyPath = ActiveWorkbook.Path<br>MyName = Dir(MyPath &amp; &quot;\&quot; &amp; &quot;*.xls&quot;)<br>AWbName = ActiveWorkbook.Name<br>Num = 0<br>Do While MyName &lt;&gt; &quot;&quot;<br>If MyName &lt;&gt; AWbName Then<br>Set Wb = Workbooks.Open(MyPath &amp; &quot;\&quot; &amp; MyName)<br>Num = Num + 1<br>With Workbooks(1).ActiveSheet<br>.Cells(.Range(&quot;B65536&quot;).End(xlUp).Row + 2, 1) = Left(MyName, Len(MyName) - 4)<br>For G = 1 To Sheets.Count<br>Wb.Sheets(G).UsedRange.Copy .Cells(.Range(&quot;B65536&quot;).End(xlUp).Row + 1, 1)<br>Next<br>WbN = WbN &amp; Chr(13) &amp; Wb.Name<br>Wb.Close False<br>End With<br>End If<br>MyName = Dir<br>Loop<br>Range(&quot;B1&quot;).Select<br>Application.ScreenUpdating = True<br>MsgBox &quot;共合并了&quot; &amp; Num &amp; &quot;个工作薄下的全部工作表。如下：&quot; &amp; Chr(13) &amp; WbN, vbInformation, &quot;提示&quot;<br>End Sub<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -314,12 +305,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/VBA/" class="category-chain-item">VBA</a>
   
   
     <span>></span>
     
-  <a href="/categories/Python/OS/" class="category-chain-item">OS</a>
+  <a href="/categories/VBA/%E5%B0%8F%E5%8A%9F%E8%83%BD/" class="category-chain-item">小功能</a>
   
   
 
@@ -336,11 +327,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Python/">#Python</a>
+        <a href="/tags/VBA/">#VBA</a>
       
-        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
-      
-        <a href="/tags/OS/">#OS</a>
+        <a href="/tags/Excel/">#Excel</a>
       
     </div>
   
@@ -352,8 +341,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python|OS实现批量扫描复制文件</div>
-      <div>http://example.com/2022/08/15/Python os 批量复制文件/</div>
+      <div>VBA|合并当前目录所有的excel文件</div>
+      <div>http://example.com/2022/08/16/VBA-合并excel文件/</div>
     </div>
     <div class="license-meta">
       
@@ -365,7 +354,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022-08-15</div>
+          <div>2022-08-16</div>
         </div>
       
       
@@ -395,18 +384,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/16/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/" title="VBA|合并当前目录所有的excel文件">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">VBA|合并当前目录所有的excel文件</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/14/Python%20PyAutoGUI/" title="Python|PyAutoGUI实现自动点赞收藏">
-                        <span class="hidden-mobile">Python|PyAutoGUI实现自动点赞收藏</span>
+                      <a href="/2022/08/15/Python%20os%20%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/" title="Python|OS实现批量扫描复制文件">
+                        <span class="hidden-mobile">Python|OS实现批量扫描复制文件</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
