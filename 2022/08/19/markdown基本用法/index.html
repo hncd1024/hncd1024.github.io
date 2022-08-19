@@ -16,32 +16,24 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="每天一划水，无事小神仙。今天有个需求：服务器上有个文件夹，里面按日期生成了文件夹。工作日所在的文件夹内有需要我复制下来的文件。要求每个月取一次。每月要翻三十个文件夹，找二十多个文件，让我手工复制是绝不可能的！🙂🙂🙂那必须要搞个脚本自己跑。 思路1、服务器磁盘已映射（本地可直接访问）。2、确定要批量扫描的文件夹名称（按日期命名的文件夹）。3、根据要扫描的日期，按文件夹名进行遍历，找到要复制的文">
+    <meta name="description" content="标题使用“# ”标记1-6级标题，标题书写格式为“#”+“空格”：    # 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题    段落样式换行 方式一：段落的换行是使用两个以上空格加上回车； 方式二：段落后增加:&lt;br&gt;段落符   字体 *斜体文本*_斜体文本_*粗体文本*_粗体文本_*粗斜体文本*_粗斜体文本_     分割线可以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件">
-<meta property="og:url" content="http://example.com/2022/08/15/Python%20os%20%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="Markdown|基本用法">
+<meta property="og:url" content="http://example.com/2022/08/19/markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="每天一划水，无事小神仙。今天有个需求：服务器上有个文件夹，里面按日期生成了文件夹。工作日所在的文件夹内有需要我复制下来的文件。要求每个月取一次。每月要翻三十个文件夹，找二十多个文件，让我手工复制是绝不可能的！🙂🙂🙂那必须要搞个脚本自己跑。 思路1、服务器磁盘已映射（本地可直接访问）。2、确定要批量扫描的文件夹名称（按日期命名的文件夹）。3、根据要扫描的日期，按文件夹名进行遍历，找到要复制的文">
+<meta property="og:description" content="标题使用“# ”标记1-6级标题，标题书写格式为“#”+“空格”：    # 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题    段落样式换行 方式一：段落的换行是使用两个以上空格加上回车； 方式二：段落后增加:&lt;br&gt;段落符   字体 *斜体文本*_斜体文本_*粗体文本*_粗体文本_*粗斜体文本*_粗斜体文本_     分割线可以">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2022/08/15/LB2IrOTtkRqbmMN.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/15/Uwz6fT5xXNYyAtH.png">
-<meta property="og:image" content="https://s2.loli.net/2022/08/15/3AG1UhmXs96qiod.png">
-<meta property="article:published_time" content="2022-08-15T10:25:40.982Z">
-<meta property="article:modified_time" content="2022-08-19T02:38:32.367Z">
+<meta property="article:published_time" content="2022-08-19T10:36:44.000Z">
+<meta property="article:modified_time" content="2022-08-19T10:12:30.253Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="自动化">
-<meta property="article:tag" content="OS">
-<meta property="article:tag" content="shutil">
-<meta property="article:tag" content="zipfile">
+<meta property="article:tag" content="Markdown">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2022/08/15/LB2IrOTtkRqbmMN.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件 - 啊芫荽</title>
+  <title>Markdown|基本用法 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -236,7 +228,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件"></span>
+            <span id="subtitle" data-typed-text="Markdown|基本用法"></span>
           
         </div>
 
@@ -247,8 +239,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-15 18:25" pubdate>
-          2022-08-15 18:25
+        <time datetime="2022-08-19 18:36" pubdate>
+          2022-08-19 18:36
         </time>
       </span>
     
@@ -259,7 +251,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          577 字
         
       </span>
     
@@ -270,7 +262,7 @@ WIDGET = {
         
         
         
-          20 分钟
+          5 分钟
         
       </span>
     
@@ -318,17 +310,42 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件</h1>
+            <h1 style="display: none">Markdown|基本用法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>每天一划水，无事小神仙。<br/><br>今天有个需求：服务器上有个文件夹，里面按日期生成了文件夹。工作日所在的文件夹内有需要我复制下来的文件。要求每个月取一次。<br/><br>每月要翻三十个文件夹，找二十多个文件，让我手工复制是绝不可能的！🙂🙂🙂那必须要搞个脚本自己跑。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>1、服务器磁盘已映射（本地可直接访问）。<br/><br>2、确定要批量扫描的文件夹名称（按日期命名的文件夹）。<br/><br>3、根据要扫描的日期，按文件夹名进行遍历，找到要复制的文件。<br/><br>4、在桌面创建一个文件夹，把找到的文件复制进去。<br/><br>5、将复制出来的文件夹进行压缩。<br/></p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="效果截图"><a href="#效果截图" class="headerlink" title="效果截图"></a>效果截图</h3><p>要扫描的文件夹，不敢想象让我手工去复制要搞到什么时候~<br><img src="https://s2.loli.net/2022/08/15/LB2IrOTtkRqbmMN.png" srcset="/img/loading.gif" lazyload alt="目标文件夹"><br>代码批量执行还是很快的，输入要执行的区间即可。<br><img src="https://s2.loli.net/2022/08/15/Uwz6fT5xXNYyAtH.png" srcset="/img/loading.gif" lazyload alt="执行日志"><br>执行结果完全符合预期😁😁😁<br><img src="https://s2.loli.net/2022/08/15/3AG1UhmXs96qiod.png" srcset="/img/loading.gif" lazyload alt="执行结果"></p>
-<h3 id="源码如下"><a href="#源码如下" class="headerlink" title="源码如下"></a>源码如下</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">import</span> zipfile<br><span class="hljs-keyword">import</span> sys <br><span class="hljs-comment"># from datetime import datetime</span><br><br><span class="hljs-comment"># 桌面创建文件夹</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">md</span>(<span class="hljs-params">tp=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">r&#x27;C:\\Users\\admin\\Desktop\\&#x27;</span>+tp):<br>        <span class="hljs-keyword">pass</span><br>    <span class="hljs-keyword">else</span>:<br>        os.makedirs(<span class="hljs-string">r&#x27;C:\\Users\\admin\\Desktop\\&#x27;</span>+tp)<br>    <span class="hljs-keyword">return</span><br><br><span class="hljs-comment"># 读取文件夹</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rd</span>(<span class="hljs-params">begindate,enddate</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">int</span>(begindate),<span class="hljs-built_in">int</span>(enddate)+<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">r&#x27;Z:\\gildata\\FileSync\\Download\\gz\\&#x27;</span>+<span class="hljs-built_in">str</span>(i)):<br>            <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">r&#x27;Z:\\gildata\\FileSync\\Download\\gz\\&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\\PAR_YIELDCURVE_ALL&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;.dbf&#x27;</span>):<br>                shutil.copy(<span class="hljs-string">&#x27;Z:\\gildata\\FileSync\\Download\\gz\\&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\\PAR_YIELDCURVE_ALL&#x27;</span>+<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;.dbf&#x27;</span>,<span class="hljs-string">&#x27;C:\\Users\\admin\\Desktop\\收益率曲线&#x27;</span>)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#123;&#125;日的收益率曲线已完成复制&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;无&#123;&#125;日的收益率曲线&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;无&#123;&#125;日的聚源数据文件夹&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br><br><span class="hljs-comment"># 生成压缩包</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">zip_dir</span>(<span class="hljs-params">dirname,zipfilename</span>):<br>    filelist = []<br>    <span class="hljs-keyword">if</span> os.path.isfile(dirname):<br>        filelist.append(dirname)<br>    <span class="hljs-keyword">else</span> :<br>        <span class="hljs-keyword">for</span> root, dirs, files <span class="hljs-keyword">in</span> os.walk(dirname):<br>            <span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> files:<br>                filelist.append(os.path.join(root, name))<br>          <br>    zf = zipfile.ZipFile(zipfilename, <span class="hljs-string">&quot;w&quot;</span>, zipfile.zlib.DEFLATED)<br>    <span class="hljs-keyword">for</span> tar <span class="hljs-keyword">in</span> filelist:<br>        arcname = tar[<span class="hljs-built_in">len</span>(dirname):]<br>        <span class="hljs-comment">#print arcname</span><br>        zf.write(tar,arcname)<br>    zf.close()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 输入起止日期</span><br>    <span class="hljs-comment"># enddate = datetime.today().date().strftime(r&#x27;%Y%m%d&#x27;)</span><br>    <span class="hljs-comment"># begindate = datetime.today().date().replace(day=1).strftime(r&#x27;%Y%m%d&#x27;)</span><br>    begindate = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入开始日期（格式：20220801）:&#x27;</span>)<br>    enddate =  <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入结束日期（格式：20220831）:&#x27;</span>)<br>    <span class="hljs-comment"># 检查文件夹</span><br>    md(<span class="hljs-string">&quot;收益率曲线&quot;</span>)<br>    <span class="hljs-comment"># 遍历文件夹</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;#####开始复制&#123;&#125;-&#123;&#125;的收益率曲线#####&#x27;</span>.<span class="hljs-built_in">format</span>(begindate,enddate))<br>    rd(begindate,enddate)<br>    <span class="hljs-comment"># 创建压缩包</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;#####开始创建压缩包#####&quot;</span>)<br>    dirname=<span class="hljs-string">&#x27;C:\\Users\\admin\\Desktop\\收益率曲线&#x27;</span><br>    zipfilename=<span class="hljs-string">&#x27;C:\\Users\\admin\\Desktop\\收益率曲线&#123;&#125;-&#123;&#125;.zip&#x27;</span>.<span class="hljs-built_in">format</span>(begindate,enddate)<br>    zip_dir(dirname, zipfilename)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;#####任务执行完成#####&quot;</span>)<br></code></pre></td></tr></table></figure>
-<h2 id="附：OS库基本用法整理"><a href="#附：OS库基本用法整理" class="headerlink" title="附：OS库基本用法整理"></a>附：OS库基本用法整理</h2><h2 id="附：shutil库基本用法整理"><a href="#附：shutil库基本用法整理" class="headerlink" title="附：shutil库基本用法整理"></a>附：shutil库基本用法整理</h2><h2 id="附：zipfile库基本用法整理"><a href="#附：zipfile库基本用法整理" class="headerlink" title="附：zipfile库基本用法整理"></a>附：zipfile库基本用法整理</h2><p><font color="#dd0000">今天有点懒，回头再整理吧😂😂😂</font></p>
-
+                <h1 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h1><p>使用“# ”标记1-6级标题，标题书写格式为“#”+“空格”：  </p>
+<blockquote>
+<p># 一级标题<br>## 二级标题<br>### 三级标题<br>#### 四级标题<br>##### 五级标题<br>###### 六级标题  </p>
+</blockquote>
+<h1 id="段落样式"><a href="#段落样式" class="headerlink" title="段落样式"></a>段落样式</h1><h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><ul>
+<li>方式一：段落的换行是使用两个以上空格加上回车；</li>
+<li>方式二：段落后增加:&lt;br&gt;段落符</li>
+</ul>
+<hr>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><blockquote>
+<p>*斜体文本*<br>_斜体文本_<br>*<em>粗体文本</em>*<br>_<em>粗体文本</em>_<br>*<strong>粗斜体文本</strong>*<br>_<strong>粗斜体文本</strong>_  </p>
+</blockquote>
+<hr>
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。</p>
+<blockquote>
+<p>***<br>-–<br>___</p>
+</blockquote>
+<hr>
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>只需要在文字的两端加上两个波浪线 ~~ 即可  </p>
+<blockquote>
+<p>示例：~~要删除的内容~~<br>效果：<del>要删除的内容</del>  </p>
+</blockquote>
+<h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><p>下划线可以通过 HTML 的 &lt;u&gt; 标签来实现</p>
+<blockquote>
+<p>示例：&lt;u&gt;带下划线的文本&lt;&#x2F;u&gt;<br>效果：<u>带下划线的文本</u></p>
+</blockquote>
+<h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><blockquote>
+<p>创建脚注格式类似这样：社会主义核心价值观 [^1]。<br>[^1]: 富强、民主、文明、和谐，自由、平等、公正、法制，爱国、敬业、诚信、友善  </p>
+</blockquote>
+<p>效果：社会主义核心价值观<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote">&lt;span class&#x3D;”hint–top hint–rounded” aria-label&#x3D;”富强、民主、文明、和谐，自由、平等、公正、法制，爱国、敬业、诚信、友善  </p>
+<h1 id="列表”-gt-1"><a href="#列表”-gt-1" class="headerlink" title="列表”&gt;[1]"></a>列表”&gt;[1]</span></a></sup></h1><h1 id="区块、代码"><a href="#区块、代码" class="headerlink" title="区块、代码"></a>区块、代码</h1><h1 id="链接、图片"><a href="#链接、图片" class="headerlink" title="链接、图片"></a>链接、图片</h1><h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><h1 id="数学公式、流程图富强、民主、文明、和谐，自由、平等、公正、法制，爱国、敬业、诚信、友善"><a href="#数学公式、流程图富强、民主、文明、和谐，自由、平等、公正、法制，爱国、敬业、诚信、友善" class="headerlink" title="数学公式、流程图富强、民主、文明、和谐，自由、平等、公正、法制，爱国、敬业、诚信、友善"></a>数学公式、流程图<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>富强、民主、文明、和谐，自由、平等、公正、法制，爱国、敬业、诚信、友善</h1><h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
@@ -348,15 +365,8 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/Markdown/" class="category-chain-item">Markdown</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Python/OS/" class="category-chain-item">OS</a>
-  
-  
-
   
 
       </span>
@@ -370,15 +380,7 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Python/">#Python</a>
-      
-        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
-      
-        <a href="/tags/OS/">#OS</a>
-      
-        <a href="/tags/shutil/">#shutil</a>
-      
-        <a href="/tags/zipfile/">#zipfile</a>
+        <a href="/tags/Markdown/">#Markdown</a>
       
     </div>
   
@@ -402,8 +404,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件</div>
-      <div>http://example.com/2022/08/15/Python os 批量复制文件/</div>
+      <div>Markdown|基本用法</div>
+      <div>http://example.com/2022/08/19/markdown基本用法/</div>
     </div>
     <div class="license-meta">
       
@@ -415,7 +417,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022-08-15</div>
+          <div>2022-08-19</div>
         </div>
       
       
@@ -447,18 +449,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/19/markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" title="Markdown|基本用法">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Markdown|基本用法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/14/Python%20PyAutoGUI/" title="Python|PyAutoGUI实现自动点赞收藏">
-                        <span class="hidden-mobile">Python|PyAutoGUI实现自动点赞收藏</span>
+                      <a href="/2022/08/15/Python%20os%20%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6/" title="Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件">
+                        <span class="hidden-mobile">Python|OS、shutil、zipfile实现批量扫描、复制、压缩文件</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
