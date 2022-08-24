@@ -16,16 +16,16 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="功能描述 前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()D">
+    <meta name="description" content="写在前面 2020年参加网络攻防大赛的时候刷过一段时间CTF的题目，在CTF夺旗赛的题目选择上，我比较喜欢杂项，就是因为杂项的解题思路天马行空（各种骚操作层出不穷，流连忘返~ ）。记得jpg、gif、exe、word、pdf、excel等文件作为题目的时候，有种解题思路是将文件后缀改成.txt或者.zip就能找到隐藏的flag。 前段时间有同事突然问我说excel里有大量的照片，需要批量保存到本">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Excel|合并当前目录所有的excel文件">
-<meta property="og:url" content="http://example.com/2019/08/29/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="Excel|关于Excel的一些奇怪探索">
+<meta property="og:url" content="http://example.com/2022/08/24/Excel_%E8%BD%AC%E5%8E%8B%E7%BC%A9%E5%8C%85/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="功能描述 前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()D">
+<meta property="og:description" content="写在前面 2020年参加网络攻防大赛的时候刷过一段时间CTF的题目，在CTF夺旗赛的题目选择上，我比较喜欢杂项，就是因为杂项的解题思路天马行空（各种骚操作层出不穷，流连忘返~ ）。记得jpg、gif、exe、word、pdf、excel等文件作为题目的时候，有种解题思路是将文件后缀改成.txt或者.zip就能找到隐藏的flag。 前段时间有同事突然问我说excel里有大量的照片，需要批量保存到本">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/image/VBA.png">
-<meta property="article:published_time" content="2019-08-29T13:36:44.000Z">
-<meta property="article:modified_time" content="2022-08-24T10:37:40.188Z">
+<meta property="article:published_time" content="2022-08-24T10:36:44.000Z">
+<meta property="article:modified_time" content="2022-08-24T10:38:25.165Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="VBA">
 <meta property="article:tag" content="Excel">
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Excel|合并当前目录所有的excel文件 - 啊芫荽</title>
+  <title>Excel|关于Excel的一些奇怪探索 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -231,7 +231,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Excel|合并当前目录所有的excel文件"></span>
+            <span id="subtitle" data-typed-text="Excel|关于Excel的一些奇怪探索"></span>
           
         </div>
 
@@ -242,8 +242,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2019-08-29 21:36" pubdate>
-          2019-08-29 21:36
+        <time datetime="2022-08-24 18:36" pubdate>
+          2022-08-24 18:36
         </time>
       </span>
     
@@ -254,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          1.2k 字
         
       </span>
     
@@ -265,7 +265,7 @@ WIDGET = {
         
         
         
-          9 分钟
+          10 分钟
         
       </span>
     
@@ -313,14 +313,50 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Excel|合并当前目录所有的excel文件</h1>
+            <h1 style="display: none">Excel|关于Excel的一些奇怪探索</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="功能描述"><a class="markdownIt-Anchor" href="#功能描述"></a> 功能描述</h2>
-<p>前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs VBA">Sub 合并当前目录下所有工作簿的全部工作表()<br>Dim MyPath, MyName, AWbName<br>Dim Wb As Workbook, WbN As String<br>Dim G As Long<br>Dim Num As Long<br>Dim BOX As String<br>Application.ScreenUpdating = False<br>MyPath = ActiveWorkbook.Path<br>MyName = Dir(MyPath &amp; &quot;\&quot; &amp; &quot;*.xls&quot;)<br>AWbName = ActiveWorkbook.Name<br>Num = 0<br>Do While MyName &lt;&gt; &quot;&quot;<br>If MyName &lt;&gt; AWbName Then<br>Set Wb = Workbooks.Open(MyPath &amp; &quot;\&quot; &amp; MyName)<br>Num = Num + 1<br>With Workbooks(1).ActiveSheet<br>.Cells(.Range(&quot;B65536&quot;).End(xlUp).Row + 2, 1) = Left(MyName, Len(MyName) - 4)<br>For G = 1 To Sheets.Count<br>Wb.Sheets(G).UsedRange.Copy .Cells(.Range(&quot;B65536&quot;).End(xlUp).Row + 1, 1)<br>Next<br>WbN = WbN &amp; Chr(13) &amp; Wb.Name<br>Wb.Close False<br>End With<br>End If<br>MyName = Dir<br>Loop<br>Range(&quot;B1&quot;).Select<br>Application.ScreenUpdating = True<br>MsgBox &quot;共合并了&quot; &amp; Num &amp; &quot;个工作薄下的全部工作表。如下：&quot; &amp; Chr(13) &amp; WbN, vbInformation, &quot;提示&quot;<br>End Sub<br></code></pre></td></tr></table></figure>
+                <h1 id="写在前面"><a class="markdownIt-Anchor" href="#写在前面"></a> 写在前面</h1>
+<p>2020年参加网络攻防大赛的时候刷过一段时间CTF的题目，在CTF夺旗赛的题目选择上，我比较喜欢杂项，就是因为杂项的解题思路天马行空（各种骚操作层出不穷，流连忘返~ ）。记得jpg、gif、exe、word、pdf、excel等文件作为题目的时候，有种解题思路是将文件后缀改成.txt或者.zip就能找到隐藏的flag。<br />
+前段时间有同事突然问我说excel里有大量的照片，需要批量保存到本地文件夹中，问有没有快捷的方法。我第一反应就是尝试改后缀名为.zip，后来发现果然可以。于是就有了这篇博文~<br />
+后来在网上找到了下面这篇文章，提供了更多的使用技巧。果真宇宙的尽头是0和1~<br />
+参考文献：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30952873?utm_id=0">不为人知的Excel转压缩包逆天功能</a></p>
+<h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1>
+<h2 id="目标excel"><a class="markdownIt-Anchor" href="#目标excel"></a> 目标excel</h2>
+<p>在准备好的excel中，插入了图片、插入了批注、sheet2工作表设置了保护密码、sheet3工作表被隐藏。<br />
+<img src="https://s2.loli.net/2022/08/24/1OiehHKRyrUdslw.png" srcset="/img/loading.gif" lazyload alt="sheet1插入了照片及批注" /><br />
+<img src="https://s2.loli.net/2022/08/24/qWaySHwI5GYX6tT.png" srcset="/img/loading.gif" lazyload alt="sheet2被保护" /><br />
+<img src="https://s2.loli.net/2022/08/24/paJHt9y5DENjRuC.png" srcset="/img/loading.gif" lazyload alt="sheet3被隐藏" /><br />
+复制excel，将后缀.xlsx改为.zip（或rar等压缩格式）后解压。可以看到有_rels，docProps、xl三个文件夹及一个[content_Types].xml文件。后续操作均在xl文件夹下进行~<br />
+<img src="https://s2.loli.net/2022/08/24/5HMtIDsm2fLu6kl.png" srcset="/img/loading.gif" lazyload alt="修改后缀名并解压" /><br />
+<img src="https://s2.loli.net/2022/08/24/Zg4vR3yxWHcQN2X.png" srcset="/img/loading.gif" lazyload alt="e解压后文件组成" /><br />
+<img src="https://s2.loli.net/2022/08/24/GTJqFux6iAwYXaU.png" srcset="/img/loading.gif" lazyload alt="xl目录组成" /></p>
+<h2 id="批量修改sheet表名称"><a class="markdownIt-Anchor" href="#批量修改sheet表名称"></a> 批量修改sheet表名称</h2>
+<p>在xl文件夹下找到workbook.xml，文本编辑器打开。可以看到name属性即为sheet表名称，修改name的值后保存。<br />
+<img src="https://s2.loli.net/2022/08/24/zJ8MZpmNcbeHSvT.png" srcset="/img/loading.gif" lazyload alt="修改sheet表名称" /><br />
+修改后将解压的文件重新压缩为.zip文件，后修改后缀名为.xlsx。之后excel打开发现sheet表修改成功~<br />
+<img src="https://s2.loli.net/2022/08/24/IMYaVGw1PUNz9Jx.png" srcset="/img/loading.gif" lazyload alt="修改sheet表名称验证" /></p>
+<h2 id="取消隐藏sheet表"><a class="markdownIt-Anchor" href="#取消隐藏sheet表"></a> 取消隐藏sheet表</h2>
+<p>在xl文件夹下找到workbook.xml，文本编辑器打开。可以看到state=&quot;hidden&quot;属性，对应的sheet表即为隐藏的sheet表。删除state=&quot;hidden&quot;后保存。<br />
+<img src="https://s2.loli.net/2022/08/24/9wnN6fJRAogqTeU.png" srcset="/img/loading.gif" lazyload alt="取消隐藏sheet表" /><br />
+修改后将解压的文件重新压缩为.zip文件，后修改后缀名为.xlsx。之后excel打开发现隐藏的sheet表已取消隐藏~<br />
+<img src="https://s2.loli.net/2022/08/24/IastC3brgl8V7O5.png" srcset="/img/loading.gif" lazyload alt="取消隐藏sheet表验证" /></p>
+<h2 id="批量提取照片"><a class="markdownIt-Anchor" href="#批量提取照片"></a> 批量提取照片</h2>
+<p>在xl文件夹下找到media文件夹，原excel中的照片已自动打包下载~<br />
+<img src="https://s2.loli.net/2022/08/24/UKJjRk3bGFwCETv.png" srcset="/img/loading.gif" lazyload alt="批量提取照片" /></p>
+<h2 id="解密受保护的sheet表"><a class="markdownIt-Anchor" href="#解密受保护的sheet表"></a> 解密受保护的sheet表</h2>
+<p>在xl/worksheets文件夹下找到隐藏的sheet表（如sheet2.xml)，文本编辑器打开。可以看到&lt;sheetProtection&gt;&lt;/sheetProtection&gt;属性。删除sheetProtection标签后保存。</p>
+<p><img src="https://s2.loli.net/2022/08/24/DCkUNK279ASLOpB.png" srcset="/img/loading.gif" lazyload alt="解密受保护的sheet表" /><br />
+修改后将解压的文件重新压缩为.zip文件，后修改后缀名为.xlsx。之后excel打开发现受保护的sheet表已取消保护~<br />
+<img src="https://s2.loli.net/2022/08/24/ChLIY347cRNzjyr.png" srcset="/img/loading.gif" lazyload alt="解密受保护的sheet表后验证" /></p>
+<h2 id="批量修改批注"><a class="markdownIt-Anchor" href="#批量修改批注"></a> 批量修改批注</h2>
+<p>在xl文件夹下找到comments1.xml，文本编辑器打开。可以看到&lt;t&gt;标签即为批注内容，修改批注内容后保存。<br />
+<img src="https://s2.loli.net/2022/08/24/16VWQ4iI2KSqZr9.png" srcset="/img/loading.gif" lazyload alt="批量修改批注" /><br />
+修改后将解压的文件重新压缩为.zip文件，后修改后缀名为.xlsx。之后excel打开发现批注修改成功~<br />
+<img src="https://s2.loli.net/2022/08/24/y6JTDw5PURbx9nZ.png" srcset="/img/loading.gif" lazyload alt="批量修改批注后验证" /></p>
+
                 
               </div>
             
@@ -381,8 +417,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Excel|合并当前目录所有的excel文件</div>
-      <div>http://example.com/2019/08/29/VBA-合并excel文件/</div>
+      <div>Excel|关于Excel的一些奇怪探索</div>
+      <div>http://example.com/2022/08/24/Excel_转压缩包/</div>
     </div>
     <div class="license-meta">
       
@@ -394,7 +430,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2019-08-29</div>
+          <div>2022-08-24</div>
         </div>
       
       
@@ -426,15 +462,15 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/25/Kettle-%E8%87%AA%E5%8A%A9%E5%B7%A1%E6%A3%80/" title="Kettle|自助巡检">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Kettle|自助巡检</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/08/19/markdown%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" title="Markdown|基本用法">
+                        <span class="hidden-mobile">Markdown|基本用法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
