@@ -16,12 +16,12 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="功能描述前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()Dim">
+    <meta name="description" content="功能描述 前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()D">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VBA|合并当前目录所有的excel文件">
 <meta property="og:url" content="http://example.com/2019/08/29/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="功能描述前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()Dim">
+<meta property="og:description" content="功能描述 前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()D">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/image/VBA.png">
 <meta property="article:published_time" content="2019-08-29T13:36:44.000Z">
@@ -318,7 +318,8 @@ WIDGET = {
             
               <div class="markdown-body">
                 
-                <h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><p>前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。</p>
+                <h2 id="功能描述"><a class="markdownIt-Anchor" href="#功能描述"></a> 功能描述</h2>
+<p>前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs VBA">Sub 合并当前目录下所有工作簿的全部工作表()<br>Dim MyPath, MyName, AWbName<br>Dim Wb As Workbook, WbN As String<br>Dim G As Long<br>Dim Num As Long<br>Dim BOX As String<br>Application.ScreenUpdating = False<br>MyPath = ActiveWorkbook.Path<br>MyName = Dir(MyPath &amp; &quot;\&quot; &amp; &quot;*.xls&quot;)<br>AWbName = ActiveWorkbook.Name<br>Num = 0<br>Do While MyName &lt;&gt; &quot;&quot;<br>If MyName &lt;&gt; AWbName Then<br>Set Wb = Workbooks.Open(MyPath &amp; &quot;\&quot; &amp; MyName)<br>Num = Num + 1<br>With Workbooks(1).ActiveSheet<br>.Cells(.Range(&quot;B65536&quot;).End(xlUp).Row + 2, 1) = Left(MyName, Len(MyName) - 4)<br>For G = 1 To Sheets.Count<br>Wb.Sheets(G).UsedRange.Copy .Cells(.Range(&quot;B65536&quot;).End(xlUp).Row + 1, 1)<br>Next<br>WbN = WbN &amp; Chr(13) &amp; Wb.Name<br>Wb.Close False<br>End With<br>End If<br>MyName = Dir<br>Loop<br>Range(&quot;B1&quot;).Select<br>Application.ScreenUpdating = True<br>MsgBox &quot;共合并了&quot; &amp; Num &amp; &quot;个工作薄下的全部工作表。如下：&quot; &amp; Chr(13) &amp; WbN, vbInformation, &quot;提示&quot;<br>End Sub<br></code></pre></td></tr></table></figure>
                 
               </div>
@@ -492,6 +493,12 @@ WIDGET = {
   
 
 
+  
+  
+
+
+
+
 
 
 
@@ -566,10 +573,25 @@ WIDGET = {
     
     
   
+  
+  
+  
 </div>
 
   
   
+  
+  
+ <script src='https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js'></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({theme: 'dark'});
+  }
+</script>
+ 
+
+  
+
   
 </div>
 
@@ -685,6 +707,40 @@ WIDGET = {
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
