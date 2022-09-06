@@ -16,20 +16,20 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在上一篇文章《Python|PyAutoGUI实现自动点赞收藏》中写过利用 PyAutoGUI 实现网页自动化点赞+收藏的功能，实测发现依靠屏幕坐标系完成鼠标操作的弊端（因为布局原因导致图标位置变化时，不能很好的处理），IT人当然不能接受这种瑕疵😂😂😂 今天用另一个 python 库实现全天候、全地域的精准点击😁😁😁  思路 和上一篇文章一样，也是基于网页实现循环打开未读文章，之后进行">
+    <meta name="description" content="背景 周五下班前公司合规部的同事找到我，说需要把公司制度管理系统中的所有制度下载下来，大概有三百多篇现行有效制度、五十多篇废止制度，离谱的是制度系统竟然没有批量下载的功能（供应商回复可以实现批量下载功能，但没这么快~ ），因为有点着急，就想到通过python脚本完成自动下载。这里参考了Python|PyAutoGUI实现自动点赞收藏里介绍的pyautogui库。 简单分析了下，文件下载的url是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|selenium实现自动点赞收藏(进阶版)">
-<meta property="og:url" content="http://hncd1024.github.io/2022/08/26/Python%20selenium/index.html">
+<meta property="og:title" content="Python|PyAutoGUI根据文件清单自动下载文件">
+<meta property="og:url" content="http://hncd1024.github.io/2022/09/03/Python%20PyAutoGUI%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E6%B8%85%E5%8D%95%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="在上一篇文章《Python|PyAutoGUI实现自动点赞收藏》中写过利用 PyAutoGUI 实现网页自动化点赞+收藏的功能，实测发现依靠屏幕坐标系完成鼠标操作的弊端（因为布局原因导致图标位置变化时，不能很好的处理），IT人当然不能接受这种瑕疵😂😂😂 今天用另一个 python 库实现全天候、全地域的精准点击😁😁😁  思路 和上一篇文章一样，也是基于网页实现循环打开未读文章，之后进行">
+<meta property="og:description" content="背景 周五下班前公司合规部的同事找到我，说需要把公司制度管理系统中的所有制度下载下来，大概有三百多篇现行有效制度、五十多篇废止制度，离谱的是制度系统竟然没有批量下载的功能（供应商回复可以实现批量下载功能，但没这么快~ ），因为有点着急，就想到通过python脚本完成自动下载。这里参考了Python|PyAutoGUI实现自动点赞收藏里介绍的pyautogui库。 简单分析了下，文件下载的url是">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/python.png">
-<meta property="article:published_time" content="2022-08-26T10:13:34.000Z">
-<meta property="article:modified_time" content="2022-09-05T05:56:30.275Z">
+<meta property="article:published_time" content="2022-09-03T15:13:34.000Z">
+<meta property="article:modified_time" content="2022-09-06T04:44:59.668Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="自动化">
-<meta property="article:tag" content="selenium">
+<meta property="article:tag" content="PyAutoGui">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
@@ -37,7 +37,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Python|selenium实现自动点赞收藏(进阶版) - 啊芫荽</title>
+  <title>Python|PyAutoGUI根据文件清单自动下载文件 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +232,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python|selenium实现自动点赞收藏(进阶版)"></span>
+            <span id="subtitle" data-typed-text="Python|PyAutoGUI根据文件清单自动下载文件"></span>
           
         </div>
 
@@ -243,8 +243,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-26 18:13" pubdate>
-          2022-08-26 18:13
+        <time datetime="2022-09-03 23:13" pubdate>
+          2022-09-03 23:13
         </time>
       </span>
     
@@ -255,7 +255,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          1.4k 字
         
       </span>
     
@@ -266,7 +266,7 @@ WIDGET = {
         
         
         
-          26 分钟
+          12 分钟
         
       </span>
     
@@ -314,28 +314,19 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Python|selenium实现自动点赞收藏(进阶版)</h1>
+            <h1 style="display: none">Python|PyAutoGUI根据文件清单自动下载文件</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/14/Python%20PyAutoGUI/">Python|PyAutoGUI实现自动点赞收藏</a>》中写过利用 PyAutoGUI 实现网页自动化点赞+收藏的功能，实测发现依靠屏幕坐标系完成鼠标操作的弊端（因为布局原因导致图标位置变化时，不能很好的处理），IT人当然不能接受这种瑕疵😂😂😂<br />
-今天用另一个 python 库实现全天候、全地域的精准点击😁😁😁</p>
-<h2 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h2>
-<p>和上一篇文章一样，也是基于网页实现循环打开未读文章，之后进行点赞+收藏操作。不同的是今天使用的 selenium 库在元素定位时是基于网页html的格式，可以通过元素 id 、 name 、 class 、 css 甚至 xpath 实现精准定位。在网页的处理上比 PyAutoGUI 有更高的稳定性。</p>
-<h2 id="测试效果"><a class="markdownIt-Anchor" href="#测试效果"></a> 测试效果</h2>
-<p><img src="https://s2.loli.net/2022/08/26/v8QpfH51kbxazW7.png" srcset="/img/loading.gif" lazyload alt="测试效果" /></p>
-<h3 id="源码如下"><a class="markdownIt-Anchor" href="#源码如下"></a> 源码如下</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> path<br><span class="hljs-keyword">from</span> selenium.webdriver.common.by <span class="hljs-keyword">import</span> By<br><br>driver = webdriver.Edge(<span class="hljs-string">&#x27;C:\Program Files (x86)\Microsoft\Edge\Application\msedgedriver.exe&#x27;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">login</span>():<br>    <span class="hljs-comment">#打开网页版APP，完成登录</span><br>    driver.get(<span class="hljs-string">&#x27;https://xxxxxx/&#x27;</span>)<br>    driver.maximize_window() <span class="hljs-comment">#窗口最大化</span><br>    time.sleep(<span class="hljs-number">15</span>) <span class="hljs-comment">#登录系统</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;----------登录成功----------&#x27;</span>)<br>    <span class="hljs-keyword">if</span> driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//img[@alt=&quot;资讯&quot;]&#x27;</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;----------打开资讯----------&#x27;</span>)<br>        driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//img[@alt=&quot;资讯&quot;]&#x27;</span>).click()<br>        time.sleep(<span class="hljs-number">1</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;----------打开推荐----------&#x27;</span>)<br>        driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[text()=&quot;推荐&quot;]&#x27;</span>).click()<br>        time.sleep(<span class="hljs-number">1</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">auto_click</span>(<span class="hljs-params">num</span>):<br>    i = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i&lt;num:<br>        driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//span[text()=&quot;热度优先&quot;]&#x27;</span>).click()<br>        time.sleep(<span class="hljs-number">0.5</span>)<br>        driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//span[text()=&quot;时间优先&quot;]&#x27;</span>).click()<br>        time.sleep(<span class="hljs-number">0.5</span>)<br>        <span class="hljs-comment"># 打开第一篇文章</span><br>        driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div [@class=&quot;home-main-partyNews&quot; and  @style=&quot;margin-top: 0px;&quot;]//div [@class=&quot;dynamic-left-title&quot;]&#x27;</span>).click()<br>        time.sleep(<span class="hljs-number">1</span>)<br>        <span class="hljs-comment"># 切换标签</span><br>        window = driver.current_window_handle <span class="hljs-comment">#获取当前句柄</span><br>        all_handles = driver.window_handles<br>        driver.switch_to.window(all_handles[-<span class="hljs-number">1</span>])<br>        <span class="hljs-comment"># 收藏</span><br>        <span class="hljs-keyword">try</span> :<br>            driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;icon&quot;]/span[@class=&quot;pointer&quot;]/i[@class=&quot;iconfont icon-shoucanghuise&quot;]&#x27;</span>).click()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;篇文章收藏成功&#x27;</span>.<span class="hljs-built_in">format</span>(i+<span class="hljs-number">1</span>))<br>        <span class="hljs-keyword">except</span> :<br>            driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@style=&quot;display: block;&quot;]/span[@class=&quot;header-icon&quot;]/i[@class=&quot;iconfont icon-weishoucang&quot;]&#x27;</span>).click()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;篇文章收藏成功&#x27;</span>.<span class="hljs-built_in">format</span>(i+<span class="hljs-number">1</span>))<br>        time.sleep(<span class="hljs-number">0.2</span>)<br>        <span class="hljs-comment"># 点赞</span><br>        <span class="hljs-keyword">try</span> :<br>            driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;icon&quot;]/span[@class=&quot;pointer&quot;]/i[@class=&quot;iconfont icon-dianzanhuise&quot;]&#x27;</span>).click()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;篇文章点赞成功&#x27;</span>.<span class="hljs-built_in">format</span>(i+<span class="hljs-number">1</span>))<br>        <span class="hljs-keyword">except</span> :<br>            driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@style=&quot;display: block;&quot;]/span[@class=&quot;header-icon&quot;]/i[@class=&quot;iconfont icon-dianzanhuise&quot;]&#x27;</span>).click()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;篇文章点赞成功&#x27;</span>.<span class="hljs-built_in">format</span>(i+<span class="hljs-number">1</span>))<br>        <span class="hljs-comment"># 关闭当前标签，切回首页标签</span><br>        driver.close()<br>        driver.switch_to.window(window)<br>        time.sleep(<span class="hljs-number">0.5</span>)<br>        i +=<span class="hljs-number">1</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;----------执行完毕----------&#x27;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    login()<br>    auto_click(<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+                <h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
+<p>周五下班前公司合规部的同事找到我，说需要把公司制度管理系统中的所有制度下载下来，大概有三百多篇现行有效制度、五十多篇废止制度，离谱的是制度系统竟然没有批量下载的功能（供应商回复可以实现批量下载功能，但没这么快~ ），因为有点着急，就想到通过python脚本完成自动下载。这里参考了<a href="https://hncd1024.github.io/2022/08/14/Python%20PyAutoGUI/">Python|PyAutoGUI实现自动点赞收藏</a>里介绍的pyautogui库。<br />
+简单分析了下，文件下载的url是固定的url格式，且通过get的方法传的id参。我就后台数据库查到了要下载的制度的id列表，然后导出txt用于遍历。下载的脚本很简单，写完我就去出去吃饭了，吃个饭的功夫就全部下载完成了😁😁😁<br />
+源码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pyautogui<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">auto_download</span>(<span class="hljs-params">url</span>):<br>    pyautogui.click(<span class="hljs-number">500</span>,<span class="hljs-number">97</span>,duration=<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 页面地址： Point(x=776, y=97)</span><br>    pyautogui.typewrite(url,<span class="hljs-number">0.01</span>)<br>    pyautogui.press(<span class="hljs-string">&#x27;Enter&#x27;</span>)<br>    time.sleep(<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 确保页面完全加载完成</span><br>    pyautogui.click(<span class="hljs-number">2014</span>,<span class="hljs-number">236</span>,duration=<span class="hljs-number">2</span>) <span class="hljs-comment"># 下载正文： Point(x=2014, y=236)</span><br>    time.sleep(<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 确保页面完全加载完成</span><br>    pyautogui.click(<span class="hljs-number">393</span>,<span class="hljs-number">250</span>,duration=<span class="hljs-number">2</span>) <span class="hljs-comment"># 打开附件： Point(x=393, y=250)</span><br>    pyautogui.click(<span class="hljs-number">116</span>,<span class="hljs-number">464</span>,duration=<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 全选附件： Point(x=116, y=464)</span><br>    pyautogui.click(<span class="hljs-number">2371</span>,<span class="hljs-number">387</span>,duration=<span class="hljs-number">1</span>) <span class="hljs-comment"># 下载附件： Point(x=2371, y=387)</span><br>    time.sleep(<span class="hljs-number">1.5</span>)<br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># print(pyautogui.position())</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;***********请10秒内切换到浏览器中***********&#x27;</span>)<br>    time.sleep(<span class="hljs-number">10</span>)<br>    id_list = <span class="hljs-string">r&#x27;C:\Users\admin\Desktop\制度20220903\现行有效.txt&#x27;</span><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(id_list , encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        count = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> f.readlines():<br>            url = (<span class="hljs-string">&#x27;http://xxxx/spa/document/index.jsp?id=&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>            auto_download(url)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;***********已完成&#123;&#125;篇制度下载***********&#x27;</span>.<span class="hljs-built_in">format</span>(count))<br>            count += <span class="hljs-number">1</span><br><br></code></pre></td></tr></table></figure>
 <h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
-<p>selenium 同样是一款 Web 自动化测试工具，但基本都被用来爬虫了。果真 python 的一切自动化测试工具的归宿都是爬虫😂😂😂<br />
-selenium 还是很强大的，在 web 页面解析、浏览器控制、鼠键处理上都是很灵活的，可以处理一些相对复杂的场景。并且selenium 支持 IE 、 chrome 、 edge 等常用浏览器，使用时需要借助 webdriver 插件完成。（ webdriver 插件最好和本地计算机对应浏览器的版本保持一致）</p>
-<div class="note note-warning">
-            <p>需要提示的是，selenium的4.*版本语法做了更新，和3.*差异较大，使用时需留意官方文档。</p>
-          </div>
-<p><img src="https://s2.loli.net/2022/08/26/eh2XlkuZPBOr1YK.png" srcset="/img/loading.gif" lazyload alt="pip show selenium" /></p>
-<h2 id="附selenium库基本用法整理"><a class="markdownIt-Anchor" href="#附selenium库基本用法整理"></a> 附：selenium库基本用法整理</h2>
-<p><font color="#dd0000">后续想起来了再整理吧😂😂😂</font></p>
+<p>这种通过GUI下载文件的方式只能用作应急方案，毕竟要专门腾出来电脑给它使用。如果时间不急的话，也完全可以通过系统标准接口实现文件下载。（当然最稳妥的方案是让供应商做成批量下载的标准功能）<br />
+<em><code>事后反应过来，无中生有的工作我为啥揽过来了？大冤种本种就是我~😂😂😂</code></em></p>
 
                 
               </div>
@@ -382,7 +373,7 @@ selenium 还是很强大的，在 web 页面解析、浏览器控制、鼠键处
       
         <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
       
-        <a href="/tags/selenium/">#selenium</a>
+        <a href="/tags/PyAutoGui/">#PyAutoGui</a>
       
     </div>
   
@@ -406,8 +397,8 @@ selenium 还是很强大的，在 web 页面解析、浏览器控制、鼠键处
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python|selenium实现自动点赞收藏(进阶版)</div>
-      <div>http://hncd1024.github.io/2022/08/26/Python selenium/</div>
+      <div>Python|PyAutoGUI根据文件清单自动下载文件</div>
+      <div>http://hncd1024.github.io/2022/09/03/Python PyAutoGUI根据文件清单自动下载文件/</div>
     </div>
     <div class="license-meta">
       
@@ -419,7 +410,7 @@ selenium 还是很强大的，在 web 页面解析、浏览器控制、鼠键处
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022-08-26</div>
+          <div>2022-09-03</div>
         </div>
       
       
@@ -451,9 +442,9 @@ selenium 还是很强大的，在 web 页面解析、浏览器控制、鼠键处
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/03/Python%20PyAutoGUI%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E6%B8%85%E5%8D%95%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/" title="Python|PyAutoGUI根据文件清单自动下载文件">
+                      <a href="/2022/09/05/Python%20PyPDF2%E5%AE%9E%E7%8E%B0PDF%E8%87%AA%E5%8A%A8%E6%8B%86%E5%88%86/" title="Python|PyPDF2实现PDF自动拆分">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|PyAutoGUI根据文件清单自动下载文件</span>
+                        <span class="hidden-mobile">Python|PyPDF2实现PDF自动拆分</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -461,8 +452,8 @@ selenium 还是很强大的，在 web 页面解析、浏览器控制、鼠键处
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/24/Excel_%E8%BD%AC%E5%8E%8B%E7%BC%A9%E5%8C%85/" title="Excel|关于Excel的一些奇怪探索">
-                        <span class="hidden-mobile">Excel|关于Excel的一些奇怪探索</span>
+                      <a href="/2022/08/26/Python%20selenium/" title="Python|selenium实现自动点赞收藏(进阶版)">
+                        <span class="hidden-mobile">Python|selenium实现自动点赞收藏(进阶版)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
