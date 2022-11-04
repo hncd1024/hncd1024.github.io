@@ -16,16 +16,16 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="问题背景 XX集团使用用友 NC Cloud 产品，下属多个业务单元，采用集团管控，系统中各业务单元均使用的是集团科目表。后因各业务单元主营业务差异，需改为集团+分级管控（即允许各业务单元会计科目的差异化管理）。  环境现状  业务单元: 33个业务单元（含集团虚拟组织及4个工会组织），最多三级，其中一家启用了资金模块。 账簿类型: 默认基准账簿，另增加一个工会账簿（用于工会组织使用）。 财务核">
+    <meta name="description" content="一个好朋友最近又碰到了关于用友NC系统科目表变更的问题，上次忘了记录过程，后悔莫及~ 这次完整的记录下来，以备后用。  问题背景 XX集团使用用友 NC Cloud 产品，下属多个业务单元，采用集团管控，系统中各业务单元均使用的是集团科目表。后因各业务单元主营业务差异，需改为集团+分级管控（即允许各业务单元会计科目的差异化管理）。  环境现状  业务单元: 33个业务单元（含集团虚拟组织及4个工会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NC|科目表调整">
 <meta property="og:url" content="http://hncd1024.github.io/2022/11/04/yonyouNC_account/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="问题背景 XX集团使用用友 NC Cloud 产品，下属多个业务单元，采用集团管控，系统中各业务单元均使用的是集团科目表。后因各业务单元主营业务差异，需改为集团+分级管控（即允许各业务单元会计科目的差异化管理）。  环境现状  业务单元: 33个业务单元（含集团虚拟组织及4个工会组织），最多三级，其中一家启用了资金模块。 账簿类型: 默认基准账簿，另增加一个工会账簿（用于工会组织使用）。 财务核">
+<meta property="og:description" content="一个好朋友最近又碰到了关于用友NC系统科目表变更的问题，上次忘了记录过程，后悔莫及~ 这次完整的记录下来，以备后用。  问题背景 XX集团使用用友 NC Cloud 产品，下属多个业务单元，采用集团管控，系统中各业务单元均使用的是集团科目表。后因各业务单元主营业务差异，需改为集团+分级管控（即允许各业务单元会计科目的差异化管理）。  环境现状  业务单元: 33个业务单元（含集团虚拟组织及4个工会">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/yonyou.png">
 <meta property="article:published_time" content="2022-11-04T01:36:44.000Z">
-<meta property="article:modified_time" content="2022-11-04T11:56:47.453Z">
+<meta property="article:modified_time" content="2022-11-04T13:35:08.987Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="yonyou">
 <meta property="article:tag" content="NC">
@@ -254,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          3.4k 字
         
       </span>
     
@@ -265,7 +265,7 @@ WIDGET = {
         
         
         
-          20 分钟
+          29 分钟
         
       </span>
     
@@ -318,7 +318,8 @@ WIDGET = {
             
               <div class="markdown-body">
                 
-                <h2 id="问题背景"><a class="markdownIt-Anchor" href="#问题背景"></a> 问题背景</h2>
+                <p>一个好朋友最近又碰到了关于用友NC系统科目表变更的问题，上次忘了记录过程，后悔莫及~ 这次完整的记录下来，以备后用。</p>
+<h2 id="问题背景"><a class="markdownIt-Anchor" href="#问题背景"></a> 问题背景</h2>
 <p>XX集团使用用友 NC Cloud 产品，下属多个业务单元，采用集团管控，系统中各业务单元均使用的是集团科目表。后因各业务单元主营业务差异，需改为集团+分级管控（即允许各业务单元会计科目的差异化管理）。</p>
 <h2 id="环境现状"><a class="markdownIt-Anchor" href="#环境现状"></a> 环境现状</h2>
 <ol>
@@ -360,6 +361,9 @@ bd_account 具备科目的继承性，集团管控下的会计科目在组织级
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">/*创建视图case_accasoaVo体现集团科目体系和财务组织（AJJT0101）的pk_accasoa对应关系。*/</span><br><span class="hljs-keyword">select</span> a.pk_accasoa <span class="hljs-keyword">as</span> old_accasoa,b.pk_accasoa <span class="hljs-keyword">as</span> new_accasoa  <span class="hljs-keyword">from</span> bd_accasoa a <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> bd_accasoa b <span class="hljs-keyword">on</span> a.pk_account<span class="hljs-operator">=</span>b.pk_account<br><span class="hljs-keyword">where</span>  a.pk_accchart <span class="hljs-operator">=</span>(<span class="hljs-keyword">select</span> pk_accchart <span class="hljs-keyword">from</span> bd_accchart <span class="hljs-keyword">where</span> code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;AJ&#x27;</span>) <span class="hljs-comment">-- 固定集团</span><br><span class="hljs-keyword">and</span> b.pk_accchart<span class="hljs-operator">=</span>(<span class="hljs-keyword">select</span> pk_accchart <span class="hljs-keyword">from</span> bd_accchart <span class="hljs-keyword">where</span> code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;AJJT0101&#x27;</span>) <span class="hljs-comment">-- 此次调整的财务组织</span><br></code></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">/*修改凭证明细表中科目表主键。*/</span><br><span class="hljs-keyword">update</span> gl_detail <span class="hljs-keyword">set</span> pk_accchart<span class="hljs-operator">=</span>( <span class="hljs-keyword">select</span> pk_accchart <span class="hljs-keyword">from</span> bd_accchart <span class="hljs-keyword">where</span> code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;AJJT0101&#x27;</span>)  <span class="hljs-keyword">where</span> pk_org<span class="hljs-operator">=</span>(<span class="hljs-keyword">select</span> pk_org <span class="hljs-keyword">from</span> org_orgs <span class="hljs-keyword">where</span> code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;AJJT0101&#x27;</span> )<br></code></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">/*修改凭证明细表中会计科目主键。*/</span><br><span class="hljs-keyword">update</span>  gl_detail <span class="hljs-keyword">set</span>  pk_accasoa<span class="hljs-operator">=</span>(<span class="hljs-keyword">select</span> new_accasoa <span class="hljs-keyword">from</span> case_accasoaVo <span class="hljs-keyword">where</span> old_accasoa<span class="hljs-operator">=</span>pk_accasoa) <span class="hljs-keyword">where</span> pk_org<span class="hljs-operator">=</span>(<span class="hljs-keyword">select</span> pk_org <span class="hljs-keyword">from</span> org_orgs <span class="hljs-keyword">where</span> code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;AJJT0101&#x27;</span> );<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">/*修改凭证明细表中对方科目主键。该步操作通过游标遍历所有科目，较为耗时。存储过程代码见下方附件。*/</span><br><span class="hljs-keyword">exec</span> gldetail_oppositesubj_update <span class="hljs-variable">@p</span>_org_code<span class="hljs-operator">=</span><span class="hljs-string">&#x27;AJJT0101&#x27;</span><br></code></pre></td></tr></table></figure>
+<h4 id="附存储过程"><a class="markdownIt-Anchor" href="#附存储过程"></a> 附：存储过程</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">/*</span><br><span class="hljs-comment">创建存储过程 gldetail_oppositesubj_update ，更新凭证明细表中的对方科目</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">SET</span> ANSI_NULLS <span class="hljs-keyword">ON</span><br>GO<br><span class="hljs-keyword">SET</span> QUOTED_IDENTIFIER <span class="hljs-keyword">ON</span><br>GO<br><span class="hljs-comment">-- =============================================</span><br><span class="hljs-comment">-- Author:		chendi</span><br><span class="hljs-comment">-- Create date: 2022-11-04</span><br><span class="hljs-comment">-- Description:	XX集团凭证明细表对方科目更新</span><br><span class="hljs-comment">-- =============================================</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [dbo].[gldetail_oppositesubj_update ]<br>	(<br>		<span class="hljs-variable">@p</span>_org_code <span class="hljs-type">varchar</span>(<span class="hljs-number">100</span>)<br>	)<br><span class="hljs-keyword">AS</span><br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;<br>	<span class="hljs-comment">--将SQL语句设置为游标，游标名new_cursor</span><br>	<span class="hljs-keyword">declare</span> new_cursor <span class="hljs-keyword">cursor</span> <span class="hljs-keyword">for</span>    <br>	<span class="hljs-keyword">select</span> old_accasoa,new_accasoa <span class="hljs-keyword">from</span> case_accasoaVo;<br>	<span class="hljs-keyword">open</span> new_cursor<br>	<span class="hljs-comment">--声明变量</span><br>	<span class="hljs-keyword">declare</span> <span class="hljs-variable">@old</span>_accasoa <span class="hljs-type">varchar</span>(max)<br>	<span class="hljs-keyword">declare</span> <span class="hljs-variable">@new</span>_accasoa <span class="hljs-type">varchar</span>(max)<br>	<span class="hljs-comment">--获取查询数据赋值给变量</span><br>	<span class="hljs-keyword">fetch</span> next <span class="hljs-keyword">from</span> new_cursor <span class="hljs-keyword">into</span> <span class="hljs-variable">@old</span>_accasoa,<span class="hljs-variable">@new</span>_accasoa<br>	<span class="hljs-comment">--若检索到数据继续执行</span><br>	while @<span class="hljs-variable">@FETCH</span>_STATUS<span class="hljs-operator">=</span><span class="hljs-number">0</span> <br>	<span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">update</span>  gl_detail <span class="hljs-keyword">set</span>  oppositesubj<span class="hljs-operator">=</span>REPLACE(oppositesubj,<span class="hljs-variable">@old</span>_accasoa,<span class="hljs-variable">@new</span>_accasoa) <span class="hljs-keyword">where</span> pk_org<span class="hljs-operator">=</span>(<span class="hljs-keyword">select</span> pk_org <span class="hljs-keyword">from</span> org_orgs <span class="hljs-keyword">where</span> code<span class="hljs-operator">=</span><span class="hljs-variable">@p</span>_org_code );<br>	<span class="hljs-keyword">END</span><br>	<span class="hljs-keyword">close</span> new_cursor<br>	<span class="hljs-keyword">deallocate</span> new_cursor<br><span class="hljs-keyword">END</span><br>GO<br></code></pre></td></tr></table></figure>
                 
               </div>
             
