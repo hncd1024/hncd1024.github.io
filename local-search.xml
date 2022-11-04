@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title></title>
+    <link href="/2022/11/04/yonyouNC_account/"/>
+    <url>/2022/11/04/yonyouNC_account/</url>
+    
+    <content type="html"><![CDATA[<h2 id="问题背景"><a class="markdownIt-Anchor" href="#问题背景"></a> 问题背景</h2><p>XX集团使用用友 NC Cloud 产品，下属多个业务单元，采用集团管控，系统中各业务单元均使用的是集团科目表。后因各业务单元主营业务差异，需改为集团+分级管控（即允许各业务单元会计科目的差异化管理）。</p><h2 id="环境现状"><a class="markdownIt-Anchor" href="#环境现状"></a> 环境现状</h2><ol><li><strong>业务单元:</strong><br />33个业务单元（含集团虚拟组织及4个工会组织），最多三级，其中一家启用了资金模块。</li><li><strong>账簿类型:</strong><br />默认基准账簿，另增加一个工会账簿（用于工会组织使用）。</li><li><strong>财务核算账簿:</strong><br />14个业务单元基准账簿（均使用集团科目表），四个工会账簿。</li><li><strong>科目体系:</strong><br />基准账簿引用“XX集团科目体系”。工会引用“工会科目体系”。</li><li><strong>会计科目:</strong> 【会计科目-财务组织】中没有维护科目表。</li><li><strong>总账：</strong> 2020-12启用。</li></ol><h2 id="调整思路"><a class="markdownIt-Anchor" href="#调整思路"></a> 调整思路</h2><ol><li>【会计科目-财务组织】中为对应的财务组织增加组织级科目表。</li><li>增加新版本（在新的会计年度生效）。</li><li>后台更新对应财务组织的财务核算账簿所引用的科目表。</li><li>后台调整BD_ACCOUNT、BD_ACCASOA等科目相关基础数据表。</li><li>后台调整GL_VOUCHER、GL_DETAIL等凭证相关数据表。</li><li>总账期初余额、凭证、科目余额表等功能验证。</li></ol><h2 id="调整步骤"><a class="markdownIt-Anchor" href="#调整步骤"></a> 调整步骤</h2>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Excel|多个dbf文件的合并处理</title>
     <link href="/2022/09/14/VBA-%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAdbf%E6%96%87%E4%BB%B6/"/>
     <url>/2022/09/14/VBA-%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAdbf%E6%96%87%E4%BB%B6/</url>
@@ -20,11 +33,11 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>VBA</tag>
       
       <tag>Excel</tag>
+      
+      <tag>Python</tag>
       
     </tags>
     
