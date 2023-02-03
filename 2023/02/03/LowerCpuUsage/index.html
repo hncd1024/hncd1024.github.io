@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/computer.jpg">
 <meta property="article:published_time" content="2023-02-03T01:20:18.000Z">
-<meta property="article:modified_time" content="2023-02-03T03:07:18.829Z">
+<meta property="article:modified_time" content="2023-02-03T03:15:00.976Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="计算机问题">
 <meta property="article:tag" content="CPU降频">
@@ -334,8 +334,7 @@ WIDGET = {
 <h3 id="怀疑电脑品牌问题"><a class="markdownIt-Anchor" href="#怀疑电脑品牌问题"></a> 怀疑电脑品牌问题</h3>
 <p>我购买的是小米pro14增强版顶配，网上搜索小米电脑卡顿时发现负面评价一大堆，但我内心仍然觉得硬件问题可能性不大，浏览很多网页觉得没有太多有效信息。</p>
 <h3 id="怀疑硬件故障"><a class="markdownIt-Anchor" href="#怀疑硬件故障"></a> 怀疑硬件故障</h3>
-<p>到这里我基本感觉就是硬件故障了，官方维修点也查了，都准备要走维修了。然后我打开任务管理器想看下磁盘卷是否故障，突然发现CPU一直是0.38Ghz，这肯定是不正常的。之后测试打开了几个程序服务，CPU始终锁频在0.38，终于找到故障的原因了！<br />
-<img src="https://i.postimg.cc/PpDwfmbM/cpuAfter.png" srcset="/img/loading.gif" lazyload alt="CPU降频+锁频" /></p>
+<p>到这里我基本感觉就是硬件故障了，官方维修点也查了，都准备要走维修了。然后我打开任务管理器想看下磁盘卷是否故障，突然发现CPU一直是0.38Ghz，这肯定是不正常的。之后测试打开了几个程序服务，CPU始终锁频在0.38，终于找到故障的原因了！</p>
 <h2 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h2>
 <p>网上搜索CPU锁频、CPU降频：<br />
 有 <strong>更换风扇和重打硅胶</strong> 的：电脑才使用半年不到，灰尘肯定不多，这个可能性不大；<br />
@@ -343,8 +342,7 @@ WIDGET = {
 有帖子说小米工程师为了降低功耗延长使用时间 <strong>故意降频</strong> 了（保持中立），之后我找到ThrottleStop这款软件，专门解除笔记本电脑的温度墙，调整CPU时钟速度。为了性能已经不在乎温度了，果断下载测试了下，发现还是无效；<br />
 最终看到一个原因是 <strong>CPU静电</strong> ，会造成CPU静电保护主动降频锁频。至此终于找到了问题的根本原因！！！<br />
 <font color="#dd0000">电脑关机键长按了1min释放CPU静电，之后重新打开电脑发现德芙回来了，丝滑如初~👍👍👍  </font><br />
-最后也为小米电脑正个名，比起Thinkxxx，稳定性完胜。Thinkxxx已经不是当年的Thinkxxx了，惋惜~<br />
-<img src="https://i.postimg.cc/5QMFX6nW/cpu-Before.png" srcset="/img/loading.gif" lazyload alt="释放静电后的CPU" /></p>
+最后也为小米电脑正个名，比起Thinkxxx，稳定性完胜。Thinkxxx已经不是当年的Thinkxxx了，惋惜~</p>
 
                 
               </div>
