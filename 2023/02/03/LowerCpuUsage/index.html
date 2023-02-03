@@ -1,0 +1,784 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CHEN DI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="去年买了台笔记本电脑，i7-11390H 3.42Ghz处理器，16.0 GB内存，512G SSD，使用一段时间感觉如德芙般丝滑。大概一个月前系统出现异常卡顿的现象，CPU和内存使用率低到不行，但开机和运行程序就是很卡，响应延迟和掉帧很严重。打开个文件夹都能慢到怀疑人生，感觉初中微机课的XP系统都比它要顺畅😂😂😂 折腾了很久都没有解决问题，我都想重装系统试一下了（考虑到本地的几个开发环境迁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机|记一次CPU降频问题排查与修复">
+<meta property="og:url" content="http://hncd1024.github.io/2023/02/03/LowerCpuUsage/index.html">
+<meta property="og:site_name" content="啊芫荽">
+<meta property="og:description" content="去年买了台笔记本电脑，i7-11390H 3.42Ghz处理器，16.0 GB内存，512G SSD，使用一段时间感觉如德芙般丝滑。大概一个月前系统出现异常卡顿的现象，CPU和内存使用率低到不行，但开机和运行程序就是很卡，响应延迟和掉帧很严重。打开个文件夹都能慢到怀疑人生，感觉初中微机课的XP系统都比它要顺畅😂😂😂 折腾了很久都没有解决问题，我都想重装系统试一下了（考虑到本地的几个开发环境迁">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://hncd1024.github.io/image/computer.jpg">
+<meta property="article:published_time" content="2023-02-03T01:20:18.000Z">
+<meta property="article:modified_time" content="2023-02-03T03:07:18.829Z">
+<meta property="article:author" content="CHEN DI">
+<meta property="article:tag" content="计算机问题">
+<meta property="article:tag" content="CPU降频">
+<meta property="article:tag" content="CPU锁频">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/computer.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机|记一次CPU降频问题排查与修复 - 啊芫荽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"hncd1024.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>啊芫荽</strong>
+    </a>
+	<!-- 和风天气 -->
+
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "01234",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "1",
+    "language": "zh",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "fcab63f1ff6243bea84220ccf7e95b45"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+   
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+	
+
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机|记一次CPU降频问题排查与修复"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-03 09:20" pubdate>
+          2023-02-03 09:20
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机|记一次CPU降频问题排查与修复</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>去年买了台笔记本电脑，i7-11390H 3.42Ghz处理器，16.0 GB内存，512G SSD，使用一段时间感觉如德芙般丝滑。大概一个月前系统出现异常卡顿的现象，CPU和内存使用率低到不行，但开机和运行程序就是很卡，响应延迟和掉帧很严重。打开个文件夹都能慢到怀疑人生，感觉初中微机课的XP系统都比它要顺畅😂😂😂<br />
+折腾了很久都没有解决问题，我都想重装系统试一下了（考虑到本地的几个开发环境迁移太麻烦而不甘心）。就在今天终于找到了问题原因~</p>
+<h2 id="结论在前"><a class="markdownIt-Anchor" href="#结论在前"></a> 结论在前</h2>
+<p>CPU静电导致的降频、锁频</p>
+<h2 id="排查过程"><a class="markdownIt-Anchor" href="#排查过程"></a> 排查过程</h2>
+<h3 id="怀疑win11升级导致"><a class="markdownIt-Anchor" href="#怀疑win11升级导致"></a> 怀疑win11升级导致</h3>
+<p>最近半年一直在体验win11，微软更新也挺积极的，我首先怀疑是win11系统本身导致的卡顿。恰巧我win11 22H2更新包一直打不上去，让我严重怀疑是当前版本的操作系统bug。<br />
+废了很大功夫去修复操作系统的更新问题，甚至重装了Windows Update功能也不行。</p>
+<h3 id="怀疑病毒文件导致"><a class="markdownIt-Anchor" href="#怀疑病毒文件导致"></a> 怀疑病毒文件导致</h3>
+<p>CPU和内存使用率很低，电脑却很卡。先确认电脑没有安装某数字安全管家、某度安全管家、某讯安全管家。然后扫描了全盘也没有发现病毒文件、恶意以文件，后台进程看起来也很正常。😂😂😂</p>
+<h3 id="怀疑系统配置导致"><a class="markdownIt-Anchor" href="#怀疑系统配置导致"></a> 怀疑系统配置导致</h3>
+<p>网上找了一大堆教程，Windows外观和性能设置调整位最佳性能了，没用；电池使用计划也调整为了高性能，没用；存储感知开了，没用；临时文件删了，没用……</p>
+<h3 id="怀疑电脑品牌问题"><a class="markdownIt-Anchor" href="#怀疑电脑品牌问题"></a> 怀疑电脑品牌问题</h3>
+<p>我购买的是小米pro14增强版顶配，网上搜索小米电脑卡顿时发现负面评价一大堆，但我内心仍然觉得硬件问题可能性不大，浏览很多网页觉得没有太多有效信息。</p>
+<h3 id="怀疑硬件故障"><a class="markdownIt-Anchor" href="#怀疑硬件故障"></a> 怀疑硬件故障</h3>
+<p>到这里我基本感觉就是硬件故障了，官方维修点也查了，都准备要走维修了。然后我打开任务管理器想看下磁盘卷是否故障，突然发现CPU一直是0.38Ghz，这肯定是不正常的。之后测试打开了几个程序服务，CPU始终锁频在0.38，终于找到故障的原因了！<br />
+<img src="https://i.postimg.cc/PpDwfmbM/cpuAfter.png" srcset="/img/loading.gif" lazyload alt="CPU降频+锁频" /></p>
+<h2 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h2>
+<p>网上搜索CPU锁频、CPU降频：<br />
+有 <strong>更换风扇和重打硅胶</strong> 的：电脑才使用半年不到，灰尘肯定不多，这个可能性不大；<br />
+有帖子说 <strong>BIOS升级导致</strong> 的：我在小米官网上下载了最新的BIOS重新升级了驱动，依旧无效；<br />
+有帖子说小米工程师为了降低功耗延长使用时间 <strong>故意降频</strong> 了（保持中立），之后我找到ThrottleStop这款软件，专门解除笔记本电脑的温度墙，调整CPU时钟速度。为了性能已经不在乎温度了，果断下载测试了下，发现还是无效；<br />
+最终看到一个原因是 <strong>CPU静电</strong> ，会造成CPU静电保护主动降频锁频。至此终于找到了问题的根本原因！！！<br />
+<font color="#dd0000">电脑关机键长按了1min释放CPU静电，之后重新打开电脑发现德芙回来了，丝滑如初~👍👍👍  </font><br />
+最后也为小米电脑正个名，比起Thinkxxx，稳定性完胜。Thinkxxx已经不是当年的Thinkxxx了，惋惜~<br />
+<img src="https://i.postimg.cc/5QMFX6nW/cpu-Before.png" srcset="/img/loading.gif" lazyload alt="释放静电后的CPU" /></p>
+
+                
+              </div>
+            
+            <hr/>
+			<div><p align="left">商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+			</div>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%97%AE%E9%A2%98/" class="category-chain-item">计算机问题</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%97%AE%E9%A2%98/">#计算机问题</a>
+      
+        <a href="/tags/CPU%E9%99%8D%E9%A2%91/">#CPU降频</a>
+      
+        <a href="/tags/CPU%E9%94%81%E9%A2%91/">#CPU锁频</a>
+      
+    </div>
+  
+</div>
+
+			  
+			  
+		
+			  <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="https://s2.loli.net/2022/08/18/8EaHe9JqfuNwmp7.png" srcset="/img/loading.gif" lazyload><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="https://s2.loli.net/2022/08/18/P6uhQ5wY3mRgGKO.png" srcset="/img/loading.gif" lazyload><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机|记一次CPU降频问题排查与修复</div>
+      <div>http://hncd1024.github.io/2023/02/03/LowerCpuUsage/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CHEN DI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023-02-03</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+			  
+			   
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/06/EntranceGuardSystem/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+			  
+			 
+			  
+            </div>
+
+            
+          </article>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+	
+	
+	
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">站内搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a  target="_blank" rel="nofollow noopener"><span>by chendi</span></a>
+<a  target="_blank" rel="nofollow noopener">
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+  
+  
+  
+</div>
+
+  
+  
+  
+  
+ <script src='https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js'></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({theme: 'dark'});
+  }
+</script>
+ 
+
+  
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
