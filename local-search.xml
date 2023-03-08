@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Power Automate</title>
+    <link href="/2023/03/08/PowerAutomate/"/>
+    <url>/2023/03/08/PowerAutomate/</url>
+    
+    <content type="html"><![CDATA[<p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。<br />近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。</p><h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1><p>登录并打开待处理的列表界面。<br /><img src="https://i.328888.xyz/2023/03/08/5Sy23.png" alt="登录过程" /><br />获取未点赞的链接，并打开进行点赞、收藏。<br /><img src="https://i.328888.xyz/2023/03/08/5SVqv.png" alt="点赞、收藏过程" /><br />运行登录，并循环进行点赞、收藏。<br /><img src="https://i.328888.xyz/2023/03/08/5SidU.png" alt="循环遍历" /><br />测试结果基本满足需要，后续可发掘更丰富的应用场景。</p><h1 id="总结一下"><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h1><p>Microsoft Power Automate是一个低代码平台的RPA工具，可以辅助用户进行流程自动化办公，提升工作效率。相比我之前接触过的UIPath，个人感觉相对具有优势。</p><div class="note note-primary">            <p>优势一：Power Automate对终端个人用户免费，从win11系统预装就可以看出微软还是诚意满满的。相比UIPath作为一款需授权使用的软件，使用门槛较高。</p>          </div><div class="note note-primary">            <p>优势二：系统集成较好，作为微软出品，Power Automate对微软环境下的应用交互做的比较好。除office全家桶都能很好的交互外，对http、FTP等服务支持也比较友好，甚至Power Automate还支持python、JS、VB、shell等脚本。真香！</p>          </div><div class="note note-primary">            <p>优势三：你见过自动帮你进行流程设计的RPA工具吗？Power Automate可以！即便你不会自己设计流程，你可以打开Power Automate的捕获功能。然后你只需要给它演示下你要怎么做，Power Automate便会自动帮你生成流程（当然一般情况下还是要在此基础上再优化调整的）。</p>          </div> ]]></content>
+    
+    
+    <categories>
+      
+      <category>PowerAutomate</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>PowerAutomate</tag>
+      
+      <tag>RPA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>计算机|记一次CPU降频问题排查与修复</title>
     <link href="/2023/02/03/LowerCpuUsage/"/>
     <url>/2023/02/03/LowerCpuUsage/</url>

@@ -16,28 +16,27 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="去年买了台笔记本电脑，i7-11390H 3.42Ghz处理器，16.0 GB内存，512G SSD，使用一段时间感觉如德芙般丝滑。大概一个月前系统出现异常卡顿的现象，CPU和内存使用率低到不行，但开机和运行程序就是很卡，响应延迟和掉帧很严重。打开个文件夹都能慢到怀疑人生，感觉初中微机课的XP系统都比它要顺畅😂😂😂 折腾了很久都没有解决问题，我都想重装系统试一下了（考虑到本地的几个开发环境迁">
+    <meta name="description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机|记一次CPU降频问题排查与修复">
-<meta property="og:url" content="http://hncd1024.github.io/2023/02/03/LowerCpuUsage/index.html">
+<meta property="og:title" content="Power Automate">
+<meta property="og:url" content="http://hncd1024.github.io/2023/03/08/PowerAutomate/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="去年买了台笔记本电脑，i7-11390H 3.42Ghz处理器，16.0 GB内存，512G SSD，使用一段时间感觉如德芙般丝滑。大概一个月前系统出现异常卡顿的现象，CPU和内存使用率低到不行，但开机和运行程序就是很卡，响应延迟和掉帧很严重。打开个文件夹都能慢到怀疑人生，感觉初中微机课的XP系统都比它要顺畅😂😂😂 折腾了很久都没有解决问题，我都想重装系统试一下了（考虑到本地的几个开发环境迁">
+<meta property="og:description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hncd1024.github.io/image/computer.jpg">
-<meta property="article:published_time" content="2023-02-03T01:20:18.000Z">
-<meta property="article:modified_time" content="2023-02-03T03:15:00.976Z">
+<meta property="og:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
+<meta property="article:published_time" content="2023-03-08T02:16:36.000Z">
+<meta property="article:modified_time" content="2023-03-08T03:20:04.136Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="计算机问题">
-<meta property="article:tag" content="CPU降频">
-<meta property="article:tag" content="CPU锁频">
+<meta property="article:tag" content="PowerAutomate">
+<meta property="article:tag" content="RPA">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hncd1024.github.io/image/computer.jpg">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>计算机|记一次CPU降频问题排查与修复 - 啊芫荽</title>
+  <title>Power Automate - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +231,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="计算机|记一次CPU降频问题排查与修复"></span>
+            <span id="subtitle" data-typed-text="Power Automate"></span>
           
         </div>
 
@@ -243,8 +242,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-03 09:20" pubdate>
-          2023-02-03 09:20
+        <time datetime="2023-03-08 10:16" pubdate>
+          2023-03-08 10:16
         </time>
       </span>
     
@@ -255,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          665 字
         
       </span>
     
@@ -266,7 +265,7 @@ WIDGET = {
         
         
         
-          10 分钟
+          6 分钟
         
       </span>
     
@@ -314,35 +313,32 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">计算机|记一次CPU降频问题排查与修复</h1>
+            <h1 style="display: none">Power Automate</h1>
             
             
               <div class="markdown-body">
                 
-                <p>去年买了台笔记本电脑，i7-11390H 3.42Ghz处理器，16.0 GB内存，512G SSD，使用一段时间感觉如德芙般丝滑。大概一个月前系统出现异常卡顿的现象，CPU和内存使用率低到不行，但开机和运行程序就是很卡，响应延迟和掉帧很严重。打开个文件夹都能慢到怀疑人生，感觉初中微机课的XP系统都比它要顺畅😂😂😂<br />
-折腾了很久都没有解决问题，我都想重装系统试一下了（考虑到本地的几个开发环境迁移太麻烦而不甘心）。就在今天终于找到了问题原因~</p>
-<h2 id="结论在前"><a class="markdownIt-Anchor" href="#结论在前"></a> 结论在前</h2>
-<p>CPU静电导致的降频、锁频</p>
-<h2 id="排查过程"><a class="markdownIt-Anchor" href="#排查过程"></a> 排查过程</h2>
-<h3 id="怀疑win11升级导致"><a class="markdownIt-Anchor" href="#怀疑win11升级导致"></a> 怀疑win11升级导致</h3>
-<p>最近半年一直在体验win11，微软更新也挺积极的，我首先怀疑是win11系统本身导致的卡顿。恰巧我win11 22H2更新包一直打不上去，让我严重怀疑是当前版本的操作系统bug。<br />
-废了很大功夫去修复操作系统的更新问题，甚至重装了Windows Update功能也不行。</p>
-<h3 id="怀疑病毒文件导致"><a class="markdownIt-Anchor" href="#怀疑病毒文件导致"></a> 怀疑病毒文件导致</h3>
-<p>CPU和内存使用率很低，电脑却很卡。先确认电脑没有安装某数字安全管家、某度安全管家、某讯安全管家。然后扫描了全盘也没有发现病毒文件、恶意以文件，后台进程看起来也很正常。😂😂😂</p>
-<h3 id="怀疑系统配置导致"><a class="markdownIt-Anchor" href="#怀疑系统配置导致"></a> 怀疑系统配置导致</h3>
-<p>网上找了一大堆教程，Windows外观和性能设置调整位最佳性能了，没用；电池使用计划也调整为了高性能，没用；存储感知开了，没用；临时文件删了，没用……</p>
-<h3 id="怀疑电脑品牌问题"><a class="markdownIt-Anchor" href="#怀疑电脑品牌问题"></a> 怀疑电脑品牌问题</h3>
-<p>我购买的是小米pro14增强版顶配，网上搜索小米电脑卡顿时发现负面评价一大堆，但我内心仍然觉得硬件问题可能性不大，浏览很多网页觉得没有太多有效信息。</p>
-<h3 id="怀疑硬件故障"><a class="markdownIt-Anchor" href="#怀疑硬件故障"></a> 怀疑硬件故障</h3>
-<p>到这里我基本感觉就是硬件故障了，官方维修点也查了，都准备要走维修了。然后我打开任务管理器想看下磁盘卷是否故障，突然发现CPU一直是0.38Ghz，这肯定是不正常的。之后测试打开了几个程序服务，CPU始终锁频在0.38，终于找到故障的原因了！</p>
-<h2 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h2>
-<p>网上搜索CPU锁频、CPU降频：<br />
-有 <strong>更换风扇和重打硅胶</strong> 的：电脑才使用半年不到，灰尘肯定不多，这个可能性不大；<br />
-有帖子说 <strong>BIOS升级导致</strong> 的：我在小米官网上下载了最新的BIOS重新升级了驱动，依旧无效；<br />
-有帖子说小米工程师为了降低功耗延长使用时间 <strong>故意降频</strong> 了（保持中立），之后我找到ThrottleStop这款软件，专门解除笔记本电脑的温度墙，调整CPU时钟速度。为了性能已经不在乎温度了，果断下载测试了下，发现还是无效；<br />
-最终看到一个原因是 <strong>CPU静电</strong> ，会造成CPU静电保护主动降频锁频。至此终于找到了问题的根本原因！！！<br />
-<font color="#dd0000">电脑关机键长按了1min释放CPU静电，之后重新打开电脑发现德芙回来了，丝滑如初~👍👍👍  </font><br />
-最后也为小米电脑正个名，比起Thinkxxx，稳定性完胜。Thinkxxx已经不是当年的Thinkxxx了，惋惜~</p>
+                <p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。<br />
+近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。</p>
+<h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1>
+<p>登录并打开待处理的列表界面。<br />
+<img src="https://i.328888.xyz/2023/03/08/5Sy23.png" srcset="/img/loading.gif" lazyload alt="登录过程" /><br />
+获取未点赞的链接，并打开进行点赞、收藏。<br />
+<img src="https://i.328888.xyz/2023/03/08/5SVqv.png" srcset="/img/loading.gif" lazyload alt="点赞、收藏过程" /><br />
+运行登录，并循环进行点赞、收藏。<br />
+<img src="https://i.328888.xyz/2023/03/08/5SidU.png" srcset="/img/loading.gif" lazyload alt="循环遍历" /><br />
+测试结果基本满足需要，后续可发掘更丰富的应用场景。</p>
+<h1 id="总结一下"><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h1>
+<p>Microsoft Power Automate是一个低代码平台的RPA工具，可以辅助用户进行流程自动化办公，提升工作效率。相比我之前接触过的UIPath，个人感觉相对具有优势。</p>
+<div class="note note-primary">
+            <p>优势一：Power Automate对终端个人用户免费，从win11系统预装就可以看出微软还是诚意满满的。相比UIPath作为一款需授权使用的软件，使用门槛较高。</p>
+          </div>
+<div class="note note-primary">
+            <p>优势二：系统集成较好，作为微软出品，Power Automate对微软环境下的应用交互做的比较好。除office全家桶都能很好的交互外，对http、FTP等服务支持也比较友好，甚至Power Automate还支持python、JS、VB、shell等脚本。真香！</p>
+          </div>
+<div class="note note-primary">
+            <p>优势三：你见过自动帮你进行流程设计的RPA工具吗？Power Automate可以！即便你不会自己设计流程，你可以打开Power Automate的捕获功能。然后你只需要给它演示下你要怎么做，Power Automate便会自动帮你生成流程（当然一般情况下还是要在此基础上再优化调整的）。</p>
+          </div> 
 
                 
               </div>
@@ -363,7 +359,7 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%97%AE%E9%A2%98/" class="category-chain-item">计算机问题</a>
+  <a href="/categories/PowerAutomate/" class="category-chain-item">PowerAutomate</a>
   
   
 
@@ -378,11 +374,9 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%97%AE%E9%A2%98/">#计算机问题</a>
+        <a href="/tags/PowerAutomate/">#PowerAutomate</a>
       
-        <a href="/tags/CPU%E9%99%8D%E9%A2%91/">#CPU降频</a>
-      
-        <a href="/tags/CPU%E9%94%81%E9%A2%91/">#CPU锁频</a>
+        <a href="/tags/RPA/">#RPA</a>
       
     </div>
   
@@ -406,8 +400,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>计算机|记一次CPU降频问题排查与修复</div>
-      <div>http://hncd1024.github.io/2023/02/03/LowerCpuUsage/</div>
+      <div>Power Automate</div>
+      <div>http://hncd1024.github.io/2023/03/08/PowerAutomate/</div>
     </div>
     <div class="license-meta">
       
@@ -419,7 +413,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-02-03</div>
+          <div>2023-03-08</div>
         </div>
       
       
@@ -451,18 +445,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/08/PowerAutomate/" title="Power Automate">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Power Automate</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/04/yonyouNC_account/" title="NC|科目表调整">
-                        <span class="hidden-mobile">NC|科目表调整</span>
+                      <a href="/2023/02/03/LowerCpuUsage/" title="计算机|记一次CPU降频问题排查与修复">
+                        <span class="hidden-mobile">计算机|记一次CPU降频问题排查与修复</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
