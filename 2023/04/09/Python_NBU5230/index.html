@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CHEN DI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在《Kettle|自助巡检》中，我曾利用ETL工具实现了除数据库备份检查之外的每日巡检工作，这一篇聊聊NBU备份巡检自动化。  分析过程 公司数据库涉及Oracle和SQL server，对于每日数据库巡检来说，Oracle数据库都是通过bplist语句进行查询，SQL server则是通过NetBackup客户端进行点击查询。 最好SQL server也能通过语句查询，这样整个方案就显得更合理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python|实现NBU自动巡检">
+<meta property="og:url" content="http://hncd1024.github.io/2023/04/09/Python_NBU5230/index.html">
+<meta property="og:site_name" content="啊芫荽">
+<meta property="og:description" content="在《Kettle|自助巡检》中，我曾利用ETL工具实现了除数据库备份检查之外的每日巡检工作，这一篇聊聊NBU备份巡检自动化。  分析过程 公司数据库涉及Oracle和SQL server，对于每日数据库巡检来说，Oracle数据库都是通过bplist语句进行查询，SQL server则是通过NetBackup客户端进行点击查询。 最好SQL server也能通过语句查询，这样整个方案就显得更合理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2023-04-09T14:13:34.000Z">
+<meta property="article:modified_time" content="2023-04-10T06:02:37.371Z">
+<meta property="article:author" content="CHEN DI">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python|实现NBU自动巡检 - 啊芫荽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"hncd1024.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>啊芫荽</strong>
+    </a>
+	<!-- 和风天气 -->
+
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "01234",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "1",
+    "language": "zh",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "fcab63f1ff6243bea84220ccf7e95b45"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+   
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+	
+
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python|实现NBU自动巡检"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-09 22:13" pubdate>
+          2023-04-09 22:13
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          79 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python|实现NBU自动巡检</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在《<a href="https://hncd1024.github.io/2022/04/25/Kettle-%E8%87%AA%E5%8A%A9%E5%B7%A1%E6%A3%80/">Kettle|自助巡检</a>》中，我曾利用ETL工具实现了除数据库备份检查之外的每日巡检工作，这一篇聊聊NBU备份巡检自动化。</p>
+<h2 id="分析过程"><a class="markdownIt-Anchor" href="#分析过程"></a> 分析过程</h2>
+<p>公司数据库涉及Oracle和SQL server，对于每日数据库巡检来说，Oracle数据库都是通过bplist语句进行查询，SQL server则是通过NetBackup客户端进行点击查询。<br />
+最好SQL server也能通过语句查询，这样整个方案就显得更合理。后来在网上看到这篇文章《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yihr/p/12974613.html">Netbackup命令之bplist</a>》，终于知道SQL server也可以通过bplist语句进行备份查询。<br />
+实现过程就比较顺利了：</p>
+<h3 id="读取待巡检数据库清单"><a class="markdownIt-Anchor" href="#读取待巡检数据库清单"></a> 读取待巡检数据库清单</h3>
+<p>通过sqlite数据库，记录数据库巡检清单信息表，涉及数据库服务器名、服务器IP、数据库类型、数据库用途、负责人邮箱等信息。</p>
+<h3 id="逐一查询数据库备份情况"><a class="markdownIt-Anchor" href="#逐一查询数据库备份情况"></a> 逐一查询数据库备份情况</h3>
+<p>遍历数据库巡检清单，逐一进行bplist查询。</p>
+<ol>
+<li>通过loguru记录每一步查询日志，并记录到log文件中。</li>
+<li>在sqlite中建立巡检信息表，将查询结果插入到表中，利于后续查询分析使用。</li>
+<li>每日轮询，查询区间为轮询日的前一自然日。</li>
+</ol>
+<h3 id="判断备份是否正常"><a class="markdownIt-Anchor" href="#判断备份是否正常"></a> 判断备份是否正常</h3>
+<p>根据bplist查询语句返回的结果判断备份是由正常。根据分析，若返回结果包含“- -rw- - -”则表明备份正常，若结果包含“EXIT STATUS” / null 则表明查询区间NBU无备份信息。</p>
+<h3 id="邮件通知"><a class="markdownIt-Anchor" href="#邮件通知"></a> 邮件通知</h3>
+<p>将查询结果通知数据库负责人，为提高阅读性，正文采用html格式。</p>
+<h3 id="定时执行"><a class="markdownIt-Anchor" href="#定时执行"></a> 定时执行</h3>
+<p>将写好的python脚本添加到bat文件中，通过服务器的计划任务程序定时执行bat即可。</p>
+<h2 id="功能源码"><a class="markdownIt-Anchor" href="#功能源码"></a> 功能源码</h2>
+<h3 id="代码部分"><a class="markdownIt-Anchor" href="#代码部分"></a> 代码部分</h3>
+<h4 id="os部分"><a class="markdownIt-Anchor" href="#os部分"></a> os部分</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os <br><span class="hljs-keyword">from</span> loguru <span class="hljs-keyword">import</span> logger<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> sqlite3<br><span class="hljs-keyword">import</span> resultEmail<br><br><span class="hljs-comment"># 创建日志对象</span><br>FileLog = <span class="hljs-string">&#x27;log&#123;&#125;.log&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.date.today())<br>logger.add(FileLog,rotation=<span class="hljs-string">&quot;500MB&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>, enqueue=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 获取昨天日期</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getYesterday</span>():<br>    today = datetime.date.today()<br>    oneday = datetime.timedelta(days=<span class="hljs-number">1</span>)<br>    yesterday = today - oneday<br>    <span class="hljs-keyword">return</span> yesterday.strftime(<span class="hljs-string">r&#x27;%Y-%m-%d&#x27;</span>)<br><br><span class="hljs-comment"># 查询系统清单</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">QuerySystemInfo</span>(<span class="hljs-params">yesterday</span>):<br>    conn = sqlite3.connect(<span class="hljs-string">r&#x27;D:\sqlite\********&#x27;</span>) <span class="hljs-comment"># sqlite文件</span><br>    c = conn.cursor()<br>    <span class="hljs-comment"># 查询系统清单，逐行进行备份检查</span><br>    querySql = c.execute(<span class="hljs-string">&quot;select * from bd_dbsysteminfo order by email&quot;</span>)<br>    logger.info(<span class="hljs-string">&#x27;#######待巡检数据库清单查询完成#######&#x27;</span>)<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> querySql:<br>        systemnameList.append(row[<span class="hljs-number">1</span>])<br>        systemtypeList.append(row[<span class="hljs-number">3</span>])<br>    conn.close()<br><br><span class="hljs-comment"># 查询备份情况</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">CmdQuery</span>(<span class="hljs-params">systemname,systemtype,yesterday</span>):<br>    logger.info(<span class="hljs-string">&#x27;#######数据库备份巡检#######&#x27;</span>)<br>    <span class="hljs-keyword">if</span> systemtype == <span class="hljs-string">&#x27;Oracle&#x27;</span>:<br>        Query = <span class="hljs-string">r&#x27;cd C:\Program Files\Veritas\NetBackup\bin\ &amp;&amp; bplist -C &#123;&#125; -S nbu5230 -s &#123;&#125; -e &#123;&#125; -t 4 -l -R /&#x27;</span>.<span class="hljs-built_in">format</span>(systemname,yesterday,yesterday)<br>    <span class="hljs-keyword">elif</span> systemtype == <span class="hljs-string">&#x27;SqlServer&#x27;</span>:<br>        Query = <span class="hljs-string">r&#x27;cd C:\Program Files\Veritas\NetBackup\bin\ &amp;&amp; bplist -C &#123;&#125; -S nbu5230 -s &#123;&#125; -e &#123;&#125; -t 15 -l -R /&#x27;</span>.<span class="hljs-built_in">format</span>(systemname,yesterday,yesterday)<br>    <span class="hljs-keyword">else</span> :<br>        logger.error(<span class="hljs-string">&#x27;+++++++数据库&#123;&#125;,数据库类型&#123;&#125;有误+++++++&#x27;</span>.<span class="hljs-built_in">format</span>(systemname,systemtype))<br>    details = os.popen(Query).read()<br>    line = details.split(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>    <span class="hljs-comment"># cd C:\Program Files\Veritas\NetBackup\bin\&amp;&amp;bplist -C USERMIC-6E73OBR -S nbu5230 -s 2023-03-01 -e 2023-03-10 -t 4 -l -R /</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;EXIT STATUS 227&#x27;</span> <span class="hljs-keyword">in</span> details:<br>        logger.error(<span class="hljs-string">&#x27;+++++++数据库&#123;&#125;,数据库类型&#123;&#125;在&#123;&#125;未查到备份文件+++++++&#x27;</span>.<span class="hljs-built_in">format</span>(systemname,systemtype,yesterday))<br>        InsertDatabase(systemname,yesterday,details,<span class="hljs-string">&#x27;无备份&#x27;</span>)<br>    <span class="hljs-keyword">elif</span> (<span class="hljs-string">&#x27;-rw---&#x27;</span> <span class="hljs-keyword">in</span> details) <span class="hljs-keyword">or</span> <span class="hljs-built_in">len</span>(line)&gt;=<span class="hljs-number">5</span> :<br>        logger.info(<span class="hljs-string">&#x27;#######数据库&#123;&#125;,数据库类型&#123;&#125;在&#123;&#125;存在备份文件#######&#x27;</span>.<span class="hljs-built_in">format</span>(systemname,systemtype,yesterday))<br>        InsertDatabase(systemname,yesterday,details,<span class="hljs-string">&#x27;正常&#x27;</span>)<br>    <span class="hljs-keyword">else</span> :<br>        logger.error(<span class="hljs-string">&#x27;+++++++数据库&#123;&#125;,数据库类型&#123;&#125;在&#123;&#125;查询结果异常+++++++&#x27;</span>.<span class="hljs-built_in">format</span>(systemname,systemtype,yesterday))<br>        InsertDatabase(systemname,yesterday,details,<span class="hljs-string">&#x27;无备份&#x27;</span>)  <br><br><span class="hljs-comment"># 插入巡查信息记录表</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">InsertDatabase</span>(<span class="hljs-params">systemname,querydate,details,result</span>):<br>    insertContent = (systemname,querydate,details,result)<br>    conn = sqlite3.connect(<span class="hljs-string">r&#x27;D:\sqlite\JicAiDatabase&#x27;</span>)<br>    c = conn.cursor()<br>    querySql = c.execute(<span class="hljs-string">&quot;insert into system_nbubakupinfo (systemname,querydate,details,result) values (?,?,?,?)&quot;</span>,insertContent)<br>    conn.commit()<br>    conn.close()<br>    logger.info(<span class="hljs-string">&#x27;#######&#123;&#125;日，服务器&#123;&#125;的NBU备份日志已插入数据库#######&#x27;</span>.<span class="hljs-built_in">format</span>(querydate,systemname))<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    yesterday = getYesterday()<br>    systemnameList = []<br>    systemtypeList = []<br>    logger.info(<span class="hljs-string">&#x27;#######巡检开始#######&#x27;</span>)<br>    QuerySystemInfo(yesterday)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-built_in">len</span>(systemnameList)):<br>        CmdQuery(systemnameList[i],systemtypeList[i],yesterday)<br>    logger.info(<span class="hljs-string">&#x27;***开始发送邮件***&#x27;</span>)<br>    resultEmail.sendEmail(yesterday)<br>    logger.info(<span class="hljs-string">&#x27;***邮件已发给各系统管理员***&#x27;</span>)<br>    resultEmail.toManager(yesterday)<br>    logger.info(<span class="hljs-string">&#x27;***邮件已发给NBU管理员***&#x27;</span>)<br>    logger.info(<span class="hljs-string">&#x27;***邮件发送完成***&#x27;</span>)<br>    logger.info(<span class="hljs-string">&#x27;#######巡检结束#######&#x27;</span>)<br>    <br></code></pre></td></tr></table></figure>
+<h4 id="email部分"><a class="markdownIt-Anchor" href="#email部分"></a> email部分</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> sqlite3<br><span class="hljs-keyword">import</span> smtplib<br><span class="hljs-keyword">from</span> email.mime.text <span class="hljs-keyword">import</span> MIMEText<br><span class="hljs-keyword">from</span> email.mime.multipart <span class="hljs-keyword">import</span> MIMEMultipart<br><span class="hljs-keyword">from</span> email.header <span class="hljs-keyword">import</span> Header<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sendEmail</span>(<span class="hljs-params">yesterday</span>):<br>    toEmail = []<br>    contents = []<br>    details = []<br>    subject = <span class="hljs-string">&#x27;&#123;&#125;-数据库备份巡检结果通知&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.date.today().strftime(<span class="hljs-string">r&#x27;%Y%m%d&#x27;</span>))<br>    conn = sqlite3.connect(<span class="hljs-string">r&#x27;D:\sqlite\******&#x27;</span>)<br>    c = conn.cursor()<br>    querySql = c.execute(<span class="hljs-string">&quot;select distinct email from bd_dbsysteminfo order by email&quot;</span>)<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> querySql:<br>        toEmail.append(row[<span class="hljs-number">0</span>])<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> toEmail:<br>        table = <span class="hljs-string">&#x27;&#x27;</span><br>        detail = <span class="hljs-string">&#x27;details:&#x27;</span><br>        contentSql = c.execute(<span class="hljs-string">&quot;select a.systemname,b.systemip,b.systemmemo,a.result,a.details from  system_nbubakupinfo a left join bd_dbsysteminfo b on a.systemname=b.systemname where b.email=&#x27;&#123;&#125;&#x27; and a.querydate=&#x27;&#123;&#125;&#x27;&quot;</span>.<span class="hljs-built_in">format</span>(row,yesterday))<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> contentSql:<br>            <span class="hljs-comment"># 封装内容</span><br>            detail = detail + i[<span class="hljs-number">4</span>]<br>            <span class="hljs-keyword">if</span> i[<span class="hljs-number">3</span>]  == <span class="hljs-string">&#x27;正常&#x27;</span> :<br>                table = table + <span class="hljs-string">r&#x27;&lt;tr&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;/tr&gt;&#x27;</span>.<span class="hljs-built_in">format</span>(i[<span class="hljs-number">0</span>],i[<span class="hljs-number">1</span>],i[<span class="hljs-number">2</span>],i[<span class="hljs-number">3</span>])<br>            <span class="hljs-keyword">else</span> :<br>                table = table + <span class="hljs-string">r&#x27;&lt;tr&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td style=&quot;color:red;&quot;&gt;&#123;&#125;&lt;/td&gt;&lt;/tr&gt;&#x27;</span>.<span class="hljs-built_in">format</span>(i[<span class="hljs-number">0</span>],i[<span class="hljs-number">1</span>],i[<span class="hljs-number">2</span>],i[<span class="hljs-number">3</span>])<br>        contents.append(<span class="hljs-string">r&#x27;&lt;p&gt;&#123;&#125;日数据库备份巡检结果&lt;/p&gt;&lt;table border=&quot;1&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th style=&quot;text-align:center;&quot;&gt;服务器名&lt;/th&gt;&lt;th style=&quot;text-align:center;&quot;&gt;服务器IP&lt;/th&gt;&lt;th style=&quot;text-align:center;&quot;&gt;数据库用途&lt;/th&gt;&lt;th style=&quot;text-align:center;&quot;&gt;巡检结果&lt;/th&gt;&lt;/tr&gt;&#123;&#125;&lt;/tbody&gt;&lt;colgroup&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;/colgroup&gt;&lt;/table&gt;&lt;span&gt;详细备份信息参见附件！该邮件为系统自动发送，请勿回复。&lt;/span&gt;&#x27;</span>.<span class="hljs-built_in">format</span>(yesterday,table))<br>        details.append(detail)<br>    conn.close()<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-built_in">len</span>(toEmail)):<br>        <span class="hljs-comment"># 创建 SMTP 对象</span><br>        smtp = smtplib.SMTP()<br>        smtp.connect(<span class="hljs-string">&quot;****.cn&quot;</span>, port=<span class="hljs-number">25</span>)<br>        smtp.login(user=<span class="hljs-string">&quot;**@*.cn&quot;</span>, password=<span class="hljs-string">r&quot;***&quot;</span>)<br>        message = MIMEMultipart()<br>        message[<span class="hljs-string">&#x27;From&#x27;</span>] = Header(<span class="hljs-string">&quot;***@***.cn&quot;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>) <br>        message[<span class="hljs-string">&#x27;Subject&#x27;</span>] = Header(subject, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;details.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            f.write(details[i])<br>        message[<span class="hljs-string">&#x27;To&#x27;</span>] = Header(toEmail[i], <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        message.attach(MIMEText(contents[i], <span class="hljs-string">&#x27;html&#x27;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>        att = MIMEText(<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;details.txt&#x27;</span>,<span class="hljs-string">&#x27;rb&#x27;</span>).read(),<span class="hljs-string">&#x27;base64&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        att[<span class="hljs-string">&#x27;Content-Type&#x27;</span>] = <span class="hljs-string">&#x27;application/octet-stream&#x27;</span><br>        att[<span class="hljs-string">&quot;Content-Disposition&quot;</span>] = <span class="hljs-string">&#x27;attachment; filename=&quot;details.txt&quot;&#x27;</span><br>        message.attach(att)<br>        smtp.sendmail(from_addr=<span class="hljs-string">&quot;******@****.cn&quot;</span>, to_addrs=toEmail[i], msg=message.as_string())<br>        smtp.quit()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">toManager</span>(<span class="hljs-params">yesterday</span>):<br>    to = <span class="hljs-string">&#x27;&#x27;</span><br>    contents = <span class="hljs-string">&#x27;&#x27;</span><br>    subject = <span class="hljs-string">&#x27;&#123;&#125;-数据库备份巡检结果通知&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.date.today().strftime(<span class="hljs-string">r&#x27;%Y%m%d&#x27;</span>))<br>    conn = sqlite3.connect(<span class="hljs-string">r&#x27;D:\sqlite\****&#x27;</span>)<br>    c = conn.cursor()<br>    querySql = c.execute(<span class="hljs-string">&quot;select distinct supermanager from bd_dbsysteminfo &quot;</span>)<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> querySql:<br>        to = row[<span class="hljs-number">0</span>]<br>        table = <span class="hljs-string">&#x27;&#x27;</span><br>        contentSql = c.execute(<span class="hljs-string">&quot;select a.systemname,b.systemip,b.systemmemo,a.result from  system_nbubakupinfo a left join bd_dbsysteminfo b on a.systemname=b.systemname where a.querydate=&#x27;&#123;&#125;&#x27;&quot;</span>.<span class="hljs-built_in">format</span>(yesterday))<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> contentSql:<br>            <span class="hljs-keyword">if</span> i[<span class="hljs-number">3</span>]  == <span class="hljs-string">&#x27;正常&#x27;</span> :<br>                table = table + <span class="hljs-string">r&#x27;&lt;tr&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;/tr&gt;&#x27;</span>.<span class="hljs-built_in">format</span>(i[<span class="hljs-number">0</span>],i[<span class="hljs-number">1</span>],i[<span class="hljs-number">2</span>],i[<span class="hljs-number">3</span>])<br>            <span class="hljs-keyword">else</span> :<br>                table = table + <span class="hljs-string">r&#x27;&lt;tr&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td&gt;&#123;&#125;&lt;/td&gt;&lt;td style=&quot;color:red;&quot;&gt;&#123;&#125;&lt;/td&gt;&lt;/tr&gt;&#x27;</span>.<span class="hljs-built_in">format</span>(i[<span class="hljs-number">0</span>],i[<span class="hljs-number">1</span>],i[<span class="hljs-number">2</span>],i[<span class="hljs-number">3</span>])<br>        contents = contents + <span class="hljs-string">&#x27;&lt;p&gt;&#123;&#125;日数据库备份巡检结果&lt;/p&gt;&lt;table border=&quot;1&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th style=&quot;text-align:center;&quot;&gt;服务器名&lt;/th&gt;&lt;th style=&quot;text-align:center;&quot;&gt;服务器IP&lt;/th&gt;&lt;th style=&quot;text-align:center;&quot;&gt;数据库用途&lt;/th&gt;&lt;th style=&quot;text-align:center;&quot;&gt;巡检结果&lt;/th&gt;&lt;/tr&gt;&#123;&#125;&lt;/tbody&gt;&lt;colgroup&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;col style=&quot;width: 25%;&quot;&gt;&lt;/colgroup&gt;&lt;/table&gt;&lt;span&gt;该邮件为系统自动发送，请勿回复。&lt;/span&gt;&#x27;</span>.<span class="hljs-built_in">format</span>(yesterday,table)<br>    conn.close()<br><br>    smtp = smtplib.SMTP()<br>    smtp.connect(<span class="hljs-string">&quot;****.****.cn&quot;</span>, port=<span class="hljs-number">25</span>)<br>    smtp.login(user=<span class="hljs-string">&quot;****@***.cn&quot;</span>, password=<span class="hljs-string">r&quot;cd2022%%&quot;</span>)<br>    message = MIMEMultipart()<br>    message[<span class="hljs-string">&#x27;From&#x27;</span>] = Header(<span class="hljs-string">&quot;***@***.cn&quot;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>) <br>    message[<span class="hljs-string">&#x27;Subject&#x27;</span>] = Header(subject, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    message[<span class="hljs-string">&#x27;To&#x27;</span>] = Header(to, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    message.attach(MIMEText(contents, <span class="hljs-string">&#x27;html&#x27;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    smtp.sendmail(from_addr=<span class="hljs-string">&quot;***@***.cn&quot;</span>, to_addrs=to, msg=message.as_string())<br>    smtp.quit()<br></code></pre></td></tr></table></figure>
+<h3 id="定时任务"><a class="markdownIt-Anchor" href="#定时任务"></a> 定时任务</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">@echo off<br>D:<br>cd D:\***<br>python ***.py<br>exit    <br></code></pre></td></tr></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>简单好用，轻轻松松。</p>
+
+                
+              </div>
+            
+            <hr/>
+			<div><p align="left">商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+			</div>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/os%E8%87%AA%E5%8A%A8%E5%8C%96/" class="category-chain-item">os自动化</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/os%E8%87%AA%E5%8A%A8%E5%8C%96/loguru/" class="category-chain-item">loguru</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/os%E8%87%AA%E5%8A%A8%E5%8C%96/loguru/resultEmail/" class="category-chain-item">resultEmail</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/os%E8%87%AA%E5%8A%A8%E5%8C%96/loguru/resultEmail/sqlite3/" class="category-chain-item">sqlite3</a>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
+      
+    </div>
+  
+</div>
+
+			  
+			  
+		
+			  <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="https://s2.loli.net/2022/08/18/8EaHe9JqfuNwmp7.png" srcset="/img/loading.gif" lazyload><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="https://s2.loli.net/2022/08/18/P6uhQ5wY3mRgGKO.png" srcset="/img/loading.gif" lazyload><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python|实现NBU自动巡检</div>
+      <div>http://hncd1024.github.io/2023/04/09/Python_NBU5230/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CHEN DI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023-04-09</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+			  
+			   
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/08/PowerAutomate/" title="Power Automate">
+                        <span class="hidden-mobile">Power Automate</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+			  
+			 
+			  
+            </div>
+
+            
+          </article>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+	
+	
+	
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">站内搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a  target="_blank" rel="nofollow noopener"><span>by chendi</span></a>
+<a  target="_blank" rel="nofollow noopener">
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+  
+  
+  
+</div>
+
+  
+  
+  
+  
+ <script src='https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js'></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({theme: 'dark'});
+  }
+</script>
+ 
+
+  
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
