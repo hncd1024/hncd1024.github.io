@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CHEN DI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="背景 从招行按日下载的PDF回单，数量大到可能有几百页，每页只有账号&#x2F;金额&#x2F;摘要&#x2F;类型等字段，但却要求按照项目分类提取出来。你会怎么做？ 我想到的方案是：逐页解析PDF内容，根据类型取收款&#x2F;付款银行账号 → 根据账号查询到对应的项目 → 根据项目创建文件夹 → 按银行账户分类拆分PDF，存入对应的项目文件夹。具体逻辑如下： 处理逻辑 处理后的文件夹效果如下：  666-A项目  20230101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python|PDF内容识别并按规则拆分">
+<meta property="og:url" content="http://hncd1024.github.io/2023/04/11/Python_PDFCutByBankacc/index.html">
+<meta property="og:site_name" content="啊芫荽">
+<meta property="og:description" content="背景 从招行按日下载的PDF回单，数量大到可能有几百页，每页只有账号&#x2F;金额&#x2F;摘要&#x2F;类型等字段，但却要求按照项目分类提取出来。你会怎么做？ 我想到的方案是：逐页解析PDF内容，根据类型取收款&#x2F;付款银行账号 → 根据账号查询到对应的项目 → 根据项目创建文件夹 → 按银行账户分类拆分PDF，存入对应的项目文件夹。具体逻辑如下： 处理逻辑 处理后的文件夹效果如下：  666-A项目  20230101">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2023-04-11T09:13:34.000Z">
+<meta property="article:modified_time" content="2023-04-12T09:33:01.697Z">
+<meta property="article:author" content="CHEN DI">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="shutil">
+<meta property="article:tag" content="PyPDF2">
+<meta property="article:tag" content="os">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python|PDF内容识别并按规则拆分 - 啊芫荽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"hncd1024.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>啊芫荽</strong>
+    </a>
+	<!-- 和风天气 -->
+
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "01234",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "1",
+    "language": "zh",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "fcab63f1ff6243bea84220ccf7e95b45"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+   
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+	
+
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python|PDF内容识别并按规则拆分"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-11 17:13" pubdate>
+          2023-04-11 17:13
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python|PDF内容识别并按规则拆分</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
+<p>从招行按日下载的PDF回单，数量大到可能有几百页，每页只有账号/金额/摘要/类型等字段，但却要求按照项目分类提取出来。你会怎么做？<br />
+我想到的方案是：逐页解析PDF内容，根据类型取收款/付款银行账号 → 根据账号查询到对应的项目 → 根据项目创建文件夹 → 按银行账户分类拆分PDF，存入对应的项目文件夹。具体逻辑如下：<br />
+<a target="_blank" rel="noopener" href="https://postimg.cc/8sbSw6p3">处理逻辑</a><br />
+处理后的文件夹效果如下：</p>
+<ul>
+<li>666-A项目
+<ul>
+<li>20230101-666-A项目.pdf</li>
+<li>20230102-666-A项目.pdf</li>
+</ul>
+</li>
+<li>888-B项目
+<ul>
+<li>20230101-888-B项目.pdf</li>
+<li>20230106-888-B项目.pdf</li>
+<li>20230108-888-B项目.pdf</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> PyPDF2 <span class="hljs-keyword">import</span> PdfReader, PdfWriter<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">import</span> sqlite3<br><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">from</span> loguru <span class="hljs-keyword">import</span> logger<br><span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-comment"># 查询项目编号及简称</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">productQuery</span>(<span class="hljs-params">bank_acct</span>):<br>    logger.info(<span class="hljs-string">&#x27;----查询项目编号及简称：&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(bank_acct))<br>    productCode = <span class="hljs-string">&#x27;&#x27;</span><br>    productName = <span class="hljs-string">&#x27;&#x27;</span><br>    conn = sqlite3.connect(<span class="hljs-string">r&#x27;\\**********.db&#x27;</span>) <br>    c = conn.cursor()<br>    querySql = c.execute(<span class="hljs-string">&quot;select bank_acct,product_code,product_jc from trust_product_bank where bank_acct=?&quot;</span>,(bank_acct,))<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> querySql:<br>        productCode = row[<span class="hljs-number">1</span>]<br>        productName = row[<span class="hljs-number">2</span>]<br>    conn.close()<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(productCode) == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;保障基金&#x27;</span><br>    <span class="hljs-keyword">else</span> :<br>        <span class="hljs-keyword">return</span> productCode+<span class="hljs-string">&#x27;-&#x27;</span>+productName<br><br><span class="hljs-comment"># 拆分pdf</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pdf_split</span>(<span class="hljs-params">pdf_in,pdf_out,<span class="hljs-built_in">list</span></span>):<br>    output = PdfWriter()<br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(pdf_in, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> in_pdf:<br>        pdf_file = PdfReader(in_pdf)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>:<br>            output.add_page(pdf_file.pages[i])<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(pdf_out, <span class="hljs-string">&#x27;ab&#x27;</span>) <span class="hljs-keyword">as</span> out_pdf:<br>            output.write(out_pdf)<br><br><span class="hljs-comment"># 获取PDF清单</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getPdfList</span>(<span class="hljs-params">filepath,filemonth</span>):<br>    dirlist = [] <span class="hljs-comment"># 待处理pdf清单</span><br>    <span class="hljs-keyword">try</span> :<br>        listDir = os.listdir(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth))<br>    <span class="hljs-keyword">except</span> FileNotFoundError:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;未找到对应的目录&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">for</span> <span class="hljs-built_in">dir</span> <span class="hljs-keyword">in</span> listDir:<br>            <span class="hljs-keyword">if</span> os.path.splitext(<span class="hljs-built_in">dir</span>)[<span class="hljs-number">1</span>] == <span class="hljs-string">r&#x27;.pdf&#x27;</span>:<br>                dirlist.append(<span class="hljs-built_in">dir</span>)<br>        <span class="hljs-keyword">return</span> dirlist<br><br><span class="hljs-comment"># 获取文件页数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pdf_reader</span>(<span class="hljs-params">pdf_in</span>):<br>    pdf_file = PdfReader(pdf_in)<br>    pages = <span class="hljs-built_in">len</span>(pdf_file.pages)<br>    <span class="hljs-keyword">return</span> pages<br>    <br><span class="hljs-comment"># 获取页面内容</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pdf_content</span>(<span class="hljs-params">pdf_in,page</span>):<br>    pdf_page = PdfReader(pdf_in)<br>    page = pdf_page.pages[page]<br>    <span class="hljs-keyword">return</span> page.extract_text()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    filepath = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入文件夹路径（所在月份文件夹父目录）：&#x27;</span>)<br>    filemonth = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入处理月份（格式：202301）：&#x27;</span>)<br>    <span class="hljs-comment"># 创建日志对象</span><br>    FileLog = <span class="hljs-string">&#x27;&#123;&#125;\Pdflog&#123;&#125;.log&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,datetime.date.today())<br>    logger.add(FileLog,rotation=<span class="hljs-string">&quot;500MB&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>, enqueue=<span class="hljs-literal">True</span>)<br>    pat10 = <span class="hljs-string">r&#x27;存款利息收入回单&#x27;</span> <span class="hljs-comment"># 获取业务类型      (?&lt;=业务类型：)[\u4e00-\u9fa5]&#123;4&#125;</span><br>    pat11 = <span class="hljs-string">r&#x27;入账回单&#x27;</span> <span class="hljs-comment"># 获取业务类型</span><br>    pat12 = <span class="hljs-string">r&#x27;出账回单&#x27;</span><br>    pat13 = <span class="hljs-string">r&#x27;定期收费回单&#x27;</span><br>    pat14 = <span class="hljs-string">r&#x27;协议利率利息收入回单&#x27;</span><br>    pat15 = <span class="hljs-string">r&#x27;对公业务收费回单&#x27;</span><br>    pat2 = <span class="hljs-string">r&#x27;(?&lt;=收款账号：)[0-9]&#123;1,30&#125;&#x27;</span> <span class="hljs-comment"># 获取收款账号  (?&lt;=收款账号：).*?(?=收款人)</span><br>    pat3 = <span class="hljs-string">r&#x27;(?&lt;=付款账号：)[0-9]&#123;1,30&#125;&#x27;</span> <span class="hljs-comment"># 获取付款账号  (?&lt;=付款账号：).*?(?=付款人)</span><br>    pat4 = <span class="hljs-string">r&#x27;(?&lt;=扣费账号：)[0-9]&#123;1,30&#125;&#x27;</span><br>    pat5 = <span class="hljs-string">r&#x27;(?&lt;=客户账号：)[0-9]&#123;1,30&#125;&#x27;</span><br>    logger.info(<span class="hljs-string">&#x27;----获取&#123;&#125;下的pdf清单&#x27;</span>.<span class="hljs-built_in">format</span>(filemonth))<br>    pdflist = getPdfList(filepath,filemonth)<br>    logger.info(<span class="hljs-string">&#x27;----获取pdf清单:&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">str</span>(pdflist)))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> pdflist:<br>        logger.info(<span class="hljs-string">&#x27;----开始处理文件:&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>        ywlx = []<br>        skzh = []<br>        fkzh = []<br>        bankAll = []<br>        logger.info(<span class="hljs-string">&#x27;----读取文件内容&#x27;</span>)<br>        filepage = pdf_reader(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,i))<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,filepage):<br>            contents = pdf_content(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,i),j).replace(<span class="hljs-string">&#x27; &#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&#x27;\n&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(contents) == <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-comment"># 业务类型 </span><br>            <span class="hljs-keyword">try</span> :<br>                re.findall(pat10,contents)[<span class="hljs-number">0</span>]<br>            <span class="hljs-keyword">except</span> IndexError:<br>                <span class="hljs-keyword">try</span> :<br>                    re.findall(pat11,contents)[<span class="hljs-number">0</span>]<br>                <span class="hljs-keyword">except</span> IndexError:<br>                    <span class="hljs-keyword">try</span> :<br>                        re.findall(pat12,contents)[<span class="hljs-number">0</span>]<br>                    <span class="hljs-keyword">except</span> IndexError:<br>                        <span class="hljs-keyword">try</span> :<br>                            re.findall(pat13,contents)[<span class="hljs-number">0</span>]<br>                        <span class="hljs-keyword">except</span> IndexError:<br>                            <span class="hljs-keyword">try</span> :<br>                                re.findall(pat14,contents)[<span class="hljs-number">0</span>]<br>                            <span class="hljs-keyword">except</span> IndexError:<br>                                ywlx.append(re.findall(pat15,contents)[<span class="hljs-number">0</span>])<br>                            <span class="hljs-keyword">else</span>:<br>                                ywlx.append(re.findall(pat14,contents)[<span class="hljs-number">0</span>])<br>                        <span class="hljs-keyword">else</span> :<br>                            ywlx.append(re.findall(pat13,contents)[<span class="hljs-number">0</span>])<br>                    <span class="hljs-keyword">else</span>:<br>                        ywlx.append(re.findall(pat12,contents)[<span class="hljs-number">0</span>])<br>                <span class="hljs-keyword">else</span>:<br>                    ywlx.append(re.findall(pat11,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-keyword">else</span> :<br>                ywlx.append(re.findall(pat10,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-comment"># 获取收款/付款账户</span><br>            <span class="hljs-keyword">if</span> ywlx[j] == pat11:<br>                bankAll.append(re.findall(pat2,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-keyword">elif</span> ywlx[j] == pat10:<br>                bankAll.append(re.findall(pat2,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-keyword">elif</span> ywlx[j] == pat12:<br>                bankAll.append(re.findall(pat3,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-keyword">elif</span> ywlx[j] == pat13:<br>                bankAll.append(re.findall(pat4,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-keyword">elif</span> ywlx[j] == pat14:<br>                bankAll.append(re.findall(pat2,contents)[<span class="hljs-number">0</span>])<br>            <span class="hljs-keyword">elif</span> ywlx[j] == pat15:<br>                bankAll.append(re.findall(pat5,contents)[<span class="hljs-number">0</span>])<br>        logger.info(<span class="hljs-string">&#x27;----完成收付款类型、银行账号提取&#x27;</span>)<br>        logger.info(<span class="hljs-string">&#x27;----去重银行账号&#x27;</span>)<br>        bankDistinct = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">set</span>(bankAll)) <span class="hljs-comment"># 去重银行账号，筛选文件总数量</span><br>        <span class="hljs-comment"># 按照银行账号分类提取PDF页面</span><br>        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-built_in">len</span>(bankDistinct)) :<br>            <span class="hljs-comment"># 创建文件夹</span><br>            logger.info(<span class="hljs-string">&#x27;----根据银行账号查询项目，并检查子文件夹&#x27;</span>)<br>            productDirname = productQuery(bankDistinct[k])<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,productDirname)):<br>                os.mkdir(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,productDirname))<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\000原始文件&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth)):<br>                os.mkdir(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\000原始文件&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth))<br>            logger.info(<span class="hljs-string">&#x27;----按银行账号提取pdf页面&#x27;</span>)<br>            pages = [m <span class="hljs-keyword">for</span> m ,n <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(bankAll) <span class="hljs-keyword">if</span> n <span class="hljs-keyword">is</span> bankDistinct[k]]<br>            pdf_in = <span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,i)<br>            pdf_out = <span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,productDirname,<span class="hljs-string">&#x27;&#123;&#125;-&#123;&#125;.pdf&#x27;</span>.<span class="hljs-built_in">format</span>(i[-<span class="hljs-number">13</span>:-<span class="hljs-number">5</span>],productDirname))<br>            pdf_split(pdf_in,pdf_out,pages)<br>            logger.info(<span class="hljs-string">&#x27;----拆分pdf完成&#x27;</span>)<br>        shutil.move(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth,i),<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;\000原始文件&#x27;</span>.<span class="hljs-built_in">format</span>(filepath,filemonth))<br>        logger.info(<span class="hljs-string">&#x27;----将已处理pdf移至已处理文件夹&#x27;</span>)<br>        logger.info(<span class="hljs-string">&#x27;----&#123;&#125;文件处理完成&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>    logger.info(<span class="hljs-string">&#x27;----&#123;&#125;处理结束&#x27;</span>.<span class="hljs-built_in">format</span>(filemonth))<br><br></code></pre></td></tr></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>验证效果比较稳定，完全满足使用需要。即便对于大型PDF文件（150M以上）处理较慢，但这么大的文件，也没有什么方法可以快起来吧🤣</p>
+
+                
+              </div>
+            
+            <hr/>
+			<div><p align="left">商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+			</div>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/PyPDF2/" class="category-chain-item">PyPDF2</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/PyPDF2/shutil/" class="category-chain-item">shutil</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Python/PyPDF2/shutil/os/" class="category-chain-item">os</a>
+  
+  
+
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+        <a href="/tags/shutil/">#shutil</a>
+      
+        <a href="/tags/PyPDF2/">#PyPDF2</a>
+      
+        <a href="/tags/os/">#os</a>
+      
+    </div>
+  
+</div>
+
+			  
+			  
+		
+			  <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="https://s2.loli.net/2022/08/18/8EaHe9JqfuNwmp7.png" srcset="/img/loading.gif" lazyload><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="https://s2.loli.net/2022/08/18/P6uhQ5wY3mRgGKO.png" srcset="/img/loading.gif" lazyload><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python|PDF内容识别并按规则拆分</div>
+      <div>http://hncd1024.github.io/2023/04/11/Python_PDFCutByBankacc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CHEN DI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023-04-11</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+			  
+			   
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/09/Python_NBU5230/" title="Python|实现NBU自动巡检">
+                        <span class="hidden-mobile">Python|实现NBU自动巡检</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+			  
+			 
+			  
+            </div>
+
+            
+          </article>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+	
+	
+	
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">站内搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a  target="_blank" rel="nofollow noopener"><span>by chendi</span></a>
+<a  target="_blank" rel="nofollow noopener">
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+  
+  
+  
+</div>
+
+  
+  
+  
+  
+ <script src='https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js'></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({theme: 'dark'});
+  }
+</script>
+ 
+
+  
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
