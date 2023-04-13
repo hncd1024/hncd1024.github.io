@@ -16,28 +16,27 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+    <meta name="description" content="关于selenium库的应用我在《Python|selenium实现自动点赞收藏(进阶版)》中有写过，因为selenium对XPATH有很好的支持，所以对自动化运维&#x2F;爬虫的场景支持比较稳定。 根据工作需要，我需要每天下载招行的回单，以便进行后续处理，所以这次就用selenium实现招行回单的自动下载。  总结 通过代码先遍历下载过去一年的清单，之后只需要通过定时任务每天晚上执行一次获取当日清单即可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Power Automate">
-<meta property="og:url" content="http://hncd1024.github.io/2023/03/08/PowerAutomate/index.html">
+<meta property="og:title" content="Python|实现招行回单自动下载">
+<meta property="og:url" content="http://hncd1024.github.io/2023/04/13/Python_CMBdownload/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+<meta property="og:description" content="关于selenium库的应用我在《Python|selenium实现自动点赞收藏(进阶版)》中有写过，因为selenium对XPATH有很好的支持，所以对自动化运维&#x2F;爬虫的场景支持比较稳定。 根据工作需要，我需要每天下载招行的回单，以便进行后续处理，所以这次就用selenium实现招行回单的自动下载。  总结 通过代码先遍历下载过去一年的清单，之后只需要通过定时任务每天晚上执行一次获取当日清单即可">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
-<meta property="article:published_time" content="2023-03-08T02:16:36.000Z">
-<meta property="article:modified_time" content="2023-03-08T03:25:45.213Z">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2023-04-13T02:13:34.000Z">
+<meta property="article:modified_time" content="2023-04-13T02:35:29.581Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="PowerAutomate">
-<meta property="article:tag" content="RPA">
 <meta property="article:tag" content="自动化">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Power Automate - 啊芫荽</title>
+  <title>Python|实现招行回单自动下载 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +231,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Power Automate"></span>
+            <span id="subtitle" data-typed-text="Python|实现招行回单自动下载"></span>
           
         </div>
 
@@ -243,8 +242,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-08 10:16" pubdate>
-          2023-03-08 10:16
+        <time datetime="2023-04-13 10:13" pubdate>
+          2023-04-13 10:13
         </time>
       </span>
     
@@ -255,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          665 字
+          3.9k 字
         
       </span>
     
@@ -266,7 +265,7 @@ WIDGET = {
         
         
         
-          6 分钟
+          33 分钟
         
       </span>
     
@@ -314,33 +313,28 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Power Automate</h1>
+            <h1 style="display: none">Python|实现招行回单自动下载</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。<br />
-近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。</p>
-<h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1>
-<p>登录并打开待处理的列表界面。<br />
-<img src="https://i.328888.xyz/2023/03/08/5Sy23.png" srcset="/img/loading.gif" lazyload alt="登录过程" /><br />
-获取未点赞的链接，并打开进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SVqv.png" srcset="/img/loading.gif" lazyload alt="点赞、收藏过程" /><br />
-运行登录，并循环进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SidU.png" srcset="/img/loading.gif" lazyload alt="循环遍历" /><br />
-测试结果基本满足需要，后续可发掘更丰富的应用场景。</p>
-<h1 id="总结一下"><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h1>
-<p>Microsoft Power Automate是一个低代码平台的RPA工具，可以辅助用户进行流程自动化办公，提升工作效率。相比我之前接触过的UIPath，个人感觉相对具有优势。</p>
-<div class="note note-primary">
-            <p>优势一：Power Automate对终端个人用户免费，从win11系统预装就可以看出微软还是诚意满满的。相比UIPath作为一款需授权使用的软件，使用门槛较高。</p>
-          </div>
-<div class="note note-primary">
-            <p>优势二：系统集成较好，作为微软出品，Power Automate对微软环境下的应用交互做的比较好。除office全家桶都能很好的交互外，对http、FTP等服务支持也比较友好，甚至Power Automate还支持python、JS、VB、shell等脚本。真香！</p>
-          </div>
-<div class="note note-primary">
-            <p>优势三：你见过自动帮你进行流程设计的RPA工具吗？Power Automate可以！即便你不会自己设计流程，你可以打开Power Automate的捕获功能。然后你只需要给它演示下你要怎么做，Power Automate便会自动帮你生成流程（当然一般情况下还是要在此基础上再优化调整的）。</p>
-          </div> 
-
+                <p>关于selenium库的应用我在《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中有写过，因为selenium对XPATH有很好的支持，所以对自动化运维/爬虫的场景支持比较稳定。<br />
+根据工作需要，我需要每天下载招行的回单，以便进行后续处理，所以这次就用selenium实现招行回单的自动下载。</p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>通过代码先遍历下载过去一年的清单，之后只需要通过定时任务每天晚上执行一次获取当日清单即可。下载完PDF之后，每月统一进行一次PDF的处理即可（PDF的处理参见：《<a href="https://hncd1024.github.io/2023/04/11/Python_PDFCutByBankacc/">Python|PDF内容识别并按规则拆分</a>》）<br />
+回单下载部分实测发现：</p>
+<ul>
+<li>招行生成PDF较慢，处理过程需要进行较长时间的time.sleep()。</li>
+<li>因为账户较多，一次性生成一定区间的回单容易报错，只能逐日生成PDF。</li>
+<li>在处理历史回单下载时，因为回单下载界面的日期区间不便进行XPATH定位，所以通过os.system修改计算机时间，从而实现回单下载界面自动填充为目标时间。但这样又有几个小问题：
+<ul>
+<li>下载一次就要重新登录一次，比较繁琐。</li>
+<li>浏览器容易提示时钟错误，从而打不开登录页（偶发问题，出现过几次）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><span class="hljs-keyword">from</span> selenium.webdriver.edge.service <span class="hljs-keyword">import</span> Service<br><span class="hljs-keyword">from</span> selenium.webdriver.common.by <span class="hljs-keyword">import</span> By<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> loguru <span class="hljs-keyword">import</span> logger<br><br><span class="hljs-comment"># 日志记录</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fileLog</span>():<br>    FileLog= <span class="hljs-string">&#x27;cmb.log&#x27;</span><br>    logger.add(FileLog,rotation=<span class="hljs-string">&#x27;500MB&#x27;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>,enqueue=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 执行下载</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">queryData2</span>():<br>    logger.info(<span class="hljs-string">&#x27;点击银行回执批量导出&#x27;</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[text()=&quot;银行回执批量导出&quot;]&#x27;</span>).click()<br>    time.sleep(<span class="hljs-number">2</span>)<br>    <span class="hljs-comment"># driver.find_element(By.XPATH,r&#x27;//div[@class=&quot;ccspSInput el-input el-input--small noBorder&quot;]&#x27;).click() # 打开项目下拉菜单</span><br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;yhhzDia&quot;]/div/div/div[2]/div/div[2]/div[2]/div/div/div/div/input&#x27;</span>).click()<br>    time.sleep(<span class="hljs-number">2</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;checkAllBox&quot;]/span[1]/label/span[1]&#x27;</span>).click() <span class="hljs-comment"># 全选</span><br>    time.sleep(<span class="hljs-number">5</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//span[text()=&quot;确定&quot;]&#x27;</span>).click() <span class="hljs-comment"># 确定</span><br>    time.sleep(<span class="hljs-number">2</span>)<br>    logger.info(<span class="hljs-string">&#x27;全选所有项目成功&#x27;</span>)<br>    <span class="hljs-comment"># driver.find_element(By.XPATH,&#x27;//div[@class=&quot;yhhzDia&quot;]/div/div/div[2]/div/div[3]/div[2]/div/i[@class=&quot;el-input__icon el-range__icon el-icon-date&quot;]&#x27;).click() # 点击日历</span><br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//span[text()=&quot;删除&quot;]&#x27;</span>).click() <span class="hljs-comment"># 删除上次已有的</span><br>    time.sleep(<span class="hljs-number">2</span>)<br>    logger.info(<span class="hljs-string">&#x27;删除上次已生成PDF成功&#x27;</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//button[@class=&quot;el-button btn-css el-button--default el-button--small&quot;]&#x27;</span>).click() <span class="hljs-comment"># 生成PDF</span><br>    time.sleep(<span class="hljs-number">120</span>)<br>    logger.info(<span class="hljs-string">&#x27;生成PDF成功&#x27;</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//span[text()=&quot;下载&quot;]&#x27;</span>).click() <span class="hljs-comment"># 下载新生成的</span><br>    time.sleep(<span class="hljs-number">10</span>)<br>    logger.info(<span class="hljs-string">&#x27;下载成功&#x27;</span>)<br><br><span class="hljs-comment"># 登录网页</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">login</span>():<br>    logger.info(<span class="hljs-string">&#x27;打开网页&#x27;</span>)<br>    time.sleep(<span class="hljs-number">5</span>)<br>    driver.maximize_window()<br>    driver.get(<span class="hljs-string">r&#x27;https://custody.ebank.cmbchina.com/ccsp/Web/index.html#/login/entrance&#x27;</span>)<br>    time.sleep(<span class="hljs-number">5</span>)<br>    logger.info(<span class="hljs-string">&#x27;UKey登录&#x27;</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//i[text()=&quot;UKey登录&quot;]&#x27;</span>).click()<br>    time.sleep(<span class="hljs-number">2</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;pw_ukey&quot;]/div/div&#x27;</span>).click()<br>    time.sleep(<span class="hljs-number">1</span>)<br>    pwd = driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;pw_ukey&quot;]/div/div&#x27;</span>)<br>    pwd.send_keys(<span class="hljs-string">&#x27;***&#x27;</span>) <span class="hljs-comment"># password</span><br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//div[@class=&quot;bottom_btn ready&quot;]/span&#x27;</span>).click()<br>    time.sleep(<span class="hljs-number">20</span>)<br>    logger.info(<span class="hljs-string">&#x27;网页登录成功&#x27;</span>)<br>    driver.find_element(By.XPATH,<span class="hljs-string">&#x27;//span[text()=&quot;回单打印&quot;][1]&#x27;</span>).click()<br>    time.sleep(<span class="hljs-number">1</span>)<br>    logger.info(<span class="hljs-string">&#x27;进入回单打印&#x27;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    fileLog()<br>    logger.info(<span class="hljs-string">&#x27;***********招行回单下载开始*************&#x27;</span>)<br>    s = Service(<span class="hljs-string">r&#x27;F:\\workspace\\msedgedriver.exe&#x27;</span>)<br><br>    <span class="hljs-comment"># 按照当前日期获取</span><br>    day = datetime.date.today()<br>    logger.info(<span class="hljs-string">&#x27;-------开始处理&#123;&#125;日-------&#x27;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">str</span>(day)))<br>    driver = webdriver.Edge(service=s)<br>    login()<br>    queryData2()<br>    driver.quit()<br>    logger.info(<span class="hljs-string">&#x27;-------&#123;&#125;日处理完成-------&#x27;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">str</span>(day)))<br><br>    <span class="hljs-comment"># # 按照日期区间遍历下载</span><br>    <span class="hljs-comment"># begin = datetime.date(2023,4,1)</span><br>    <span class="hljs-comment"># end = datetime.date(2023,4,12)</span><br>    <span class="hljs-comment"># for i in range((end-begin).days+1):</span><br>    <span class="hljs-comment">#     day = begin + datetime.timedelta(days=i)</span><br>    <span class="hljs-comment">#     logger.info(&#x27;-------开始处理&#123;&#125;日-------&#x27;.format(str(day)))</span><br>    <span class="hljs-comment">#     os.system(&#x27;date &#123;&#125;&#x27;.format(str(day)))</span><br>    <span class="hljs-comment">#     logger.info(&#x27;修改系统日期成功&#x27;)</span><br>    <span class="hljs-comment">#     time.sleep(8)</span><br>    <span class="hljs-comment">#     driver = webdriver.Edge(service=s)</span><br>    <span class="hljs-comment">#     login()</span><br>    <span class="hljs-comment">#     queryData2()</span><br>    <span class="hljs-comment">#     driver.quit()</span><br>    <span class="hljs-comment">#     logger.info(&#x27;-------&#123;&#125;日处理完成-------&#x27;.format(str(day)))</span><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -360,8 +354,15 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/PowerAutomate/" class="category-chain-item">PowerAutomate</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Python/selenium/" class="category-chain-item">selenium</a>
+  
+  
+
   
 
       </span>
@@ -375,11 +376,9 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/PowerAutomate/">#PowerAutomate</a>
-      
-        <a href="/tags/RPA/">#RPA</a>
-      
         <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
+      
+        <a href="/tags/Python/">#Python</a>
       
     </div>
   
@@ -403,8 +402,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Power Automate</div>
-      <div>http://hncd1024.github.io/2023/03/08/PowerAutomate/</div>
+      <div>Python|实现招行回单自动下载</div>
+      <div>http://hncd1024.github.io/2023/04/13/Python_CMBdownload/</div>
     </div>
     <div class="license-meta">
       
@@ -416,7 +415,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-03-08</div>
+          <div>2023-04-13</div>
         </div>
       
       
@@ -448,18 +447,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/09/Python_NBU5230/" title="Python|实现NBU自动巡检">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|实现NBU自动巡检</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/03/LowerCpuUsage/" title="计算机|记一次CPU降频问题排查与修复">
-                        <span class="hidden-mobile">计算机|记一次CPU降频问题排查与修复</span>
+                      <a href="/2023/04/11/Python_PDFCutByBankacc/" title="Python|PDF内容识别并按规则拆分">
+                        <span class="hidden-mobile">Python|PDF内容识别并按规则拆分</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
