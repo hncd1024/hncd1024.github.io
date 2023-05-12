@@ -16,28 +16,28 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+    <meta name="description" content="reportlab pdf库 近期因工作需要要进行某个承诺书的签署文件生成，需要在固定的PDF模板上填充上部门、姓名、日期信息。之前使用过福昕PDF编辑器，体验较为不错，但这次要生成的PDF数量有300份，手工逐个处理自然是不便的。在《Python|PyPDF2实现PDF自动拆分》中曾写过利用 PyPDF2 实现PDF文件的拆分，这次我们用python的reportlab库尝试下PDF的生成。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Power Automate">
-<meta property="og:url" content="http://hncd1024.github.io/2023/03/08/PowerAutomate/index.html">
+<meta property="og:title" content="Python|reportlab实现pdf内容填充">
+<meta property="og:url" content="http://hncd1024.github.io/2023/04/27/Python_reportlab/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+<meta property="og:description" content="reportlab pdf库 近期因工作需要要进行某个承诺书的签署文件生成，需要在固定的PDF模板上填充上部门、姓名、日期信息。之前使用过福昕PDF编辑器，体验较为不错，但这次要生成的PDF数量有300份，手工逐个处理自然是不便的。在《Python|PyPDF2实现PDF自动拆分》中曾写过利用 PyPDF2 实现PDF文件的拆分，这次我们用python的reportlab库尝试下PDF的生成。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
-<meta property="article:published_time" content="2023-03-08T02:16:36.000Z">
-<meta property="article:modified_time" content="2023-03-08T03:25:45.213Z">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2023-04-27T06:18:29.000Z">
+<meta property="article:modified_time" content="2023-05-12T09:00:47.897Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="PowerAutomate">
-<meta property="article:tag" content="RPA">
 <meta property="article:tag" content="自动化">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Pdf">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Power Automate - 啊芫荽</title>
+  <title>Python|reportlab实现pdf内容填充 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +232,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Power Automate"></span>
+            <span id="subtitle" data-typed-text="Python|reportlab实现pdf内容填充"></span>
           
         </div>
 
@@ -243,8 +243,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-08 10:16" pubdate>
-          2023-03-08 10:16
+        <time datetime="2023-04-27 14:18" pubdate>
+          2023-04-27 14:18
         </time>
       </span>
     
@@ -255,7 +255,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          665 字
+          3k 字
         
       </span>
     
@@ -266,7 +266,7 @@ WIDGET = {
         
         
         
-          6 分钟
+          25 分钟
         
       </span>
     
@@ -314,32 +314,23 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Power Automate</h1>
+            <h1 style="display: none">Python|reportlab实现pdf内容填充</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。<br />
-近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。</p>
-<h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1>
-<p>登录并打开待处理的列表界面。<br />
-<img src="https://i.328888.xyz/2023/03/08/5Sy23.png" srcset="/img/loading.gif" lazyload alt="登录过程" /><br />
-获取未点赞的链接，并打开进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SVqv.png" srcset="/img/loading.gif" lazyload alt="点赞、收藏过程" /><br />
-运行登录，并循环进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SidU.png" srcset="/img/loading.gif" lazyload alt="循环遍历" /><br />
-测试结果基本满足需要，后续可发掘更丰富的应用场景。</p>
-<h1 id="总结一下"><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h1>
-<p>Microsoft Power Automate是一个低代码平台的RPA工具，可以辅助用户进行流程自动化办公，提升工作效率。相比我之前接触过的UIPath，个人感觉相对具有优势。</p>
-<div class="note note-primary">
-            <p>优势一：Power Automate对终端个人用户免费，从win11系统预装就可以看出微软还是诚意满满的。相比UIPath作为一款需授权使用的软件，使用门槛较高。</p>
-          </div>
-<div class="note note-primary">
-            <p>优势二：系统集成较好，作为微软出品，Power Automate对微软环境下的应用交互做的比较好。除office全家桶都能很好的交互外，对http、FTP等服务支持也比较友好，甚至Power Automate还支持python、JS、VB、shell等脚本。真香！</p>
-          </div>
-<div class="note note-primary">
-            <p>优势三：你见过自动帮你进行流程设计的RPA工具吗？Power Automate可以！即便你不会自己设计流程，你可以打开Power Automate的捕获功能。然后你只需要给它演示下你要怎么做，Power Automate便会自动帮你生成流程（当然一般情况下还是要在此基础上再优化调整的）。</p>
-          </div> 
+                <p><a target="_blank" rel="noopener" href="https://docs.reportlab.com/reportlab/userguide/ch1_intro/">reportlab pdf库</a><br />
+近期因工作需要要进行某个承诺书的签署文件生成，需要在固定的PDF模板上填充上部门、姓名、日期信息。之前使用过福昕PDF编辑器，体验较为不错，但这次要生成的PDF数量有300份，手工逐个处理自然是不便的。在《<a href="https://hncd1024.github.io/2022/09/05/Python_PDFCut/">Python|PyPDF2实现PDF自动拆分</a>》中曾写过利用 PyPDF2 实现PDF文件的拆分，这次我们用python的reportlab库尝试下PDF的生成。</p>
+<blockquote>
+<p>PDF is the global standard for electronic documents. It supports high-quality printing yet is totally portable across platforms, thanks to the freely available Acrobat Reader. Any application which previously generated hard copy reports or driving a printer can benefit from making PDF documents instead; these can be archived, emailed, placed on the web, or printed out the old-fashioned way. However, the PDF file format is a complex indexed binary format which is impossible to type directly. The PDF format specification is more than 600 pages long and PDF files must provide precise byte offsets – a single extra character placed anywhere in a valid PDF document can render it invalid. This makes it harder to generate than HTML.<br />
+PDF文件格式是一种复杂的索引二进制格式，不可能直接输入。 reportlab 的处理逻辑是生成一个画布，通过笛卡尔坐标系在位图上创建具有矢量格式的文件内容，之后根据加工后的页码创建一个PDF。</p>
+</blockquote>
+<h2 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h2>
+<p>准备好待签署的人员清单及PDF模板，分析PDF模板（待签署页码，签署区域），生成签署内容并合成签署页，合成完成PDF并输出。</p>
+<h3 id="源码如下"><a class="markdownIt-Anchor" href="#源码如下"></a> 源码如下</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyPDF2 <span class="hljs-keyword">import</span> PdfWriter, PdfReader<br><span class="hljs-keyword">import</span> io<br><span class="hljs-keyword">from</span> reportlab.pdfgen <span class="hljs-keyword">import</span> canvas<br><span class="hljs-keyword">from</span> reportlab.lib.pagesizes <span class="hljs-keyword">import</span> letter<br><span class="hljs-keyword">from</span> reportlab.pdfbase.ttfonts <span class="hljs-keyword">import</span> TTFont<br><span class="hljs-keyword">from</span> reportlab.pdfbase <span class="hljs-keyword">import</span> pdfmetrics<br><br>pdfmetrics.registerFont(TTFont(<span class="hljs-string">&#x27;仿宋&#x27;</span>, <span class="hljs-string">r&#x27;C:\Windows\Fonts\simfang.ttf&#x27;</span>))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">PdfProcess</span>(<span class="hljs-params">pdfInPath,pdfInName,alterPageNumber,dept,username,yearv,monthv,daysv</span>):<br>    <span class="hljs-comment"># 创建PDF流</span><br>    packet = io.BytesIO()<br>    can = canvas.Canvas(packet, pagesize=letter)<br>    can.setFillColorRGB(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)  <span class="hljs-comment"># 字体黑色</span><br>    can.setFont(<span class="hljs-string">&quot;仿宋&quot;</span>, <span class="hljs-number">16</span>)  <span class="hljs-comment"># 字体样式</span><br>    can.drawString(<span class="hljs-number">328</span>, <span class="hljs-number">307</span>, dept)  <span class="hljs-comment"># 填充部门</span><br>    can.drawString(<span class="hljs-number">343</span>, <span class="hljs-number">249</span>, username)  <span class="hljs-comment"># 姓名</span><br>    can.drawString(<span class="hljs-number">325</span>, <span class="hljs-number">192</span>, yearv)  <span class="hljs-comment"># 年</span><br>    can.drawString(<span class="hljs-number">380</span>, <span class="hljs-number">192</span>, monthv)  <span class="hljs-comment"># 月</span><br>    can.drawString(<span class="hljs-number">420</span>, <span class="hljs-number">192</span>, daysv)  <span class="hljs-comment"># 日</span><br>    can.save()<br> <br>    <span class="hljs-comment"># 合成PDF页面</span><br>    packet.seek(<span class="hljs-number">0</span>)<br>    new_pdf = PdfReader(packet)<br>    existing_pdf = PdfReader(<span class="hljs-built_in">open</span>(<span class="hljs-string">r&#x27;&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(pdfInPath,pdfInName), <span class="hljs-string">&#x27;rb&#x27;</span>))<br>    output = PdfWriter()<br>    page = existing_pdf.pages[alterPageNumber-<span class="hljs-number">1</span>]<br>    page.merge_page(new_pdf.pages[<span class="hljs-number">0</span>])<br><br>    <span class="hljs-comment"># 合成最终PDF</span><br>    existing_numPages = <span class="hljs-built_in">len</span>(existing_pdf.pages)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,existing_numPages):<br>        <span class="hljs-keyword">if</span> i == alterPageNumber-<span class="hljs-number">1</span>:<br>            output.add_page(page)<br>        <span class="hljs-keyword">else</span>:<br>            output.add_page(existing_pdf.pages[i])<br>    <br>    <span class="hljs-comment"># 输出最终pdf</span><br>    outputStream = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&#x27;C:\Users\admin\Desktop\签署文件生成\&#123;&#125;-&#123;&#125;.pdf&#x27;</span>.<span class="hljs-built_in">format</span>(dept,username), <span class="hljs-string">&quot;wb&quot;</span>)<br>    output.write(outputStream)<br>    outputStream.close()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    pdfInPath = <span class="hljs-string">r&#x27;C:\Users\admin\Desktop\签署文件生成&#x27;</span><br>    pdfInName = <span class="hljs-string">&#x27;模板.pdf&#x27;</span><br>    alterPageNumber = <span class="hljs-number">5</span><br>    s = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&#x27;C:\Users\admin\Desktop\签署文件生成\签署清单.txt&#x27;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> s:<br>        line = line.split()<br>        dept = line[<span class="hljs-number">0</span>]<br>        username = line[<span class="hljs-number">1</span>]<br>        yearv = line[<span class="hljs-number">2</span>]<br>        monthv = line[<span class="hljs-number">3</span>]<br>        daysv = line[<span class="hljs-number">4</span>]<br>        PdfProcess(pdfInPath,pdfInName,alterPageNumber,dept,username,yearv,monthv,daysv)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;已完成&#123;&#125;-&#123;&#125;.pdf的生成&#x27;</span>.<span class="hljs-built_in">format</span>(dept,username))<br>    <br></code></pre></td></tr></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>reportlab 的体验感还是不错的，这种通过笛卡尔坐标合成的PDF可以很准确的使内容生成到自己想要的位置。后来大致翻阅了官方文库（<a target="_blank" rel="noopener" href="https://selenium-python.readthedocs.io/index.html">Selenium with Python</a>）发现这个库在PDF合成上真的是神器，在文本（颜色、样式）、图像、段落、表格等方面支持性都比较高。</p>
 
                 
               </div>
@@ -360,8 +351,15 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/PowerAutomate/" class="category-chain-item">PowerAutomate</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Python/Pdf%E8%87%AA%E5%8A%A8%E5%8C%96/" class="category-chain-item">Pdf自动化</a>
+  
+  
+
   
 
       </span>
@@ -375,11 +373,11 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/PowerAutomate/">#PowerAutomate</a>
-      
-        <a href="/tags/RPA/">#RPA</a>
-      
         <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+        <a href="/tags/Pdf/">#Pdf</a>
       
     </div>
   
@@ -403,8 +401,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Power Automate</div>
-      <div>http://hncd1024.github.io/2023/03/08/PowerAutomate/</div>
+      <div>Python|reportlab实现pdf内容填充</div>
+      <div>http://hncd1024.github.io/2023/04/27/Python_reportlab/</div>
     </div>
     <div class="license-meta">
       
@@ -416,7 +414,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-03-08</div>
+          <div>2023-04-27</div>
         </div>
       
       
@@ -448,18 +446,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/09/Python_NBU5230/" title="Python|实现NBU自动巡检">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|实现NBU自动巡检</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/03/LowerCpuUsage/" title="计算机|记一次CPU降频问题排查与修复">
-                        <span class="hidden-mobile">计算机|记一次CPU降频问题排查与修复</span>
+                      <a href="/2023/04/13/Python_CMBdownload/" title="Python|实现招行回单自动下载">
+                        <span class="hidden-mobile">Python|实现招行回单自动下载</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
