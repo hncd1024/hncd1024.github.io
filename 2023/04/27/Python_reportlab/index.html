@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/python.png">
 <meta property="article:published_time" content="2023-04-27T06:18:29.000Z">
-<meta property="article:modified_time" content="2023-05-12T09:09:25.128Z">
+<meta property="article:modified_time" content="2023-05-12T09:11:08.032Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="自动化">
 <meta property="article:tag" content="Python">
@@ -321,9 +321,9 @@ WIDGET = {
                 
                 <p>近期因工作需要要进行某个承诺书的签署文件生成，需要在固定的PDF模板上填充上部门、姓名、日期信息。之前使用过福昕PDF编辑器，体验较为不错，但这次要生成的PDF数量有300份，手工逐个处理自然是不便的。在《<a href="https://hncd1024.github.io/2022/09/05/Python_PDFCut/">Python|PyPDF2实现PDF自动拆分</a>》中曾写过利用 PyPDF2 实现PDF文件的拆分，这次我们用python的reportlab库尝试下PDF的生成。</p>
 <blockquote>
-<p>PDF is the global standard for electronic documents. It supports high-quality printing yet is totally portable across platforms, thanks to the freely available Acrobat Reader. Any application which previously generated hard copy reports or driving a printer can benefit from making PDF documents instead; these can be archived, emailed, placed on the web, or printed out the old-fashioned way. However, the PDF file format is a complex indexed binary format which is impossible to type directly. The PDF format specification is more than 600 pages long and PDF files must provide precise byte offsets – a single extra character placed anywhere in a valid PDF document can render it invalid. This makes it harder to generate than HTML.<br />
-PDF文件格式是一种复杂的索引二进制格式，不可能直接输入。 reportlab 的处理逻辑是生成一个画布，通过笛卡尔坐标系在位图上创建具有矢量格式的文件内容，之后根据加工后的页码创建一个PDF。</p>
+<p>PDF is the global standard for electronic documents. It supports high-quality printing yet is totally portable across platforms, thanks to the freely available Acrobat Reader. Any application which previously generated hard copy reports or driving a printer can benefit from making PDF documents instead; these can be archived, emailed, placed on the web, or printed out the old-fashioned way. However, the PDF file format is a complex indexed binary format which is impossible to type directly. The PDF format specification is more than 600 pages long and PDF files must provide precise byte offsets – a single extra character placed anywhere in a valid PDF document can render it invalid. This makes it harder to generate than HTML.</p>
 </blockquote>
+<p>PDF文件格式是一种复杂的索引二进制格式，不可能直接输入。 reportlab 的处理逻辑是生成一个画布，通过笛卡尔坐标系在位图上创建具有矢量格式的文件内容，之后根据加工后的页码创建一个PDF。</p>
 <h2 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h2>
 <p>准备好待签署的人员清单及PDF模板，分析PDF模板（待签署页码，签署区域），生成签署内容并合成签署页，合成完成PDF并输出。</p>
 <h3 id="源码如下"><a class="markdownIt-Anchor" href="#源码如下"></a> 源码如下</h3>
