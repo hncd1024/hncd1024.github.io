@@ -4,6 +4,66 @@
   
   
   <entry>
+    <title>Python|PDF转图像</title>
+    <link href="/2023/06/09/Python_pdf2image/"/>
+    <url>/2023/06/09/Python_pdf2image/</url>
+    
+    <content type="html"><![CDATA[<p>  在前面通过百度文字识别实现了图片的文字提取。但在测试中发现我们实际中文件大多是PDF的扫描件。所以需要先把PDF转为图片，之后进行遍历调用百度文字识别接口即可。这里我使用的是pdf2image库实现PDF转图片。。</p><h1 id="pdf转图片源码"><a class="markdownIt-Anchor" href="#pdf转图片源码"></a> PDF转图片源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># PDF转图片</span><br><span class="hljs-keyword">from</span> pdf2image <span class="hljs-keyword">import</span> convert_from_path<br>pdf_file = <span class="hljs-string">r&#x27;C:\Users\admin\Documents\workspace\xxx.pdf&#x27;</span><br>output_dir = <span class="hljs-string">r&#x27;C:\Users\admin\Documents\workspace\xx&#x27;</span><br><br><span class="hljs-comment"># images = convert_from_path(pdf_file)</span><br>images = convert_from_path(pdf_file,poppler_path=<span class="hljs-string">r&#x27;C:\Users\admin\Documents\workspace\otherapi\poppler-0.68.0\bin&#x27;</span>)<br><span class="hljs-keyword">for</span> i ,img <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(images):<br>    img.save(output_dir+<span class="hljs-string">f&#x27;page_<span class="hljs-subst">&#123;i+<span class="hljs-number">1</span>&#125;</span>.png&#x27;</span>,<span class="hljs-string">&#x27;PNG&#x27;</span>)<br></code></pre></td></tr></table></figure><h1 id="报错问题修复"><a class="markdownIt-Anchor" href="#报错问题修复"></a> 报错问题修复</h1><p>在执行时报错了，报错信息：</p><blockquote><p>pdf2image.exceptions.PDFInfoNotInstalledError: Unable to get page count. Is poppler installed and in PATH?</p></blockquote><p>百度之后知道是ndk版本不对导致的，安装python-poppler即可解决。<br />解决方法如下：</p><ol><li>访问 <a href="https://blog.alivate.com.au/poppler-windows/">https://blog.alivate.com.au/poppler-windows/</a> 下载压缩包。</li><li>解压后将bin路径添加到环境变量。</li><li>在 convert_from_path()调用时增加poppler_path参数（如上述代码）。</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>pdf2image</category>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>pdf2image</tag>
+      
+      <tag>PDF</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Python|通过百度OCR实现图片文字识别</title>
+    <link href="/2023/06/09/Python_baidu_aip/"/>
+    <url>/2023/06/09/Python_baidu_aip/</url>
+    
+    <content type="html"><![CDATA[<p>  昨天需要测试OCR的文字识别功能，需要从提供的图片或PDF扫描件中提取出文本信息。本来我想使用python的开源库（如pytesseract、OCRopus、OpenCV之类的库），考虑到公司数字员工的使用场景，未来图像识别会对识别率有较高的要求，所以还是用第三方提供的OCR接口最为稳妥。<br />  大概看了百度的AI开放平台，在文字识别部分对个人用户开放了每月的调用额度，就顺便注册体验了下。整体识别效率个人感觉还是很高的。</p><h1 id="测试步骤"><a class="markdownIt-Anchor" href="#测试步骤"></a> 测试步骤</h1><ol><li>登录百度AI开放平台，开通文字识别服务。</li><li>在控制台创建应用，获取到AppID、API Key、Secret Key。</li><li>参照百度提供的技术文档进行联调测试。</li></ol><h1 id="源码"><a class="markdownIt-Anchor" href="#源码"></a> 源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 图片识别</span><br><span class="hljs-keyword">from</span> aip <span class="hljs-keyword">import</span> AipOcr<br><br><span class="hljs-comment"># APP_ID，API_KEY，SECRET_KEY的值在创建完应用后可以获取到</span><br>APP_ID = <span class="hljs-string">&#x27;xx&#x27;</span><br>API_KEY = <span class="hljs-string">&#x27;xx&#x27;</span><br>SECRET_KEY = <span class="hljs-string">&#x27;xx&#x27;</span><br>client = AipOcr(APP_ID, API_KEY, SECRET_KEY)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">open_file</span>(<span class="hljs-params">filePath</span>):<br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filePath, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> fp:  <span class="hljs-comment"># 要用二进制读方式打开</span><br>        <span class="hljs-keyword">return</span> fp.read()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_text</span>(<span class="hljs-params">fileName</span>):<br>    image = open_file(fileName)<br>    dic_result = client.basicGeneral(image)<br>    res = dic_result[<span class="hljs-string">&#x27;words_result&#x27;</span>]<br>    <span class="hljs-keyword">return</span> res<br><br>picture_text = get_text(<span class="hljs-string">r&#x27;C:\a.jpg&#x27;</span>) <span class="hljs-comment"># 括号里是图片的路径</span><br><span class="hljs-built_in">print</span>(picture_text)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>aip</category>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>aip</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>UiAuto|泛微Ecology系统附件上传插件</title>
     <link href="/2023/06/02/UiAuto_ecologyFileUpload/"/>
     <url>/2023/06/02/UiAuto_ecologyFileUpload/</url>
