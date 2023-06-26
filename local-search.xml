@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Python|实现PC端微信对接</title>
+    <link href="/2023/06/26/Python_wechatapi/"/>
+    <url>/2023/06/26/Python_wechatapi/</url>
+    
+    <content type="html"><![CDATA[<p>  今天介绍一个免费开源的微信HOOK和框架，提供HTTPAPI接口和封装好的框架，可基于此通过python对接微信。</p><h1 id="项目地址"><a class="markdownIt-Anchor" href="#项目地址"></a> 项目地址</h1><p>gitee地址：<a href="https://gitee.com/xiao-lis-personal-warehouse/mp_-weixin2">千寻框架开源微信hook框架</a><br />接口地址：<a href="https://www.apifox.cn/apidoc/shared-af49a169-8b5c-4137-a5ea-723a10e8e794/doc-1046131">https://www.apifox.cn/apidoc/shared-af49a169-8b5c-4137-a5ea-723a10e8e794/doc-1046131</a>  密码 vHCAG7IM<br />3.6.0.18版本微信下载地址：<a href="https://pan.quark.cn/s/eee03fdec56e">https://pan.quark.cn/s/eee03fdec56e</a></p><h1 id="实现过程"><a class="markdownIt-Anchor" href="#实现过程"></a> 实现过程</h1><ol><li>下载3.6.0.18版本微信进行安装（必须使用对应版本的微信，否则会有封号风险）。</li><li>下载千寻框架并打开，在框架设置中设置微信安装目录、图片缓存目录、微信数据目录信息，保存后重启。</li><li>打开千寻框架，在微信管理页签添加微信，之后正常扫码登录微信。</li><li>登录微信后返回千寻框架，记录wxid值。在后续python的对接中wxid会作为主要的post参数。</li><li>在接口地址中可参考代码示例进行测试和使用。如获取微信列表、发送文本/图片/文件、获取好友列表/个人信息、添加好友、邀请进群等接口。</li></ol><p><span style='color:red'>建议提前将开源插件、接口地址、微信版本安装包等保存一份到本地，这种好的工具总担心某一天会被和谐😂后续会考虑将接口内容搬运到这篇博客中。</span></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Hook</category>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>Hook</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python|实现公司周报的自动生成</title>
     <link href="/2023/06/25/Python_docx/"/>
     <url>/2023/06/25/Python_docx/</url>
@@ -291,9 +320,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>Pdf</tag>
       
@@ -322,9 +351,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -394,9 +423,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -421,11 +450,11 @@
     
     <tags>
       
+      <tag>自动化</tag>
+      
       <tag>PowerAutomate</tag>
       
       <tag>RPA</tag>
-      
-      <tag>自动化</tag>
       
     </tags>
     
@@ -566,9 +595,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>PyAutoGui</tag>
       
@@ -597,9 +626,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>selenium</tag>
       
@@ -682,9 +711,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>OS</tag>
       
@@ -715,9 +744,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>PyAutoGui</tag>
       
