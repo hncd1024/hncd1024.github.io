@@ -16,19 +16,19 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="今天介绍一个免费开源的微信HOOK和框架，提供HTTPAPI接口和封装好的框架，可基于此通过python对接微信。  项目地址 gitee地址：千寻框架开源微信hook框架 接口地址：https:&#x2F;&#x2F;www.apifox.cn&#x2F;apidoc&#x2F;shared-af49a169-8b5c-4137-a5ea-723a10e8e794&#x2F;doc-1046131  密码 vHCAG7IM 3.6.0.18">
+    <meta name="description" content="前面已经研究过如何通过微信、钉钉进行消息通知，但公司内部还在使用泛微的E-Mobile通讯工具，部分涉密信息还是通过内部通讯工具发送比较合适。今天研究下如何通过python实现E-Mobile的消息通知。  分析过程 供应商提供了一个接口文档《E9二开、第三方系统推送消息》,  但这种方式需要在ecology的消息中心进行配置。而我实际的使用需求仅仅是通过python将消息推送到emobile">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|实现PC端微信对接">
-<meta property="og:url" content="http://hncd1024.github.io/2023/06/26/Python_wechatapi/index.html">
+<meta property="og:title" content="Python|实现泛微E-Mobile消息发送对接">
+<meta property="og:url" content="http://hncd1024.github.io/2023/06/29/Python_emobileapi/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="今天介绍一个免费开源的微信HOOK和框架，提供HTTPAPI接口和封装好的框架，可基于此通过python对接微信。  项目地址 gitee地址：千寻框架开源微信hook框架 接口地址：https:&#x2F;&#x2F;www.apifox.cn&#x2F;apidoc&#x2F;shared-af49a169-8b5c-4137-a5ea-723a10e8e794&#x2F;doc-1046131  密码 vHCAG7IM 3.6.0.18">
+<meta property="og:description" content="前面已经研究过如何通过微信、钉钉进行消息通知，但公司内部还在使用泛微的E-Mobile通讯工具，部分涉密信息还是通过内部通讯工具发送比较合适。今天研究下如何通过python实现E-Mobile的消息通知。  分析过程 供应商提供了一个接口文档《E9二开、第三方系统推送消息》,  但这种方式需要在ecology的消息中心进行配置。而我实际的使用需求仅仅是通过python将消息推送到emobile">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/python.png">
-<meta property="article:published_time" content="2023-06-26T08:43:02.000Z">
-<meta property="article:modified_time" content="2023-06-26T09:05:00.642Z">
+<meta property="article:published_time" content="2023-06-29T02:36:02.000Z">
+<meta property="article:modified_time" content="2023-06-29T03:08:55.979Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="Python">
-<meta property="article:tag" content="Hook">
+<meta property="article:tag" content="requests">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Python|实现PC端微信对接 - 啊芫荽</title>
+  <title>Python|实现泛微E-Mobile消息发送对接 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -231,7 +231,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python|实现PC端微信对接"></span>
+            <span id="subtitle" data-typed-text="Python|实现泛微E-Mobile消息发送对接"></span>
           
         </div>
 
@@ -242,8 +242,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-26 16:43" pubdate>
-          2023-06-26 16:43
+        <time datetime="2023-06-29 10:36" pubdate>
+          2023-06-29 10:36
         </time>
       </span>
     
@@ -254,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          539 字
+          1.9k 字
         
       </span>
     
@@ -265,7 +265,7 @@ WIDGET = {
         
         
         
-          5 分钟
+          17 分钟
         
       </span>
     
@@ -313,25 +313,106 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Python|实现PC端微信对接</h1>
+            <h1 style="display: none">Python|实现泛微E-Mobile消息发送对接</h1>
             
             
               <div class="markdown-body">
                 
-                <p>  今天介绍一个免费开源的微信HOOK和框架，提供HTTPAPI接口和封装好的框架，可基于此通过python对接微信。</p>
-<h1 id="项目地址"><a class="markdownIt-Anchor" href="#项目地址"></a> 项目地址</h1>
-<p>gitee地址：<a target="_blank" rel="noopener" href="https://gitee.com/xiao-lis-personal-warehouse/mp_-weixin2">千寻框架开源微信hook框架</a><br />
-接口地址：<a target="_blank" rel="noopener" href="https://www.apifox.cn/apidoc/shared-af49a169-8b5c-4137-a5ea-723a10e8e794/doc-1046131">https://www.apifox.cn/apidoc/shared-af49a169-8b5c-4137-a5ea-723a10e8e794/doc-1046131</a>  密码 vHCAG7IM<br />
-3.6.0.18版本微信下载地址：<a target="_blank" rel="noopener" href="https://pan.quark.cn/s/eee03fdec56e">https://pan.quark.cn/s/eee03fdec56e</a></p>
-<h1 id="实现过程"><a class="markdownIt-Anchor" href="#实现过程"></a> 实现过程</h1>
-<ol>
-<li>下载3.6.0.18版本微信进行安装（必须使用对应版本的微信，否则会有封号风险）。</li>
-<li>下载千寻框架并打开，在框架设置中设置微信安装目录、图片缓存目录、微信数据目录信息，保存后重启。</li>
-<li>打开千寻框架，在微信管理页签添加微信，之后正常扫码登录微信。</li>
-<li>登录微信后返回千寻框架，记录wxid值。在后续python的对接中wxid会作为主要的post参数。</li>
-<li>在接口地址中可参考代码示例进行测试和使用。如获取微信列表、发送文本/图片/文件、获取好友列表/个人信息、添加好友、邀请进群等接口。</li>
-</ol>
-<p><span style='color:red'>建议提前将开源插件、接口地址、微信版本安装包等保存一份到本地，这种好的工具总担心某一天会被和谐😂后续会考虑将接口内容搬运到这篇博客中。</span></p>
+                <p>  前面已经研究过如何通过微信、钉钉进行消息通知，但公司内部还在使用泛微的E-Mobile通讯工具，部分涉密信息还是通过内部通讯工具发送比较合适。今天研究下如何通过python实现E-Mobile的消息通知。</p>
+<h1 id="分析过程"><a class="markdownIt-Anchor" href="#分析过程"></a> 分析过程</h1>
+<p>供应商提供了一个接口文档《<a target="_blank" rel="noopener" href="https://e-cloudstore.com/doc.html?appId=0d084e0145f044d3888b2e16b1875951">E9二开、第三方系统推送消息</a>》,  但这种方式需要在ecology的消息中心进行配置。而我实际的使用需求仅仅是通过python将消息推送到emobile。<br />
+在跟厂商确认后得知，泛微没有针对emobile的接口文档。后来我曾想过通过抓包工具抓取客户端的请求体，不过没有成功。<br />
+在emobile的管理后台我发现了这样一个功能：可以创建一个消息型应用，通过发送消息的功能实现类似消息通知/消息广播的场景。<br />
+<a target="_blank" rel="noopener" href="https://postimg.cc/XZ09L6S8"><img src="https://i.postimg.cc/N0KbgQdW/web.png" srcset="/img/loading.gif" lazyload alt="emobile管理后台" /></a><br />
+分析该页面的网络请求很容易就找到了请求地址和请求体：<br />
+<a target="_blank" rel="noopener" href="https://postimg.cc/RNN1VTLc"><img src="https://i.postimg.cc/m2SmjXc6/image.png" srcset="/img/loading.gif" lazyload alt="接口地址" /></a><br />
+之后分别获取了文本、图片、文件、分享几种场景的请求体，通过python调用测试满足需求：<br />
+<a target="_blank" rel="noopener" href="https://postimg.cc/jLmHWJMB"><img src="https://i.postimg.cc/Z5KVM8pY/image.png" srcset="/img/loading.gif" lazyload alt="弹窗显示" /></a><br />
+<a target="_blank" rel="noopener" href="https://postimg.cc/4YczpNMy"><img src="https://i.postimg.cc/kg1f32vQ/image.png" srcset="/img/loading.gif" lazyload alt="消息列表" /></a></p>
+<h1 id="源码文件"><a class="markdownIt-Anchor" href="#源码文件"></a> 源码文件</h1>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> requests
+loginurl = <span class="hljs-string">r'http://ip:port/emp/passport/login'</span>
+url = <span class="hljs-string">r'http://ip:port/emp/api/message/send'</span>
+
+<span class="hljs-comment"># 获取登录信息</span>
+login_data = &#123;<span class="hljs-string">"key"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"loginid"</span>:<span class="hljs-string">"********"</span>,<span class="hljs-string">"password"</span>:<span class="hljs-string">"********"</span>,<span class="hljs-string">"login_type"</span>:<span class="hljs-number">2</span>,<span class="hljs-string">"loginUUID"</span>:<span class="hljs-string">""</span>&#125;
+login_content = requests.post(loginurl,json=login_data)
+cookies = login_content.cookies
+
+<span class="hljs-comment"># 发送文本消息</span>
+textContent = &#123;
+	<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"text"</span>,
+	<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,
+	<span class="hljs-string">"text"</span>: &#123;
+		<span class="hljs-string">"content"</span>: <span class="hljs-string">"来自python的文本测试"</span>
+	&#125;,
+	<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"toparty"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"touser"</span>: <span class="hljs-string">"683|515"</span>,
+	<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,
+	<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>
+&#125;
+<span class="hljs-comment"># 发送图片消息</span>
+imgContent = &#123;
+	<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"image"</span>,
+	<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,
+	<span class="hljs-string">"image"</span>: &#123;
+		<span class="hljs-string">"media_id"</span>: <span class="hljs-string">"27d81a593df64726824af72e8e9fb2c2"</span>
+	&#125;,
+	<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"toparty"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"touser"</span>: <span class="hljs-string">"683"</span>,
+	<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,
+	<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>
+&#125;
+<span class="hljs-comment"># 发送文件消息</span>
+fileContent = &#123;
+	<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"file"</span>,
+	<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,
+	<span class="hljs-string">"file"</span>: &#123;
+		<span class="hljs-string">"media_id"</span>: <span class="hljs-string">"ee736fc486e348d7b0662bf13ad5fa4e"</span>
+	&#125;,
+	<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"toparty"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"touser"</span>: <span class="hljs-string">"683"</span>,
+	<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,
+	<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>
+&#125;
+<span class="hljs-comment"># 发送分享消息</span>
+shareContent = &#123;
+	<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"share"</span>,
+	<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,
+	<span class="hljs-string">"share"</span>: &#123;
+		<span class="hljs-string">"content"</span>: <span class="hljs-string">"百度首页"</span>,
+		<span class="hljs-string">"extra"</span>: &#123;
+			<span class="hljs-string">"linkurl"</span>: <span class="hljs-string">"http://www.baidu.com"</span>,
+			<span class="hljs-string">"linkurl_pc"</span>: <span class="hljs-string">"http://www.baidu.com"</span>,
+			<span class="hljs-string">"sharetypename"</span>: <span class="hljs-string">"工作通知"</span>,
+			<span class="hljs-string">"desc"</span>: <span class="hljs-string">"点击可进入百度首页"</span>,
+			<span class="hljs-string">"show_in_mobile"</span>: <span class="hljs-number">1</span>,
+			<span class="hljs-string">"show_in_pc"</span>: <span class="hljs-number">1</span>,
+			<span class="hljs-string">"desc"</span>: <span class="hljs-string">"Sender：陈迪，2023-06-29 10:36:00"</span>,
+			<span class="hljs-string">"sharetypebgcolor"</span>: <span class="hljs-string">"#965454"</span>
+		&#125;
+	&#125;,
+	<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"toparty"</span>: <span class="hljs-string">"15"</span>,
+	<span class="hljs-string">"touser"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,
+	<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,
+	<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>
+&#125;
+<span class="hljs-comment"># result = requests.post(url,cookies=cookies,json = textContent)</span>
+<span class="hljs-comment"># result = requests.post(url,cookies=cookies,json = imgContent)</span>
+<span class="hljs-comment"># result = requests.post(url,cookies=cookies,json = fileContent)</span>
+result = requests.post(url,cookies=cookies,json = shareContent)
+print(result.text)
+
+
+</code></pre>
 
                 
               </div>
@@ -352,12 +433,12 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/Hook/" class="category-chain-item">Hook</a>
+  <a href="/categories/requests/" class="category-chain-item">requests</a>
   
   
     <span>></span>
     
-  <a href="/categories/Hook/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/requests/Python/" class="category-chain-item">Python</a>
   
   
 
@@ -376,7 +457,7 @@ WIDGET = {
       
         <a href="/tags/Python/">#Python</a>
       
-        <a href="/tags/Hook/">#Hook</a>
+        <a href="/tags/requests/">#requests</a>
       
     </div>
   
@@ -400,8 +481,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python|实现PC端微信对接</div>
-      <div>http://hncd1024.github.io/2023/06/26/Python_wechatapi/</div>
+      <div>Python|实现泛微E-Mobile消息发送对接</div>
+      <div>http://hncd1024.github.io/2023/06/29/Python_emobileapi/</div>
     </div>
     <div class="license-meta">
       
@@ -413,7 +494,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-06-26</div>
+          <div>2023-06-29</div>
         </div>
       
       
@@ -445,18 +526,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/29/Python_emobileapi/" title="Python|实现泛微E-Mobile消息发送对接">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|实现泛微E-Mobile消息发送对接</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/25/Python_docx/" title="Python|实现公司周报的自动生成">
-                        <span class="hidden-mobile">Python|实现公司周报的自动生成</span>
+                      <a href="/2023/06/26/Python_wechatapi/" title="Python|实现PC端微信对接">
+                        <span class="hidden-mobile">Python|实现PC端微信对接</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

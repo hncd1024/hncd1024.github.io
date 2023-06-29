@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Python|实现泛微E-Mobile消息发送对接</title>
+    <link href="/2023/06/29/Python_emobileapi/"/>
+    <url>/2023/06/29/Python_emobileapi/</url>
+    
+    <content type="html"><![CDATA[<p>  前面已经研究过如何通过微信、钉钉进行消息通知，但公司内部还在使用泛微的E-Mobile通讯工具，部分涉密信息还是通过内部通讯工具发送比较合适。今天研究下如何通过python实现E-Mobile的消息通知。</p><h1 id="分析过程"><a class="markdownIt-Anchor" href="#分析过程"></a> 分析过程</h1><p>供应商提供了一个接口文档《<a href="https://e-cloudstore.com/doc.html?appId=0d084e0145f044d3888b2e16b1875951">E9二开、第三方系统推送消息</a>》,  但这种方式需要在ecology的消息中心进行配置。而我实际的使用需求仅仅是通过python将消息推送到emobile。<br />在跟厂商确认后得知，泛微没有针对emobile的接口文档。后来我曾想过通过抓包工具抓取客户端的请求体，不过没有成功。<br />在emobile的管理后台我发现了这样一个功能：可以创建一个消息型应用，通过发送消息的功能实现类似消息通知/消息广播的场景。<br /><a href="https://postimg.cc/XZ09L6S8"><img src="https://i.postimg.cc/N0KbgQdW/web.png" alt="emobile管理后台" /></a><br />分析该页面的网络请求很容易就找到了请求地址和请求体：<br /><a href="https://postimg.cc/RNN1VTLc"><img src="https://i.postimg.cc/m2SmjXc6/image.png" alt="接口地址" /></a><br />之后分别获取了文本、图片、文件、分享几种场景的请求体，通过python调用测试满足需求：<br /><a href="https://postimg.cc/jLmHWJMB"><img src="https://i.postimg.cc/Z5KVM8pY/image.png" alt="弹窗显示" /></a><br /><a href="https://postimg.cc/4YczpNMy"><img src="https://i.postimg.cc/kg1f32vQ/image.png" alt="消息列表" /></a></p><h1 id="源码文件"><a class="markdownIt-Anchor" href="#源码文件"></a> 源码文件</h1><pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> requestsloginurl = <span class="hljs-string">r'http://ip:port/emp/passport/login'</span>url = <span class="hljs-string">r'http://ip:port/emp/api/message/send'</span><span class="hljs-comment"># 获取登录信息</span>login_data = &#123;<span class="hljs-string">"key"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"loginid"</span>:<span class="hljs-string">"********"</span>,<span class="hljs-string">"password"</span>:<span class="hljs-string">"********"</span>,<span class="hljs-string">"login_type"</span>:<span class="hljs-number">2</span>,<span class="hljs-string">"loginUUID"</span>:<span class="hljs-string">""</span>&#125;login_content = requests.post(loginurl,json=login_data)cookies = login_content.cookies<span class="hljs-comment"># 发送文本消息</span>textContent = &#123;<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"text"</span>,<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,<span class="hljs-string">"text"</span>: &#123;<span class="hljs-string">"content"</span>: <span class="hljs-string">"来自python的文本测试"</span>&#125;,<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"toparty"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"touser"</span>: <span class="hljs-string">"683|515"</span>,<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>&#125;<span class="hljs-comment"># 发送图片消息</span>imgContent = &#123;<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"image"</span>,<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,<span class="hljs-string">"image"</span>: &#123;<span class="hljs-string">"media_id"</span>: <span class="hljs-string">"27d81a593df64726824af72e8e9fb2c2"</span>&#125;,<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"toparty"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"touser"</span>: <span class="hljs-string">"683"</span>,<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>&#125;<span class="hljs-comment"># 发送文件消息</span>fileContent = &#123;<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"file"</span>,<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,<span class="hljs-string">"file"</span>: &#123;<span class="hljs-string">"media_id"</span>: <span class="hljs-string">"ee736fc486e348d7b0662bf13ad5fa4e"</span>&#125;,<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"toparty"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"touser"</span>: <span class="hljs-string">"683"</span>,<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>&#125;<span class="hljs-comment"># 发送分享消息</span>shareContent = &#123;<span class="hljs-string">"msgtype"</span>: <span class="hljs-string">"share"</span>,<span class="hljs-string">"agentid"</span>: <span class="hljs-number">35</span>,<span class="hljs-string">"share"</span>: &#123;<span class="hljs-string">"content"</span>: <span class="hljs-string">"百度首页"</span>,<span class="hljs-string">"extra"</span>: &#123;<span class="hljs-string">"linkurl"</span>: <span class="hljs-string">"http://www.baidu.com"</span>,<span class="hljs-string">"linkurl_pc"</span>: <span class="hljs-string">"http://www.baidu.com"</span>,<span class="hljs-string">"sharetypename"</span>: <span class="hljs-string">"工作通知"</span>,<span class="hljs-string">"desc"</span>: <span class="hljs-string">"点击可进入百度首页"</span>,<span class="hljs-string">"show_in_mobile"</span>: <span class="hljs-number">1</span>,<span class="hljs-string">"show_in_pc"</span>: <span class="hljs-number">1</span>,<span class="hljs-string">"desc"</span>: <span class="hljs-string">"Sender：陈迪，2023-06-29 10:36:00"</span>,<span class="hljs-string">"sharetypebgcolor"</span>: <span class="hljs-string">"#965454"</span>&#125;&#125;,<span class="hljs-string">"todept"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"toparty"</span>: <span class="hljs-string">"15"</span>,<span class="hljs-string">"touser"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"totag"</span>: <span class="hljs-string">""</span>,<span class="hljs-string">"send_type"</span>: <span class="hljs-number">1</span>,<span class="hljs-string">"target_type"</span>: <span class="hljs-number">1</span>&#125;<span class="hljs-comment"># result = requests.post(url,cookies=cookies,json = textContent)</span><span class="hljs-comment"># result = requests.post(url,cookies=cookies,json = imgContent)</span><span class="hljs-comment"># result = requests.post(url,cookies=cookies,json = fileContent)</span>result = requests.post(url,cookies=cookies,json = shareContent)print(result.text)</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>requests</category>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>requests</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python|实现PC端微信对接</title>
     <link href="/2023/06/26/Python_wechatapi/"/>
     <url>/2023/06/26/Python_wechatapi/</url>
@@ -320,9 +349,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
       <tag>Pdf</tag>
       
@@ -351,9 +380,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
     </tags>
     
@@ -423,9 +452,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
     </tags>
     
@@ -450,11 +479,11 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>PowerAutomate</tag>
       
       <tag>RPA</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -595,9 +624,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
       <tag>PyAutoGui</tag>
       
@@ -626,9 +655,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
       <tag>selenium</tag>
       
@@ -711,9 +740,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
       <tag>OS</tag>
       
@@ -744,9 +773,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>自动化</tag>
+      
+      <tag>Python</tag>
       
       <tag>PyAutoGui</tag>
       
