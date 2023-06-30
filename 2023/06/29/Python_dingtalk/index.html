@@ -1,0 +1,778 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CHEN DI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="钉钉相比微信的好处在于接口丰富（《钉钉接口文档》），今天通过两种方式实现钉钉通知的对接：  方式一：钉钉群聊机器人  步骤  在钉钉中创建一个群聊机器人。在安全设置中选择“加签”，之后会生成一个密钥，复制下来后续有用；webhook也复制下来后续有用。 参照接口文档中即时通信IM-机器人部分的文档进行调用。   简单聊天信息的源码 123456789101112131415161718192021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python|钉钉消息通知对接">
+<meta property="og:url" content="http://hncd1024.github.io/2023/06/29/Python_dingtalk/index.html">
+<meta property="og:site_name" content="啊芫荽">
+<meta property="og:description" content="钉钉相比微信的好处在于接口丰富（《钉钉接口文档》），今天通过两种方式实现钉钉通知的对接：  方式一：钉钉群聊机器人  步骤  在钉钉中创建一个群聊机器人。在安全设置中选择“加签”，之后会生成一个密钥，复制下来后续有用；webhook也复制下来后续有用。 参照接口文档中即时通信IM-机器人部分的文档进行调用。   简单聊天信息的源码 123456789101112131415161718192021">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2023-06-29T07:08:24.000Z">
+<meta property="article:modified_time" content="2023-06-30T07:42:31.000Z">
+<meta property="article:author" content="CHEN DI">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="dingtalk">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python|钉钉消息通知对接 - 啊芫荽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"hncd1024.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>啊芫荽</strong>
+    </a>
+	<!-- 和风天气 -->
+
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "01234",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "1",
+    "language": "zh",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "fcab63f1ff6243bea84220ccf7e95b45"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+   
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+	
+
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python|钉钉消息通知对接"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-29 15:08" pubdate>
+          2023-06-29 15:08
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python|钉钉消息通知对接</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>钉钉相比微信的好处在于接口丰富（《<a target="_blank" rel="noopener" href="https://open.dingtalk.com/document/orgapp/asynchronous-sending-of-enterprise-session-messages">钉钉接口文档</a>》），今天通过两种方式实现钉钉通知的对接：</p>
+<h1 id="方式一钉钉群聊机器人"><a class="markdownIt-Anchor" href="#方式一钉钉群聊机器人"></a> 方式一：钉钉群聊机器人</h1>
+<h2 id="步骤"><a class="markdownIt-Anchor" href="#步骤"></a> 步骤</h2>
+<ol>
+<li>在钉钉中创建一个群聊机器人。在安全设置中选择“加签”，之后会生成一个密钥，复制下来后续有用；webhook也复制下来后续有用。</li>
+<li>参照接口文档中即时通信IM-机器人部分的文档进行调用。</li>
+</ol>
+<h2 id="简单聊天信息的源码"><a class="markdownIt-Anchor" href="#简单聊天信息的源码"></a> 简单聊天信息的源码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> hashlib<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> hmac<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> quote_plus<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Messenger</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, token=os.getenv(<span class="hljs-params"><span class="hljs-string">&quot;DD_ACCESS_TOKEN&quot;</span></span>), secret=os.getenv(<span class="hljs-params"><span class="hljs-string">&quot;DD_SECRET&quot;</span></span>)</span>):<br>        self.timestamp = <span class="hljs-built_in">str</span>(<span class="hljs-built_in">round</span>(time.time() * <span class="hljs-number">1000</span>))<br>        self.URL = <span class="hljs-string">&quot;https://oapi.dingtalk.com/robot/send&quot;</span><br>        self.headers = &#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>&#125;<br>        secret = secret<br>        secret_enc = secret.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        string_to_sign = <span class="hljs-string">&#x27;&#123;&#125;\n&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(self.timestamp, secret)<br>        string_to_sign_enc = string_to_sign.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()<br>        self.sign = quote_plus(base64.b64encode(hmac_code))<br>        self.params = &#123;<span class="hljs-string">&#x27;access_token&#x27;</span>: token, <span class="hljs-string">&quot;sign&quot;</span>: self.sign&#125;<br> <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_text</span>(<span class="hljs-params">self, content</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        发送文本</span><br><span class="hljs-string">        @param content: str, 文本内容</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        data = &#123;<span class="hljs-string">&quot;msgtype&quot;</span>: <span class="hljs-string">&quot;text&quot;</span>, <span class="hljs-string">&quot;text&quot;</span>: &#123;<span class="hljs-string">&quot;content&quot;</span>: content&#125;&#125;<br>        self.params[<span class="hljs-string">&quot;timestamp&quot;</span>] = self.timestamp<br>        <span class="hljs-keyword">return</span> requests.post(<br>            url=self.URL,<br>            data=json.dumps(data),<br>            params=self.params,<br>            headers=self.headers<br>        )<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_md</span>(<span class="hljs-params">self, title, content</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        发送Markdown文本</span><br><span class="hljs-string">        @param title: str, 标题</span><br><span class="hljs-string">        @param content: str, 文本内容</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        data = &#123;<span class="hljs-string">&quot;msgtype&quot;</span>: <span class="hljs-string">&quot;markdown&quot;</span>, <span class="hljs-string">&quot;markdown&quot;</span>: &#123;<span class="hljs-string">&quot;title&quot;</span>: title, <span class="hljs-string">&quot;text&quot;</span>: content&#125;&#125;<br>        self.params[<span class="hljs-string">&quot;timestamp&quot;</span>] = self.timestamp<br>        <span class="hljs-keyword">return</span> requests.post(<br>            url=self.URL,<br>            data=json.dumps(data),<br>            params=self.params,<br>            headers=self.headers<br>        )<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># markdown_text = &quot;\n&quot;.join(open(&quot;D://UiAuto_ecologyFileDownload.md&quot;, encoding=&quot;utf-8&quot;).readlines())</span><br>    m = Messenger(<br>        token=<span class="hljs-string">&quot;webhook中的token信息&quot;</span>,<br>        secret=<span class="hljs-string">&quot;在安全设置勾选加签后生成的密钥&quot;</span><br>    )<br>    <span class="hljs-comment"># m.send_md(&quot;测试Markdown&quot;, markdown_text)</span><br>    m.send_text(<span class="hljs-string">&quot;数字员工机器人test&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+<h1 id="方式二钉钉应用工作通知"><a class="markdownIt-Anchor" href="#方式二钉钉应用工作通知"></a> 方式二：钉钉应用工作通知</h1>
+<h2 id="步骤-2"><a class="markdownIt-Anchor" href="#步骤-2"></a> 步骤</h2>
+<ol>
+<li>在钉钉管理后台创建一个应用，复制生成的应用凭证信息（AgentId,AppKey,AppSecret）。</li>
+<li>参照接口文档中即时通信IM-工作通知部分的文档进行调用。</li>
+</ol>
+<h2 id="工作通知源码"><a class="markdownIt-Anchor" href="#工作通知源码"></a> 工作通知源码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getAccessToken</span>(<span class="hljs-params">AppKey,AppSecret</span>):<br>    url = <span class="hljs-string">r&#x27;https://oapi.dingtalk.com/gettoken?appkey=&#123;&#125;&amp;appsecret=&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(AppKey,AppSecret)<br>    response = requests.get(url)<br>    <span class="hljs-keyword">return</span> response.json().get(<span class="hljs-string">&#x27;access_token&#x27;</span>)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sendMsg</span>(<span class="hljs-params">access_token,json</span>):<br>    url = <span class="hljs-string">r&#x27;https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(access_token)<br>    response = requests.post(url,data=json)<br>    <span class="hljs-keyword">return</span> response.json()<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">recallMsg</span>(<span class="hljs-params">access_token,task_id,agent_id</span>):<br>    url = <span class="hljs-string">r&#x27;https://oapi.dingtalk.com/topapi/message/corpconversation/recall?access_token=&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(access_token)<br>    msg = &#123;<br>        <span class="hljs-string">&quot;msg_task_id&quot;</span>:task_id,<br>        <span class="hljs-string">&quot;agent_id&quot;</span>:agent_id<br>    &#125;<br>    responce = requests.post(url,msg)<br>    <span class="hljs-keyword">return</span> responce.json()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    agent_id = <span class="hljs-string">&#x27;复制的AgentId&#x27;</span><br>    AppKey = <span class="hljs-string">&#x27;复制的AppKey&#x27;</span><br>    AppSecret = <span class="hljs-string">&#x27;复制的AppSecret&#x27;</span><br>    access_token = getAccessToken(AppKey = AppKey,AppSecret= AppSecret)<br>    msg = <span class="hljs-string">&#x27;&#x27;&#x27;&#123;</span><br><span class="hljs-string">        &quot;msg&quot;:&#123;</span><br><span class="hljs-string">                &quot;text&quot;:&#123;</span><br><span class="hljs-string">                        &quot;content&quot;:&quot;我是数字员工。高效办公、事项提醒、消息通知一网打尽。&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string">                </span><br><span class="hljs-string">                &quot;markdown&quot;:&#123;</span><br><span class="hljs-string">                        &quot;text&quot;:&quot;我是数字员工\n + 高效办公\n+ 事项提醒\n + 消息通知  \n\n如有需要可联系金融科技部  &quot;,</span><br><span class="hljs-string">                        &quot;title&quot;:&quot;提醒&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string"></span><br><span class="hljs-string">                &quot;action_card&quot;:&#123;</span><br><span class="hljs-string">                        &quot;btn_json_list&quot;:&#123;</span><br><span class="hljs-string">                                &quot;action_url&quot;:&quot;http://www.baidu.com&quot;,</span><br><span class="hljs-string">                                &quot;title&quot;:&quot;title2&quot;</span><br><span class="hljs-string">                        &#125;,</span><br><span class="hljs-string">                        &quot;single_url&quot;:&quot;https://www.toutiao.com/article/7249711322559185448/?log_from=0a46e2448d138_1688028529113&quot;,</span><br><span class="hljs-string">                        &quot;btn_orientation&quot;:&quot;0&quot;,</span><br><span class="hljs-string">                        &quot;single_title&quot;:&quot;海上风电机组成功吊装&quot;,</span><br><span class="hljs-string">                        &quot;markdown&quot;:&quot;今日热点&quot;,</span><br><span class="hljs-string">                        &quot;title&quot;:&quot;测试&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string">                &quot;link&quot;:&#123;</span><br><span class="hljs-string">                        &quot;picUrl&quot;:&quot;https://img1.imgtp.com/2023/06/29/1cZT9PvV.jpg&quot;,</span><br><span class="hljs-string">                        &quot;messageUrl&quot;:&quot;http://www.baidu.com&quot;,</span><br><span class="hljs-string">                        &quot;text&quot;:&quot;万众一心，破浪而行&quot;,</span><br><span class="hljs-string">                        &quot;title&quot;:&quot;端午安康&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string">                &quot;voice&quot;:&#123;</span><br><span class="hljs-string">                        &quot;duration&quot;:&quot;100&quot;,</span><br><span class="hljs-string">                        &quot;media_id&quot;:&quot;100&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string">                &quot;image&quot;:&#123;</span><br><span class="hljs-string">                        &quot;media_id&quot;:&quot;@123&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string">                &quot;file&quot;:&#123;</span><br><span class="hljs-string">                        &quot;media_id&quot;:&quot;media_id&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string">                &quot;oa&quot;:&#123;</span><br><span class="hljs-string">                        &quot;head&quot;:&#123;</span><br><span class="hljs-string">                                &quot;bgcolor&quot;:&quot;bgcolor&quot;,</span><br><span class="hljs-string">                                &quot;text&quot;:&quot;text&quot;</span><br><span class="hljs-string">                        &#125;,</span><br><span class="hljs-string">                        &quot;pc_message_url&quot;:&quot;http://www.baidu.com&quot;,</span><br><span class="hljs-string">                        &quot;status_bar&quot;:&#123;</span><br><span class="hljs-string">                                &quot;status_value&quot;:&quot;进行中&quot;,</span><br><span class="hljs-string">                                &quot;status_bg&quot;:&quot;0xFFF65E5E&quot;</span><br><span class="hljs-string">                        &#125;,</span><br><span class="hljs-string">                        &quot;body&quot;:&#123;</span><br><span class="hljs-string">                                &quot;file_count&quot;:&quot;2&quot;,</span><br><span class="hljs-string">                                &quot;image&quot;:&quot;https://img1.imgtp.com/2023/06/29/1cZT9PvV.jpg&quot;,</span><br><span class="hljs-string">                                &quot;form&quot;:[&#123;</span><br><span class="hljs-string">                                        &quot;value&quot;:&quot;小智&quot;,</span><br><span class="hljs-string">                                        &quot;key&quot;:&quot;姓名：&quot;</span><br><span class="hljs-string">                                &#125;,&#123;</span><br><span class="hljs-string">                                        &quot;value&quot;:&quot;1&quot;,</span><br><span class="hljs-string">                                        &quot;key&quot;:&quot;年龄：&quot;</span><br><span class="hljs-string">                                &#125;,&#123;</span><br><span class="hljs-string">                                        &quot;value&quot;:&quot;RPA、人工智能&quot;,</span><br><span class="hljs-string">                                        &quot;key&quot;:&quot;能力：&quot;</span><br><span class="hljs-string">                                &#125;],</span><br><span class="hljs-string">                                &quot;author&quot;:&quot;陈迪&quot;,</span><br><span class="hljs-string">                                &quot;rich&quot;:&#123;</span><br><span class="hljs-string">                                        &quot;unit&quot;:&quot;大领域能力&quot;,</span><br><span class="hljs-string">                                        &quot;num&quot;:&quot;5&quot;</span><br><span class="hljs-string">                                &#125;,</span><br><span class="hljs-string">                                &quot;title&quot;:&quot;简介&quot;,</span><br><span class="hljs-string">                                &quot;content&quot;:&quot;&quot;</span><br><span class="hljs-string">                        &#125;,</span><br><span class="hljs-string">                        &quot;message_url&quot;:&quot;message_url&quot;</span><br><span class="hljs-string">                &#125;,</span><br><span class="hljs-string"></span><br><span class="hljs-string">                &quot;msgtype&quot;:&quot;markdown&quot;</span><br><span class="hljs-string">        &#125;,</span><br><span class="hljs-string">        &quot;to_all_user&quot;:&quot;false&quot;,</span><br><span class="hljs-string">        &quot;agent_id&quot;:&quot;复制的AgentId&quot;,</span><br><span class="hljs-string">        &quot;userid_list&quot;:&quot;683&quot;</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>    <span class="hljs-comment"># 发送消息</span><br>    result = sendMsg(access_token,msg.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br><span class="hljs-comment">#     # 撤回消息</span><br><span class="hljs-comment">#     result = recallMsg(access_token,&#x27;2902475260697&#x27;,agent_id)</span><br>    <span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+			<div><p align="left">商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+			</div>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/dingtalk/" class="category-chain-item">dingtalk</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/dingtalk/Python/" class="category-chain-item">Python</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+        <a href="/tags/dingtalk/">#dingtalk</a>
+      
+    </div>
+  
+</div>
+
+			  
+			  
+		
+			  <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="https://s2.loli.net/2022/08/18/8EaHe9JqfuNwmp7.png" srcset="/img/loading.gif" lazyload><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="https://s2.loli.net/2022/08/18/P6uhQ5wY3mRgGKO.png" srcset="/img/loading.gif" lazyload><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python|钉钉消息通知对接</div>
+      <div>http://hncd1024.github.io/2023/06/29/Python_dingtalk/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CHEN DI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023-06-29</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+			  
+			   
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/29/Python_emobileapi/" title="Python|实现泛微E-Mobile消息发送对接">
+                        <span class="hidden-mobile">Python|实现泛微E-Mobile消息发送对接</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+			  
+			 
+			  
+            </div>
+
+            
+          </article>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+	
+	
+	
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">站内搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a  target="_blank" rel="nofollow noopener"><span>by chendi</span></a>
+<a  target="_blank" rel="nofollow noopener">
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+  
+  
+  
+</div>
+
+  
+  
+  
+  
+ <script src='https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js'></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({theme: 'dark'});
+  }
+</script>
+ 
+
+  
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
