@@ -4,7 +4,7 @@
   
   
   <entry>
-    <title>Python|标题</title>
+    <title>Python|文件自动下载、解压、核对数量</title>
     <link href="/2023/07/07/Python_fileCheck/"/>
     <url>/2023/07/07/Python_fileCheck/</url>
     
@@ -12,8 +12,6 @@
     
     
     <categories>
-      
-      <category>UiAuto</category>
       
       <category>Python</category>
       
@@ -23,8 +21,6 @@
     <tags>
       
       <tag>Python</tag>
-      
-      <tag>UiAuto</tag>
       
     </tags>
     
@@ -407,9 +403,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>Pdf</tag>
       
@@ -438,9 +434,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -510,9 +506,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -537,11 +533,11 @@
     
     <tags>
       
+      <tag>自动化</tag>
+      
       <tag>PowerAutomate</tag>
       
       <tag>RPA</tag>
-      
-      <tag>自动化</tag>
       
     </tags>
     
@@ -622,11 +618,11 @@
     
     <tags>
       
+      <tag>Python</tag>
+      
       <tag>VBA</tag>
       
       <tag>Excel</tag>
-      
-      <tag>Python</tag>
       
     </tags>
     
@@ -682,9 +678,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>PyAutoGui</tag>
       
@@ -713,9 +709,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>selenium</tag>
       
@@ -798,9 +794,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>OS</tag>
       
@@ -831,9 +827,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>PyAutoGui</tag>
       
