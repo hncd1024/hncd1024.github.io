@@ -17,8 +17,8 @@
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://hncd1024.github.io/archives/2023/07/index.html">
+<meta property="og:title" content="啊芫荽">
+<meta property="og:url" content="http://hncd1024.github.io/page/4/index.html">
 <meta property="og:site_name" content="啊芫荽">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="CHEN DI">
@@ -28,7 +28,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - 啊芫荽</title>
+  <title>啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -82,7 +82,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -217,13 +217,17 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="日子常新，未来不远"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
         
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -237,36 +241,90 @@ WIDGET = {
     
       <div class="container nopadding-x-md">
         <div id="board"
-          >
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 31 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/08/29/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/" target="_self">
+          <img src="/./image/Excel.png" srcset="/img/loading.gif" lazyload alt="Excel|合并当前目录所有的excel文件">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/29/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/" target="_self">
+          Excel|合并当前目录所有的excel文件
+        </a>
+      </h1>
+
       
-      <p class="h5">2023</p>
-    
-    <a href="/2023/07/13/Python_wordfootnote/" class="list-group-item list-group-item-action">
-      <time>07-13</time>
-      <div class="list-group-item-title">Python|在word中插入脚注</div>
-    </a>
+      <a class="index-excerpt " href="/2019/08/29/VBA-%E5%90%88%E5%B9%B6excel%E6%96%87%E4%BB%B6/" target="_self">
+        <div>
+          功能描述 前几年做项目时有次项目组整理客户的物料编码，涉及上万条数据的整理。十几个人分工整理后还需要合并到一个excel做进一步处理。逐个粘贴到一个表中不仅费时间还容易出错，后来百度了一个方法：通过VBA合并当前文件夹下所有工作簿的全部工作表。 123456789101112131415161718192021222324252627282930Sub 合并当前目录下所有工作簿的全部工作表()D
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-29 21:36" pubdate>
+              2019-08-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
   
     
-    <a href="/2023/07/07/Python_fileCheck/" class="list-group-item list-group-item-action">
-      <time>07-07</time>
-      <div class="list-group-item-title">Python|文件自动下载、解压、核对数量</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/Excel/" class="category-chain-item">Excel</a>
   
-</div>
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/VBA/">#VBA</a>
+            
+              <a href="/tags/Excel/">#Excel</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span>
+    </span>
+  </nav>
 
 
 
@@ -396,7 +454,37 @@ WIDGET = {
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'hitokoto'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
