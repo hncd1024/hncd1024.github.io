@@ -16,20 +16,20 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="背景 周五下班前公司合规部的同事找到我，说需要把公司制度管理系统中的所有制度下载下来，大概有三百多篇现行有效制度、五十多篇废止制度，离谱的是制度系统竟然没有批量下载的功能（供应商回复可以实现批量下载功能，但没这么快~ ），因为有点着急，就想到通过python脚本完成自动下载。这里参考了Python|PyAutoGUI实现自动点赞收藏里介绍的pyautogui库。 简单分析了下，文件下载的url是">
+    <meta name="description" content="在《Python|实现公司周报的自动生成》中我实现了公司周报（word）的自动生成。在实际运行中发现待合并的word中会有表格，而通过python的docx库进行合并时不能保证表格的样式。这里还是通过VBA脚本处理更稳定，通过VBA脚本实现word中表格的合并，并通过python的win32com库实现VBA的执行。  处理逻辑 在周报的合并中，我先把待合并的word进行遍历。在一篇word的处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|PyAutoGUI根据文件清单自动下载文件">
-<meta property="og:url" content="http://hncd1024.github.io/2022/09/03/Python%20PyAutoGUI%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E6%B8%85%E5%8D%95%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="Python|VBA|实现word中表格的复制粘贴">
+<meta property="og:url" content="http://hncd1024.github.io/2023/07/21/VBA_tableInsertWord/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="背景 周五下班前公司合规部的同事找到我，说需要把公司制度管理系统中的所有制度下载下来，大概有三百多篇现行有效制度、五十多篇废止制度，离谱的是制度系统竟然没有批量下载的功能（供应商回复可以实现批量下载功能，但没这么快~ ），因为有点着急，就想到通过python脚本完成自动下载。这里参考了Python|PyAutoGUI实现自动点赞收藏里介绍的pyautogui库。 简单分析了下，文件下载的url是">
+<meta property="og:description" content="在《Python|实现公司周报的自动生成》中我实现了公司周报（word）的自动生成。在实际运行中发现待合并的word中会有表格，而通过python的docx库进行合并时不能保证表格的样式。这里还是通过VBA脚本处理更稳定，通过VBA脚本实现word中表格的合并，并通过python的win32com库实现VBA的执行。  处理逻辑 在周报的合并中，我先把待合并的word进行遍历。在一篇word的处理">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/python.png">
-<meta property="article:published_time" content="2022-09-03T15:13:34.000Z">
-<meta property="article:modified_time" content="2022-09-06T04:48:47.066Z">
+<meta property="article:published_time" content="2023-07-21T15:23:07.000Z">
+<meta property="article:modified_time" content="2023-07-21T15:34:33.622Z">
 <meta property="article:author" content="CHEN DI">
+<meta property="article:tag" content="VBA">
 <meta property="article:tag" content="Python">
-<meta property="article:tag" content="自动化">
-<meta property="article:tag" content="PyAutoGui">
+<meta property="article:tag" content="win32com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
@@ -37,7 +37,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Python|PyAutoGUI根据文件清单自动下载文件 - 啊芫荽</title>
+  <title>Python|VBA|实现word中表格的复制粘贴 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +232,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python|PyAutoGUI根据文件清单自动下载文件"></span>
+            <span id="subtitle" data-typed-text="Python|VBA|实现word中表格的复制粘贴"></span>
           
         </div>
 
@@ -243,8 +243,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-03 23:13" pubdate>
-          2022-09-03 23:13
+        <time datetime="2023-07-21 23:23" pubdate>
+          2023-07-21 23:23
         </time>
       </span>
     
@@ -255,7 +255,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          2.8k 字
         
       </span>
     
@@ -266,7 +266,7 @@ WIDGET = {
         
         
         
-          12 分钟
+          23 分钟
         
       </span>
     
@@ -314,20 +314,17 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Python|PyAutoGUI根据文件清单自动下载文件</h1>
+            <h1 style="display: none">Python|VBA|实现word中表格的复制粘贴</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
-<p>周五下班前公司合规部的同事找到我，说需要把公司制度管理系统中的所有制度下载下来，大概有三百多篇现行有效制度、五十多篇废止制度，离谱的是制度系统竟然没有批量下载的功能（供应商回复可以实现批量下载功能，但没这么快~ ），因为有点着急，就想到通过python脚本完成自动下载。这里参考了<a href="https://hncd1024.github.io/2022/08/14/Python%20PyAutoGUI/">Python|PyAutoGUI实现自动点赞收藏</a>里介绍的pyautogui库。<br />
-简单分析了下，文件下载的url是固定的url格式，且通过get的方法传的id参。我就后台数据库查到了要下载的制度的id列表，然后导出txt用于遍历。下载的脚本很简单，写完我就去出去吃饭了，吃个饭的功夫就全部下载完成了😁😁😁<br />
-源码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pyautogui<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">auto_download</span>(<span class="hljs-params">url</span>):<br>    pyautogui.click(<span class="hljs-number">500</span>,<span class="hljs-number">97</span>,duration=<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 页面地址： Point(x=776, y=97)</span><br>    pyautogui.typewrite(url,<span class="hljs-number">0.01</span>)<br>    pyautogui.press(<span class="hljs-string">&#x27;Enter&#x27;</span>)<br>    time.sleep(<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 确保页面完全加载完成</span><br>    pyautogui.click(<span class="hljs-number">2014</span>,<span class="hljs-number">236</span>,duration=<span class="hljs-number">2</span>) <span class="hljs-comment"># 下载正文： Point(x=2014, y=236)</span><br>    time.sleep(<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 确保页面完全加载完成</span><br>    pyautogui.click(<span class="hljs-number">393</span>,<span class="hljs-number">250</span>,duration=<span class="hljs-number">2</span>) <span class="hljs-comment"># 打开附件： Point(x=393, y=250)</span><br>    pyautogui.click(<span class="hljs-number">116</span>,<span class="hljs-number">464</span>,duration=<span class="hljs-number">1.5</span>) <span class="hljs-comment"># 全选附件： Point(x=116, y=464)</span><br>    pyautogui.click(<span class="hljs-number">2371</span>,<span class="hljs-number">387</span>,duration=<span class="hljs-number">1</span>) <span class="hljs-comment"># 下载附件： Point(x=2371, y=387)</span><br>    time.sleep(<span class="hljs-number">1.5</span>)<br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># print(pyautogui.position())</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;***********请10秒内切换到浏览器中***********&#x27;</span>)<br>    time.sleep(<span class="hljs-number">10</span>)<br>    id_list = <span class="hljs-string">r&#x27;C:\Users\admin\Desktop\制度20220903\现行有效.txt&#x27;</span><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(id_list , encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        count = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> f.readlines():<br>            url = (<span class="hljs-string">&#x27;http://xxxx/spa/document/index.jsp?id=&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(i))<br>            auto_download(url)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;***********已完成&#123;&#125;篇制度下载***********&#x27;</span>.<span class="hljs-built_in">format</span>(count))<br>            count += <span class="hljs-number">1</span><br><br></code></pre></td></tr></table></figure>
-<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
-<p>这种通过GUI下载文件的方式只能用作应急方案，毕竟要专门腾出来电脑给它使用。如果时间不急的话，也完全可以通过系统标准接口实现文件下载。（当然最稳妥的方案是让供应商做成批量下载的标准功能）<br />
-<font color="#dd0000">事后反应过来，无中生有的工作我为啥揽过来了？大冤种本种就是我~😂😂😂</font></p>
-
+                <p>在《<a href="https://hncd1024.github.io/2023/06/25/Python_docx/">Python|实现公司周报的自动生成</a>》中我实现了公司周报（word）的自动生成。在实际运行中发现待合并的word中会有表格，而通过python的docx库进行合并时不能保证表格的样式。这里还是通过VBA脚本处理更稳定，通过VBA脚本实现word中表格的合并，并通过python的win32com库实现VBA的执行。</p>
+<h1 id="处理逻辑"><a class="markdownIt-Anchor" href="#处理逻辑"></a> 处理逻辑</h1>
+<p>在周报的合并中，我先把待合并的word进行遍历。在一篇word的处理中按照顺序进行段落的合并，如果word中存在表格，则通过“【插入表格】”的占位符进行占位。<br />
+在word简单合并后，只需要再遍历一下待合并的word，逐篇提取出word中的表格，在占位符位置进行表格插入即可。</p>
+<h1 id="源代码"><a class="markdownIt-Anchor" href="#源代码"></a> 源代码</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> loguru <span class="hljs-keyword">import</span> logger<br><span class="hljs-keyword">import</span> win32com.client <span class="hljs-keyword">as</span> win32<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-comment"># 插入表格</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">insert_tables</span>(<span class="hljs-params">sourceDoc,targetDoc</span>):<br>    <span class="hljs-comment"># 创建word应用程序对象</span><br>    word_app = win32.Dispatch(<span class="hljs-string">&quot;Word.Application&quot;</span>)<br>    <span class="hljs-comment"># 打开要插入表格的word文档</span><br>    doc = word_app.Documents.Open(<span class="hljs-string">&#x27;D:/a.docx&#x27;</span>)<br>    <span class="hljs-comment"># time.sleep(5)</span><br>    <span class="hljs-comment"># VBA字符串只能255个字符，所以拆成两段拼接一下</span><br>    vba_code_part1 = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">Sub InsertTables()</span><br><span class="hljs-string">    Dim sourceDoc As Document</span><br><span class="hljs-string">    Dim targetDoc As Document</span><br><span class="hljs-string">    Dim sourceTable As Table</span><br><span class="hljs-string">    Dim foundRange As Range</span><br><span class="hljs-string">    Dim deleteRange As Range</span><br><span class="hljs-string">    Dim tableIndex As Integer</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    vba_code_part2 = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    Set sourceDoc = Documents.Open(&quot;&#123;&#125;&quot;)</span><br><span class="hljs-string">    Set targetDoc = Documents.Open(&quot;&#123;&#125;&quot;)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span>.<span class="hljs-built_in">format</span>(sourceDoc,targetDoc)<br>    vba_code_part3 = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    tableIndex = 1</span><br><span class="hljs-string">    &#x27; 在源文件中查找每個“【插入表格】”</span><br><span class="hljs-string">    For Each sourceTable In sourceDoc.Tables</span><br><span class="hljs-string">        Set foundRange = targetDoc.Content</span><br><span class="hljs-string">        With foundRange.Find</span><br><span class="hljs-string">            .Text = &quot;【插入表格】&quot;</span><br><span class="hljs-string">            .Execute</span><br><span class="hljs-string">        End With   </span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    vba_code_part4 = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">        If foundRange.Find.Found Then</span><br><span class="hljs-string">            &#x27; 刪除段落</span><br><span class="hljs-string">            Set deleteRange = foundRange.Paragraphs(1).Range</span><br><span class="hljs-string">            deleteRange.Delete</span><br><span class="hljs-string">            &#x27; 复制表格</span><br><span class="hljs-string">            sourceTable.Range.Copy</span><br><span class="hljs-string">            foundRange.Paste</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    vba_code_part5 = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">        Else</span><br><span class="hljs-string">            Exit Sub</span><br><span class="hljs-string">        End If</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        &#x27; 更新表格索引</span><br><span class="hljs-string">        tableIndex = tableIndex + 1</span><br><span class="hljs-string">    Next sourceTable</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    &#x27; 关闭源文件和目标文件</span><br><span class="hljs-string">    sourceDoc.Close</span><br><span class="hljs-string">    targetDoc.Close</span><br><span class="hljs-string">End Sub</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><br>    <span class="hljs-comment"># 在Word VBA中创建新的模块</span><br>    vba_module = doc.VBProject.VBComponents.Add(<span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 拼接VBA脚本</span><br>    vba_code = vba_code_part1 + vba_code_part2 + vba_code_part3 + vba_code_part4 + vba_code_part5<br>    <span class="hljs-comment"># 添加VBA代码</span><br>    vba_module.CodeModule.AddFromString(vba_code)<br>    <span class="hljs-comment"># 运行VBA宏</span><br>    word_app.Run(<span class="hljs-string">&quot;InsertTables&quot;</span>)<br>    <span class="hljs-comment"># 关闭word，退出word程序</span><br>    doc.Close()<br>    word_app.Quit()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># pass</span><br>    <span class="hljs-comment"># 创建日志对象</span><br>    FileLog = <span class="hljs-string">&#x27;D:/workspace/weeklyNewspaper/log/log&#123;&#125;.log&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.date.today())<br>    logger.add(FileLog,rotation=<span class="hljs-string">&quot;500MB&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>, enqueue=<span class="hljs-literal">True</span>)<br>    logger.info(<span class="hljs-string">&#x27;***开始处理脚注***&#x27;</span>)<br>    footnotes = []<br>    fontindextext = []<br>    path = <span class="hljs-string">&#x27;D:/aidownload/gongsizhoubao/&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.datetime.today().date())<br>    logger.info(<span class="hljs-string">&#x27;遍历文件夹下的文件&#x27;</span>)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> os.listdir(path):<br>        <span class="hljs-keyword">if</span> i != <span class="hljs-string">&#x27;公司周报&#123;&#125;.docx&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.datetime.today().date()) :<br>            logger.info(path + <span class="hljs-string">&#x27;/&#x27;</span> +i)<br>            insert_tables(path + <span class="hljs-string">&#x27;/&#x27;</span> +i,path + <span class="hljs-string">&#x27;/公司周报&#123;&#125;.docx&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.datetime.today().date()))<br>            logger.info(<span class="hljs-string">&#x27;--该文件已处理&#x27;</span>)<br>            time.sleep(<span class="hljs-number">5</span>)<br><br><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -352,8 +349,15 @@ WIDGET = {
   
     <span>></span>
     
-  <a href="/categories/Python/GUI%E8%87%AA%E5%8A%A8%E5%8C%96/" class="category-chain-item">GUI自动化</a>
+  <a href="/categories/Python/VBA/" class="category-chain-item">VBA</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Python/VBA/win32com/" class="category-chain-item">win32com</a>
+  
+  
+
   
 
   
@@ -369,11 +373,11 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/VBA/">#VBA</a>
+      
         <a href="/tags/Python/">#Python</a>
       
-        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
-      
-        <a href="/tags/PyAutoGui/">#PyAutoGui</a>
+        <a href="/tags/win32com/">#win32com</a>
       
     </div>
   
@@ -397,8 +401,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python|PyAutoGUI根据文件清单自动下载文件</div>
-      <div>http://hncd1024.github.io/2022/09/03/Python PyAutoGUI根据文件清单自动下载文件/</div>
+      <div>Python|VBA|实现word中表格的复制粘贴</div>
+      <div>http://hncd1024.github.io/2023/07/21/VBA_tableInsertWord/</div>
     </div>
     <div class="license-meta">
       
@@ -410,7 +414,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022-09-03</div>
+          <div>2023-07-21</div>
         </div>
       
       
@@ -442,18 +446,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/05/Python_PDFCut/" title="Python|PyPDF2实现PDF自动拆分">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|PyPDF2实现PDF自动拆分</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/26/Python%20selenium/" title="Python|selenium实现自动点赞收藏(进阶版)">
-                        <span class="hidden-mobile">Python|selenium实现自动点赞收藏(进阶版)</span>
+                      <a href="/2023/07/13/VBA_wordfootnote/" title="Python|VBA|在word中插入脚注">
+                        <span class="hidden-mobile">Python|VBA|在word中插入脚注</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
