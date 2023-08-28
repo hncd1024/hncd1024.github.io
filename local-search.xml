@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>ecology|泛微ecology9获取token信息</title>
+    <link href="/2023/08/25/Ecology_apiToken/"/>
+    <url>/2023/08/25/Ecology_apiToken/</url>
+    
+    <content type="html"><![CDATA[<p>在泛微系统（Ecology9）的后端接口中，需要在请求体中加上token的参数。这篇文章记录下泛微Ecology9的token获取方式。</p><h1 id="token获取步骤"><a class="markdownIt-Anchor" href="#token获取步骤"></a> Token获取步骤</h1><h2 id="一-数据库中新建appid"><a class="markdownIt-Anchor" href="#一-数据库中新建appid"></a> 一、数据库中新建appid</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> ECOLOGY_BIZ_EC(ID,APPID,NAME) <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;12&#x27;</span>,<span class="hljs-string">&#x27;test&#x27;</span>,<span class="hljs-string">&#x27;数字员工平台&#x27;</span>);<br></code></pre></td></tr></table></figure><h2 id="二-向ecology发送许可证信息进行注册"><a class="markdownIt-Anchor" href="#二-向ecology发送许可证信息进行注册"></a> 二、向Ecology发送许可证信息进行注册</h2><div class="note note-info">            <p>只需要注册一次即可，注册后相关信息会更新在ECOLOGY_BIZ_EC表中</p>          </div><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br>url = <span class="hljs-string">&#x27;http://ip:1234/api/ec/dev/auth/regist&#x27;</span><br>headers = &#123;<span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;test&#x27;</span>&#125;<br>response = requests.post(url, headers=headers )<br><span class="hljs-built_in">print</span>( response.json())<br></code></pre></td></tr></table></figure><p>注册成功后，返回参secret和spk会分别写进ECOLOGY_BIZ_EC表中的secrit和server_public_key中，在后面会使用到。</p><h2 id="三-向ecology发送获取token请求"><a class="markdownIt-Anchor" href="#三-向ecology发送获取token请求"></a> 三、向Ecology发送获取token请求</h2><p>在上一步中以spk为密钥对secret进行RSA加密，加密后作为请求头的参数调用接口获取token即可。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> PKCS1_v1_5 <span class="hljs-keyword">as</span> Cipher_pkcs1_v1_5<br><br><span class="hljs-comment"># RSA加密</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_RSA</span>(<span class="hljs-params">secret</span>):<br>    public_key = <span class="hljs-string">&#x27;&#x27;&#x27;-----BEGIN RSA PUBLIC KEY-----</span><br><span class="hljs-string">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAutgI110nor/T77o/wpQGEYUqhRNcDIuFybhYO9aP0fiD0Q66EUwTVWtwpgcxV71UMGJlWa0UPd1P6BktnQHzzkAx5aRN5z8dd0TVxCp6zcfUdwnAsPC7PCq4wseLFd0XGmmaeJW+8qlJs+6YSbEQIDAQAB</span><br><span class="hljs-string">-----END RSA PUBLIC KEY-----</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>    secret = secret.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    rsakey = RSA.importKey(public_key)<br>    cipher = Cipher_pkcs1_v1_5.new(rsakey)<br>    cipher_text = base64.b64encode(cipher.encrypt(secret))<br>    <span class="hljs-keyword">return</span> cipher_text<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getToken</span>(<span class="hljs-params">secret</span>):<br>    url = <span class="hljs-string">&#x27;http://ip:1234/api/ec/dev/auth/applytoken&#x27;</span><br>    headers = &#123;<span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;jictai&#x27;</span>,<span class="hljs-string">&#x27;secret&#x27;</span>:secret&#125;<br>    response = requests.post(url, headers=headers )<br>    <span class="hljs-keyword">return</span> response<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    secret = <span class="hljs-string">&#x27;81ab3d983d34ed5b33&#x27;</span><br>    secretRSA = encode_RSA(secret)<br>    response = getToken(secretRSA)<br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span> :<br>        token = response.json()[<span class="hljs-string">&#x27;token&#x27;</span>]<br>    <span class="hljs-built_in">print</span>(userid)<br>    <br></code></pre></td></tr></table></figure><p>注：<br />在RSA加密时用到了Crypto模块，安装方式如下：</p><ol><li>安装pycryptodome库：pip install pycryptodome</li><li>找到pycryptodome的安装路径：pip show pycryptodome</li><li>在安装路径下找到一个名为crypto的文件夹，将 c 改为 C</li></ol><h1 id="参考文档"><a class="markdownIt-Anchor" href="#参考文档"></a> 参考文档</h1><p>《<a href="https://e-cloudstore.com/doc.html?appId=af09c25938714c26b9736f535ca20fc9">Token认证使用步骤</a>》<br />《<a href="https://blog.csdn.net/weixin_44786530/article/details/120652977">Python使用RSA公私钥做数据加密</a>》</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>Ecology</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>Ecology</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python|VBA|实现word中表格的复制粘贴</title>
     <link href="/2023/07/21/VBA_tableInsertWord/"/>
     <url>/2023/07/21/VBA_tableInsertWord/</url>
@@ -469,9 +498,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>Pdf</tag>
       
@@ -500,9 +529,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -572,9 +601,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
     </tags>
     
@@ -599,11 +628,11 @@
     
     <tags>
       
+      <tag>自动化</tag>
+      
       <tag>PowerAutomate</tag>
       
       <tag>RPA</tag>
-      
-      <tag>自动化</tag>
       
     </tags>
     
@@ -744,9 +773,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>PyAutoGui</tag>
       
@@ -775,9 +804,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>selenium</tag>
       
@@ -860,9 +889,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>OS</tag>
       
@@ -893,9 +922,9 @@
     
     <tags>
       
-      <tag>自动化</tag>
-      
       <tag>Python</tag>
+      
+      <tag>自动化</tag>
       
       <tag>PyAutoGui</tag>
       
