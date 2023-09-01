@@ -16,16 +16,16 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近发现泛微ecology9的接口文档，这篇文章我们简单测试下流程创建的场景。  参考文档 《泛微接口文档》 注：在这篇文档中介绍了不同接口的调用方式，基本都是POST方式，通过请求参数实现接口调用。其中测试发现在接口调用时还需要封装headers，需要在headers中传以下参数：token,appid,userid (参照《ecology|泛微ecology9获取token信息》)  源码 1">
+    <meta name="description" content="在《UiAuto|泛微Ecology系统附件上传插件》中，我通过ecology8的WSDL实现了文件的上传，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件上传，并简单测试下流程创建的场景。  参考文档 《泛微接口文档》  ，参照的是知识管理-附件上传接口。  源码 123456789101112131415161718">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ecology|泛微ecology9流程新建接口">
-<meta property="og:url" content="http://hncd1024.github.io/2023/08/29/Ecology_apidoCreateRequest/index.html">
+<meta property="og:title" content="Python|泛微Ecology附件上传接口">
+<meta property="og:url" content="http://hncd1024.github.io/2023/09/01/Ecology_apiUpload/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="最近发现泛微ecology9的接口文档，这篇文章我们简单测试下流程创建的场景。  参考文档 《泛微接口文档》 注：在这篇文档中介绍了不同接口的调用方式，基本都是POST方式，通过请求参数实现接口调用。其中测试发现在接口调用时还需要封装headers，需要在headers中传以下参数：token,appid,userid (参照《ecology|泛微ecology9获取token信息》)  源码 1">
+<meta property="og:description" content="在《UiAuto|泛微Ecology系统附件上传插件》中，我通过ecology8的WSDL实现了文件的上传，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件上传，并简单测试下流程创建的场景。  参考文档 《泛微接口文档》  ，参照的是知识管理-附件上传接口。  源码 123456789101112131415161718">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/python.png">
-<meta property="article:published_time" content="2023-08-29T06:29:49.000Z">
-<meta property="article:modified_time" content="2023-09-01T01:51:59.686Z">
+<meta property="article:published_time" content="2023-09-01T01:53:02.000Z">
+<meta property="article:modified_time" content="2023-09-01T03:14:13.929Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Ecology">
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ecology|泛微ecology9流程新建接口 - 啊芫荽</title>
+  <title>Python|泛微Ecology附件上传接口 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -231,7 +231,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ecology|泛微ecology9流程新建接口"></span>
+            <span id="subtitle" data-typed-text="Python|泛微Ecology附件上传接口"></span>
           
         </div>
 
@@ -242,8 +242,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-29 14:29" pubdate>
-          2023-08-29 14:29
+        <time datetime="2023-09-01 09:53" pubdate>
+          2023-09-01 09:53
         </time>
       </span>
     
@@ -254,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          1.8k 字
         
       </span>
     
@@ -265,7 +265,7 @@ WIDGET = {
         
         
         
-          22 分钟
+          15 分钟
         
       </span>
     
@@ -313,17 +313,16 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ecology|泛微ecology9流程新建接口</h1>
+            <h1 style="display: none">Python|泛微Ecology附件上传接口</h1>
             
             
               <div class="markdown-body">
                 
-                <p>最近发现泛微ecology9的接口文档，这篇文章我们简单测试下流程创建的场景。</p>
+                <p>在《<a href="https://hncd1024.github.io/2023/06/02/UiAuto_ecologyFileUpload/#indexpy">UiAuto|泛微Ecology系统附件上传插件</a>》中，我通过ecology8的WSDL实现了文件的上传，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件上传，并简单测试下流程创建的场景。</p>
 <h1 id="参考文档"><a class="markdownIt-Anchor" href="#参考文档"></a> 参考文档</h1>
-<p>《<a target="_blank" rel="noopener" href="https://e-cloudstore.com/ec/api/applist/index.html#/">泛微接口文档</a>》<br />
-注：在这篇文档中介绍了不同接口的调用方式，基本都是POST方式，通过请求参数实现接口调用。其中测试发现在接口调用时还需要封装headers，需要在headers中传以下参数：token,appid,userid (参照《<a href="https://hncd1024.github.io/2023/08/25/Ecology_apiToken/">ecology|泛微ecology9获取token信息</a>》)</p>
+<p>《<a target="_blank" rel="noopener" href="https://e-cloudstore.com/ec/api/applist/index.html#/">泛微接口文档</a>》  ，参照的是知识管理-附件上传接口。</p>
 <h1 id="源码"><a class="markdownIt-Anchor" href="#源码"></a> 源码</h1>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> PKCS1_v1_5 <span class="hljs-keyword">as</span> Cipher_pkcs1_v1_5<br><br><span class="hljs-comment"># RSA加密</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_RSA</span>(<span class="hljs-params">secret</span>):<br>  public_key = <span class="hljs-string">&#x27;&#x27;&#x27;-----BEGIN RSA PUBLIC KEY-----</span><br><span class="hljs-string">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAutgI110nsPC7PCq4wseLFd0XGmmaeJW+8qlJs+6YSbEQIDAQAB</span><br><span class="hljs-string">-----END RSA PUBLIC KEY-----</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>  secret = secret.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>  rsakey = RSA.importKey(public_key)<br>  cipher = Cipher_pkcs1_v1_5.new(rsakey)<br>  cipher_text = base64.b64encode(cipher.encrypt(secret))<br>  <span class="hljs-keyword">return</span> cipher_text<br><br><span class="hljs-comment"># 获取token</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getToken</span>(<span class="hljs-params">secret</span>):<br>  url = <span class="hljs-string">&#x27;http://id:host/api/ec/dev/auth/applytoken&#x27;</span><br>  headers = &#123;<span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;test&#x27;</span>,<span class="hljs-string">&#x27;secret&#x27;</span>:secret&#125;<br>  response = requests.post(url, headers=headers )<br>  <span class="hljs-keyword">return</span> response<br><br><span class="hljs-comment"># 创建流程</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">createWorkflow</span>(<span class="hljs-params">token,userid,param</span>):<br>  url = <span class="hljs-string">&quot;http://ip:host/api/workflow/paService/doCreateRequest&quot;</span><br>  headers = &#123;<br>        <span class="hljs-string">&#x27;token&#x27;</span>: token,<br>        <span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;test&#x27;</span>,<br>        <span class="hljs-string">&#x27;userid&#x27;</span>: userid,<br>        <span class="hljs-string">&#x27;Content-Type&#x27;</span> : <span class="hljs-string">&#x27;application/x-www-form-urlencoded; charset=utf-8&#x27;</span><br>  &#125;<br>  response = requests.request(<span class="hljs-string">&quot;POST&quot;</span>, url, headers=headers,data=param)<br>  <span class="hljs-built_in">print</span>(response.text)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>  secret = <span class="hljs-string">&#x27;81ab3d9a83d34ed5b33&#x27;</span><br>  secretRSA = encode_RSA(secret)<br>  userid = encode_RSA(<span class="hljs-string">&#x27;683&#x27;</span>)<br>  response = getToken(secretRSA)<br>  param = &#123;<br>    <span class="hljs-string">&quot;mainData&quot;</span> : <span class="hljs-string">&#x27;[  &#123;    &quot;fieldName&quot;: &quot;lxdlx&quot;,    &quot;fieldValue&quot;: &quot;1&quot;  &#125;, &#123;    &quot;fieldName&quot;: &quot;ngbm&quot;,    &quot;fieldValue&quot;: &quot;111&quot;  &#125;,&#123;    &quot;fieldName&quot;: &quot;ngsj&quot;,    &quot;fieldValue&quot;: &quot;2023-08-29&quot;  &#125;, &#123;    &quot;fieldName&quot;: &quot;ngr&quot;,    &quot;fieldValue&quot;: &quot;683&quot;  &#125;,  &#123;    &quot;fieldName&quot;: &quot;cbbm&quot;,    &quot;fieldValue&quot;: &quot;109&quot;  &#125;,  &#123;    &quot;fieldName&quot;: &quot;lxdnr&quot;,    &quot;fieldValue&quot;: &quot;api/doCreateRequest测试联系单内容&quot;  &#125;,&#123;    &quot;fieldName&quot;: &quot;lxdfj&quot;,    &quot;fieldValue&quot;: &quot;58377&quot;  &#125;,  &#123;    &quot;fieldName&quot;: &quot;bz&quot;,    &quot;fieldValue&quot;: &quot;接口推送流程测试0831&quot;  &#125; ]&#x27;</span> ,<br>    <span class="hljs-string">&quot;requestName&quot;</span> : <span class="hljs-string">&quot;接口推送流程测试0831999&quot;</span>,<br>    <span class="hljs-string">&quot;workflowId&quot;</span> : <span class="hljs-string">&quot;105&quot;</span><br>  &#125; <br>  <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span> :<br>      token = response.json()[<span class="hljs-string">&#x27;token&#x27;</span>]<br>      createWorkflow(token,userid,param)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> PKCS1_v1_5 <span class="hljs-keyword">as</span> Cipher_pkcs1_v1_5<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># RSA加密</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_RSA</span>(<span class="hljs-params">secret</span>):<br>  public_key = <span class="hljs-string">&#x27;&#x27;&#x27;-----BEGIN RSA PUBLIC KEY-----</span><br><span class="hljs-string">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAulJs+6YSbEQIDAQAB</span><br><span class="hljs-string">-----END RSA PUBLIC KEY-----</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>  secret = secret.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>  rsakey = RSA.importKey(public_key)<br>  cipher = Cipher_pkcs1_v1_5.new(rsakey)<br>  cipher_text = base64.b64encode(cipher.encrypt(secret))<br>  <span class="hljs-keyword">return</span> cipher_text<br><br><span class="hljs-comment"># 获取token</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getToken</span>(<span class="hljs-params">secret</span>):<br>  url = <span class="hljs-string">&#x27;http://ip:1234/api/ec/dev/auth/applytoken&#x27;</span><br>  headers = &#123;<span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;jictai&#x27;</span>,<span class="hljs-string">&#x27;secret&#x27;</span>:secret&#125;<br>  response = requests.post(url, headers=headers )<br>  <span class="hljs-keyword">return</span> response<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">uploadFile</span>(<span class="hljs-params">token,userid,category,path,filename</span>):<br>  url = <span class="hljs-string">r&#x27;http://ip:1234/api/doc/upload/uploadFile2Doc&#x27;</span><br>  headers = &#123;<br>        <span class="hljs-string">&#x27;token&#x27;</span>: token,<br>        <span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;jictai&#x27;</span>,<br>        <span class="hljs-string">&#x27;userid&#x27;</span> : userid<br>  &#125;<br>  files=[<br>   (<span class="hljs-string">&#x27;file&#x27;</span>,(filename,<span class="hljs-built_in">open</span>(os.path.join(path,filename),<span class="hljs-string">&#x27;rb&#x27;</span>)))<br>]<br>  data = &#123;<br>    <span class="hljs-string">&quot;category&quot;</span> : category<br>  &#125;<br>  response = requests.request(<span class="hljs-string">&quot;POST&quot;</span>, url, headers=headers,data=data,files=files)<br>  <span class="hljs-keyword">return</span> response<br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>  secret = <span class="hljs-string">&#x27;81ab3ed5b33&#x27;</span><br>  secretRSA = encode_RSA(secret)<br>  userid = encode_RSA(<span class="hljs-string">&#x27;683&#x27;</span>)<br>  response = getToken(secretRSA)<br>  <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span> :<br>      token = response.json()[<span class="hljs-string">&#x27;token&#x27;</span>]<br>      <span class="hljs-built_in">print</span>(token)<br>      result = uploadFile(token=token,userid=userid,category=<span class="hljs-string">&#x27;91&#x27;</span>,path=<span class="hljs-string">r&#x27;C:\Users\admin\Downloads&#x27;</span>,filename=<span class="hljs-string">&#x27;a.jpg&#x27;</span>)<br>      <span class="hljs-built_in">print</span>(result.text)<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -391,8 +390,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ecology|泛微ecology9流程新建接口</div>
-      <div>http://hncd1024.github.io/2023/08/29/Ecology_apidoCreateRequest/</div>
+      <div>Python|泛微Ecology附件上传接口</div>
+      <div>http://hncd1024.github.io/2023/09/01/Ecology_apiUpload/</div>
     </div>
     <div class="license-meta">
       
@@ -404,7 +403,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-08-29</div>
+          <div>2023-09-01</div>
         </div>
       
       
@@ -436,18 +435,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/01/Ecology_apiUpload/" title="Python|泛微Ecology附件上传接口">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|泛微Ecology附件上传接口</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/25/Ecology_apiToken/" title="ecology|泛微ecology9获取token信息">
-                        <span class="hidden-mobile">ecology|泛微ecology9获取token信息</span>
+                      <a href="/2023/08/29/Ecology_apidoCreateRequest/" title="ecology|泛微ecology9流程新建接口">
+                        <span class="hidden-mobile">ecology|泛微ecology9流程新建接口</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
