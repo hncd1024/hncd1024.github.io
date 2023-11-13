@@ -16,16 +16,16 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在《UiAuto|泛微Ecology系统附件上传插件》中，我通过ecology8的WSDL实现了文件的上传，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件上传，并简单测试下流程创建的场景。  参考文档 《泛微接口文档》  ，参照的是知识管理-附件上传接口。  源码 123456789101112131415161718">
+    <meta name="description" content="公司有一类流程，需要把所有的附件打包下载下来。手工下载会比较耗时，这里我们常尝试下通过脚本简单实现下附件的批量下载。 其实在《UiAuto|泛微Ecology系统附件下载插件》中，我通过ecology8的WSDL实现了文件的下载，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件下载，并在完成批量下载后自动打包为压缩包文件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|泛微Ecology附件上传接口">
-<meta property="og:url" content="http://hncd1024.github.io/2023/09/01/Ecology_apiUpload/index.html">
+<meta property="og:title" content="Python|泛微Ecology附件下载接口">
+<meta property="og:url" content="http://hncd1024.github.io/2023/11/13/Ecology_FileDownload/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="在《UiAuto|泛微Ecology系统附件上传插件》中，我通过ecology8的WSDL实现了文件的上传，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件上传，并简单测试下流程创建的场景。  参考文档 《泛微接口文档》  ，参照的是知识管理-附件上传接口。  源码 123456789101112131415161718">
+<meta property="og:description" content="公司有一类流程，需要把所有的附件打包下载下来。手工下载会比较耗时，这里我们常尝试下通过脚本简单实现下附件的批量下载。 其实在《UiAuto|泛微Ecology系统附件下载插件》中，我通过ecology8的WSDL实现了文件的下载，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件下载，并在完成批量下载后自动打包为压缩包文件">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://hncd1024.github.io/image/python.png">
-<meta property="article:published_time" content="2023-09-01T01:53:02.000Z">
-<meta property="article:modified_time" content="2023-09-01T03:14:13.929Z">
+<meta property="article:published_time" content="2023-11-13T02:10:06.000Z">
+<meta property="article:modified_time" content="2023-11-13T02:50:21.823Z">
 <meta property="article:author" content="CHEN DI">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Ecology">
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Python|泛微Ecology附件上传接口 - 啊芫荽</title>
+  <title>Python|泛微Ecology附件下载接口 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -231,7 +231,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Python|泛微Ecology附件上传接口"></span>
+            <span id="subtitle" data-typed-text="Python|泛微Ecology附件下载接口"></span>
           
         </div>
 
@@ -242,8 +242,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-01 09:53" pubdate>
-          2023-09-01 09:53
+        <time datetime="2023-11-13 10:10" pubdate>
+          2023-11-13 10:10
         </time>
       </span>
     
@@ -254,7 +254,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.8k 字
         
       </span>
     
@@ -265,7 +265,7 @@ WIDGET = {
         
         
         
-          15 分钟
+          24 分钟
         
       </span>
     
@@ -313,16 +313,21 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Python|泛微Ecology附件上传接口</h1>
+            <h1 style="display: none">Python|泛微Ecology附件下载接口</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在《<a href="https://hncd1024.github.io/2023/06/02/UiAuto_ecologyFileUpload/#indexpy">UiAuto|泛微Ecology系统附件上传插件</a>》中，我通过ecology8的WSDL实现了文件的上传，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件上传，并简单测试下流程创建的场景。</p>
-<h1 id="参考文档"><a class="markdownIt-Anchor" href="#参考文档"></a> 参考文档</h1>
-<p>《<a target="_blank" rel="noopener" href="https://e-cloudstore.com/ec/api/applist/index.html#/">泛微接口文档</a>》  ，参照的是知识管理-附件上传接口。</p>
+                <p>公司有一类流程，需要把所有的附件打包下载下来。手工下载会比较耗时，这里我们常尝试下通过脚本简单实现下附件的批量下载。<br />
+其实在《<a href="https://hncd1024.github.io/2023/06/21/UiAuto_ecologyFileDownload/">UiAuto|泛微Ecology系统附件下载插件</a>》中，我通过ecology8的WSDL实现了文件的下载，但在实际运用中需要用账号密码获取session，还要封装docinfo信息才能实现上传和下载。这篇文章我们试下另一种方式的文件下载，并在完成批量下载后自动打包为压缩包文件。</p>
+<h1 id="过程分析"><a class="markdownIt-Anchor" href="#过程分析"></a> 过程分析</h1>
+<p><b>关于下载地址：</b>打开一个流程手工下载一个文件，就可以在F12中看到下载地址。<br />
+<b>关于下载清单：</b>因为只使用一次，所以通过sql单独查询出待下载的文件清单，并整理为列表进行后续批量下载。<br />
+<b>关于认证信息：</b>在F12中可以看到下载文件时需要传入cookie。</p>
+<h1 id="sql"><a class="markdownIt-Anchor" href="#sql"></a> SQL</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;(&quot;&#x27;</span><span class="hljs-operator">+</span>b.lastname<span class="hljs-operator">+</span><span class="hljs-string">&#x27;&quot;,&quot;&#x27;</span><span class="hljs-operator">+</span>c.departmentname<span class="hljs-operator">+</span><span class="hljs-string">&#x27;&quot;,&#x27;</span><span class="hljs-operator">+</span> <span class="hljs-built_in">cast</span>(d.imagefileid <span class="hljs-keyword">as</span> <span class="hljs-type">VARCHAR</span>(max))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;),&#x27;</span>  <span class="hljs-keyword">from</span> formtable_main_274 a <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> HrmResource b <span class="hljs-keyword">on</span> a.ngr<span class="hljs-operator">=</span>b.id <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> HrmDepartment c <span class="hljs-keyword">on</span> a.ngbm<span class="hljs-operator">=</span>c.id <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> DocImageFile d <span class="hljs-keyword">on</span> <span class="hljs-built_in">cast</span>(d.docid <span class="hljs-keyword">as</span> <span class="hljs-type">VARCHAR</span>(max))<span class="hljs-operator">=</span><span class="hljs-built_in">cast</span>(a.sfzsmj <span class="hljs-keyword">as</span> <span class="hljs-type">VARCHAR</span>(max)) <span class="hljs-keyword">where</span> a.sfzsmj <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span><br></code></pre></td></tr></table></figure>
 <h1 id="源码"><a class="markdownIt-Anchor" href="#源码"></a> 源码</h1>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> PKCS1_v1_5 <span class="hljs-keyword">as</span> Cipher_pkcs1_v1_5<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># RSA加密</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_RSA</span>(<span class="hljs-params">secret</span>):<br>  public_key = <span class="hljs-string">&#x27;&#x27;&#x27;-----BEGIN RSA PUBLIC KEY-----</span><br><span class="hljs-string">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAulJs+6YSbEQIDAQAB</span><br><span class="hljs-string">-----END RSA PUBLIC KEY-----</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>  secret = secret.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>  rsakey = RSA.importKey(public_key)<br>  cipher = Cipher_pkcs1_v1_5.new(rsakey)<br>  cipher_text = base64.b64encode(cipher.encrypt(secret))<br>  <span class="hljs-keyword">return</span> cipher_text<br><br><span class="hljs-comment"># 获取token</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getToken</span>(<span class="hljs-params">secret</span>):<br>  url = <span class="hljs-string">&#x27;http://ip:1234/api/ec/dev/auth/applytoken&#x27;</span><br>  headers = &#123;<span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;jictai&#x27;</span>,<span class="hljs-string">&#x27;secret&#x27;</span>:secret&#125;<br>  response = requests.post(url, headers=headers )<br>  <span class="hljs-keyword">return</span> response<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">uploadFile</span>(<span class="hljs-params">token,userid,category,path,filename</span>):<br>  url = <span class="hljs-string">r&#x27;http://ip:1234/api/doc/upload/uploadFile2Doc&#x27;</span><br>  headers = &#123;<br>        <span class="hljs-string">&#x27;token&#x27;</span>: token,<br>        <span class="hljs-string">&#x27;appid&#x27;</span>: <span class="hljs-string">&#x27;jictai&#x27;</span>,<br>        <span class="hljs-string">&#x27;userid&#x27;</span> : userid<br>  &#125;<br>  files=[<br>   (<span class="hljs-string">&#x27;file&#x27;</span>,(filename,<span class="hljs-built_in">open</span>(os.path.join(path,filename),<span class="hljs-string">&#x27;rb&#x27;</span>)))<br>]<br>  data = &#123;<br>    <span class="hljs-string">&quot;category&quot;</span> : category<br>  &#125;<br>  response = requests.request(<span class="hljs-string">&quot;POST&quot;</span>, url, headers=headers,data=data,files=files)<br>  <span class="hljs-keyword">return</span> response<br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>  secret = <span class="hljs-string">&#x27;81ab3ed5b33&#x27;</span><br>  secretRSA = encode_RSA(secret)<br>  userid = encode_RSA(<span class="hljs-string">&#x27;683&#x27;</span>)<br>  response = getToken(secretRSA)<br>  <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span> :<br>      token = response.json()[<span class="hljs-string">&#x27;token&#x27;</span>]<br>      <span class="hljs-built_in">print</span>(token)<br>      result = uploadFile(token=token,userid=userid,category=<span class="hljs-string">&#x27;91&#x27;</span>,path=<span class="hljs-string">r&#x27;C:\Users\admin\Downloads&#x27;</span>,filename=<span class="hljs-string">&#x27;a.jpg&#x27;</span>)<br>      <span class="hljs-built_in">print</span>(result.text)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-comment"># 生成压缩包</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">zip_dir</span>(<span class="hljs-params">basename,<span class="hljs-built_in">format</span>,root_dir</span>):<br>    shutil.make_archive(base_name=basename,<span class="hljs-built_in">format</span>=<span class="hljs-built_in">format</span>,root_dir=root_dir)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getCookies</span>(<span class="hljs-params">cookie_str</span>):<br>    <span class="hljs-comment"># 将字符串按照 &#x27;;&#x27; 分割  </span><br>    cookie_items = cookie_str.split(<span class="hljs-string">&#x27;;&#x27;</span>)  <br>    <span class="hljs-comment"># 初始化一个空字典  </span><br>    cookie_dict = &#123;&#125;  <br>    <span class="hljs-comment"># 遍历每一个cookie项  </span><br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> cookie_items:  <br>        <span class="hljs-comment"># 按照 &#x27;=&#x27; 分割每一项，分割后的第一项是key，第二项是value  </span><br>        key, value = item.strip().split(<span class="hljs-string">&#x27;=&#x27;</span>, <span class="hljs-number">1</span>)  <br>        <span class="hljs-comment"># 将key和value加入到字典中  </span><br>        cookie_dict[key] = value  <br>    <span class="hljs-keyword">return</span> cookie_dict<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getFiles</span>(<span class="hljs-params">cookies,fileid</span>) :<br>    <span class="hljs-comment"># 封装headers</span><br>    headers = &#123;<br>        <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0&#x27;</span>,<br>        <span class="hljs-string">&#x27;Accept&#x27;</span>: <span class="hljs-string">&#x27;*/*&#x27;</span>,<br>        <span class="hljs-string">&#x27;Accept-Encoding&#x27;</span>: <span class="hljs-string">&#x27;gzip, deflate&#x27;</span>,<br>        <span class="hljs-string">&#x27;Cache-Control&#x27;</span>: <span class="hljs-string">&#x27;no-cache&#x27;</span>,<br>        <span class="hljs-string">&#x27;Connection&#x27;</span>: <span class="hljs-string">&#x27;keep-alive&#x27;</span>,<br>        <span class="hljs-string">&#x27;Host&#x27;</span>: <span class="hljs-string">&#x27;portal.jictrust.cn&#x27;</span>,<br>        <span class="hljs-string">&#x27;Pragma&#x27;</span>: <span class="hljs-string">&#x27;no-cache&#x27;</span>,<br>    &#125;<br>    <span class="hljs-comment"># 创建params</span><br>    params = (<br>        (<span class="hljs-string">&#x27;download&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>),<br>        (<span class="hljs-string">&#x27;fileid&#x27;</span>, fileid),<br>    )<br>    <span class="hljs-comment"># 创建请求，获取文件内容</span><br>    response = requests.get(<span class="hljs-string">&#x27;http://id/weaver/weaver.file.FileDownload&#x27;</span>, headers=headers, params=params, cookies=cookies)<br>    <span class="hljs-keyword">return</span>(response)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">downloadFiles</span>(<span class="hljs-params">response,username,depart</span>):<br>    <span class="hljs-comment"># 保存文件</span><br>    path = <span class="hljs-string">r&#x27;C:\Users\admin\Documents\workspace\下载泛微文件夹\download\&#123;&#125;_&#123;&#125;.pdf&#x27;</span>.<span class="hljs-built_in">format</span>(username,depart)<br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path ,<span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        f.write(response.content)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;文件下载完成&#x27;</span>)<br><span class="hljs-comment"># print(response.content)</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 粘贴浏览器中复制的cookies信息</span><br>    cookies = <span class="hljs-string">&#x27;&#x27;&#x27;复制的cookies信息粘贴到这里&#x27;&#x27;&#x27;</span><br>    <span class="hljs-comment"># SQL查询的待下载清单以列表形式进行查询</span><br>    allMsg = [(<span class="hljs-string">&quot;姓名1&quot;</span>,<span class="hljs-string">&quot;部门1&quot;</span>,<span class="hljs-number">1234</span>),(<span class="hljs-string">&quot;姓名2&quot;</span>,<span class="hljs-string">&quot;部门2&quot;</span>,<span class="hljs-number">5678</span>)]<br>    cookies = getCookies(cookies)<br>    <span class="hljs-comment"># 便利列表，下载文件</span><br>    <span class="hljs-keyword">for</span> msg <span class="hljs-keyword">in</span> allMsg:<br>        response = getFiles(cookies,msg[<span class="hljs-number">2</span>])<br>        downloadFiles(response,msg[<span class="hljs-number">0</span>],msg[<span class="hljs-number">1</span>])<br>    <span class="hljs-comment"># 创建压缩包</span><br>    basename = <span class="hljs-string">r&#x27;C:\Users\admin\Documents\workspace\下载泛微文件夹\身份证扫描件导出&#x27;</span><br>    root_dir = <span class="hljs-string">r&#x27;C:\Users\admin\Documents\workspace\下载泛微文件夹\download&#x27;</span><br>    zip_dir(basename=basename,<span class="hljs-built_in">format</span>=<span class="hljs-string">&#x27;zip&#x27;</span>,root_dir=root_dir)<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -390,8 +395,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Python|泛微Ecology附件上传接口</div>
-      <div>http://hncd1024.github.io/2023/09/01/Ecology_apiUpload/</div>
+      <div>Python|泛微Ecology附件下载接口</div>
+      <div>http://hncd1024.github.io/2023/11/13/Ecology_FileDownload/</div>
     </div>
     <div class="license-meta">
       
@@ -403,7 +408,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-09-01</div>
+          <div>2023-11-13</div>
         </div>
       
       
@@ -435,18 +440,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/13/Ecology_FileDownload/" title="Python|泛微Ecology附件下载接口">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|泛微Ecology附件下载接口</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/29/Ecology_apidoCreateRequest/" title="ecology|泛微ecology9流程新建接口">
-                        <span class="hidden-mobile">ecology|泛微ecology9流程新建接口</span>
+                      <a href="/2023/09/01/Ecology_apiUpload/" title="Python|泛微Ecology附件上传接口">
+                        <span class="hidden-mobile">Python|泛微Ecology附件上传接口</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
