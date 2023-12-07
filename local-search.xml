@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>Python|word、html文件转pdf</title>
+    <link href="/2023/12/07/Python_pdfkit/"/>
+    <url>/2023/12/07/Python_pdfkit/</url>
+    
+    <content type="html"><![CDATA[<p>最近在做一个文档迁移的工作，源文件比较多，有大量的目录，其中包含word文档、html文件。在新系统中，希望将文件格式转换为PDF以实现在线预览。<br />这里我们通过python实现文件的批量转换，具体思路是：</p><ul><li>通过os库逐层遍历目录，待处理的获取文件名及文件路径。</li><li>通过win32com库将.doc、.docx文件转为.pdf。</li><li>通过pdfkit将.html文件转为.pdf。</li></ul><h1 id="源码如下"><a class="markdownIt-Anchor" href="#源码如下"></a> 源码如下：</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> win32com <span class="hljs-keyword">import</span> client<br><span class="hljs-keyword">import</span> pdfkit<br><br><span class="hljs-comment"># 转换doc为pdf</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">doc2pdf</span>(<span class="hljs-params">fn</span>):<br>    word = client.Dispatch(<span class="hljs-string">&quot;Word.Application&quot;</span>)  <span class="hljs-comment"># 打开word应用程序</span><br>    <span class="hljs-comment"># for file in files:</span><br>    doc = word.Documents.Open(fn)  <span class="hljs-comment"># 打开word文件</span><br>    doc.SaveAs(<span class="hljs-string">&quot;&#123;&#125;.pdf&quot;</span>.<span class="hljs-built_in">format</span>(fn[:-<span class="hljs-number">4</span>]), <span class="hljs-number">17</span>)  <span class="hljs-comment"># 另存为后缀为&quot;.pdf&quot;的文件，其中参数17表示为pdf</span><br>    doc.Close()  <span class="hljs-comment"># 关闭原来word文件</span><br>    word.Quit()<br>    <br><span class="hljs-comment"># 转换docx为pdf</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">docx2pdf</span>(<span class="hljs-params">fn</span>):<br>    word = client.Dispatch(<span class="hljs-string">&quot;Word.Application&quot;</span>)  <span class="hljs-comment"># 打开word应用程序</span><br>    <span class="hljs-comment"># for file in files:</span><br>    doc = word.Documents.Open(fn)  <span class="hljs-comment"># 打开word文件</span><br>    doc.SaveAs(<span class="hljs-string">&quot;&#123;&#125;.pdf&quot;</span>.<span class="hljs-built_in">format</span>(fn[:-<span class="hljs-number">5</span>]), <span class="hljs-number">17</span>)  <span class="hljs-comment"># 另存为后缀为&quot;.pdf&quot;的文件，其中参数17表示为pdf    </span><br>    doc.Close()  <span class="hljs-comment"># 关闭原来word文件</span><br>    word.Quit()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">convert_doc_to_pdf</span>(<span class="hljs-params">path</span>):  <br>    <span class="hljs-keyword">if</span> os.path.isdir(path):  <br>        <span class="hljs-keyword">for</span> root, dirs, files <span class="hljs-keyword">in</span> os.walk(path):  <br>            <span class="hljs-comment"># print(files)</span><br>            <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:  <br>                <span class="hljs-keyword">if</span> file.endswith(<span class="hljs-string">&#x27;.DOC&#x27;</span>) <span class="hljs-keyword">or</span> file.endswith(<span class="hljs-string">&#x27;.DOCX&#x27;</span>):  <br>                    doc_path = os.path.join(root, file) <br>                    <span class="hljs-built_in">print</span>(doc_path)<br>                    <span class="hljs-keyword">if</span> file.endswith(<span class="hljs-string">&#x27;.DOC&#x27;</span>):<br>                        doc2pdf(doc_path)<br>                        os.remove(doc_path)  <br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#123;&#125;_已完成转换&#x27;</span>.<span class="hljs-built_in">format</span>(file))  <br>                    <span class="hljs-keyword">elif</span> file.endswith(<span class="hljs-string">&#x27;.DOCX&#x27;</span>):<br>                        docx2pdf(doc_path)<br>                        os.remove(doc_path)  <br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#123;&#125;_已完成转换&#x27;</span>.<span class="hljs-built_in">format</span>(file)) <br>    <span class="hljs-keyword">else</span>:  <br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Path provided is not a directory: <span class="hljs-subst">&#123;path&#125;</span>&quot;</span>)  <br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">html_to_pdf</span>(<span class="hljs-params">path</span>):<br>    <span class="hljs-keyword">if</span> os.path.isdir(path):  <br>        <span class="hljs-keyword">for</span> root, dirs, files <span class="hljs-keyword">in</span> os.walk(path):  <br>            <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:  <br>                <span class="hljs-keyword">if</span> file.endswith(<span class="hljs-string">&#x27;.HTML&#x27;</span>) <span class="hljs-keyword">or</span> file.endswith(<span class="hljs-string">&#x27;.html&#x27;</span>):  <br>                    html_path = os.path.join(root, file)<br>                    pdf_path = <span class="hljs-string">&#x27;&#123;&#125;.pdf&#x27;</span>.<span class="hljs-built_in">format</span>(html_path[:-<span class="hljs-number">5</span>],<span class="hljs-number">17</span>)<br>                    <span class="hljs-keyword">try</span>: <br>                        pdfkit.from_file(html_path,pdf_path)<br>                    <span class="hljs-keyword">except</span> OSError <span class="hljs-keyword">as</span> e:<br>                        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;ProtocolUnknownError&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(e):<br>                            <span class="hljs-keyword">pass</span><br>                        <span class="hljs-keyword">else</span>:<br>                            <span class="hljs-keyword">raise</span> e<br>                    os.remove(html_path)<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#123;&#125;_已完成转换&#x27;</span>.<span class="hljs-built_in">format</span>(html_path))<br>    <span class="hljs-keyword">else</span>:  <br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Path provided is not a directory: <span class="hljs-subst">&#123;path&#125;</span>&quot;</span>)  <br>  <br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    path = <span class="hljs-string">r&#x27;D:\workspace\旧公文系统&#x27;</span><br>    convert_doc_to_pdf(path)<br>    html_to_pdf(path)<br></code></pre></td></tr></table></figure><p>注意事项：</p><ul><li>win32com是python中用于访问windows com组件的库，在使用时会调用当前计算机的word应用程序。因此在代码运行的过程中，计算机最好不要操作其他word文档。另外，要使用win32com，必须安装pywin32库。</li><li>pdfkit是用于将html内容转换为pdf的python库，pdfkit基于wkhtmltopdf命令行工具，通过调用该工具将html内容转换为pdf格式。因此要使用pdfkit，需要先安装wkhtmltopdf（<a href="https://wkhtmltopdf.org/downloads.html">点击下载wkhtmltopdf</a>）,并添加环境变量。添加完环境变量后可在cmd中进行html转pdf验证：<blockquote><p>wkhtmltopdf <a href="https://www.baidu.com">https://www.baidu.com</a> D:/test.pdf</p></blockquote></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>pdfkit,win32com</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>UiApdfkit</tag>
+      
+      <tag>win32comuto</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python|泛微Ecology附件下载接口</title>
     <link href="/2023/11/13/Ecology_FileDownload/"/>
     <url>/2023/11/13/Ecology_FileDownload/</url>
@@ -715,11 +746,11 @@
     
     <tags>
       
+      <tag>自动化</tag>
+      
       <tag>PowerAutomate</tag>
       
       <tag>RPA</tag>
-      
-      <tag>自动化</tag>
       
     </tags>
     
