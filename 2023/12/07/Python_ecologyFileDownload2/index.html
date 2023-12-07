@@ -16,28 +16,28 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+    <meta name="description" content="我们公司公文系统开发过一个【收藏】的功能，当点击【收藏】按钮的时候，系统会将当前收文&#x2F;发文&#x2F;签报里的正文、附件、审批表单打包成一个.zip文件下载到本地。 这几天在做档案系统的迁移工作，需要把公文系统一年的内容批量下载下来。时间比较着急，也来不急找供应商再单独做个功能了。这次我的处理方式如下：  在浏览器中随便打开一个签报，点击【收藏】，F12跟一下请求，发现会通过POST请求调用 &#x2F;api&#x2F;on">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Power Automate">
-<meta property="og:url" content="http://hncd1024.github.io/2023/03/08/PowerAutomate/index.html">
+<meta property="og:title" content="Python|实现公文系统批量收藏">
+<meta property="og:url" content="http://hncd1024.github.io/2023/12/07/Python_ecologyFileDownload2/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+<meta property="og:description" content="我们公司公文系统开发过一个【收藏】的功能，当点击【收藏】按钮的时候，系统会将当前收文&#x2F;发文&#x2F;签报里的正文、附件、审批表单打包成一个.zip文件下载到本地。 这几天在做档案系统的迁移工作，需要把公文系统一年的内容批量下载下来。时间比较着急，也来不急找供应商再单独做个功能了。这次我的处理方式如下：  在浏览器中随便打开一个签报，点击【收藏】，F12跟一下请求，发现会通过POST请求调用 &#x2F;api&#x2F;on">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
-<meta property="article:published_time" content="2023-03-08T02:16:36.000Z">
-<meta property="article:modified_time" content="2023-03-08T03:25:45.213Z">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2023-12-07T06:47:14.000Z">
+<meta property="article:modified_time" content="2023-12-07T08:31:49.999Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="PowerAutomate">
-<meta property="article:tag" content="RPA">
-<meta property="article:tag" content="自动化">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="requests">
+<meta property="article:tag" content="pandas">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Power Automate - 啊芫荽</title>
+  <title>Python|实现公文系统批量收藏 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +232,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Power Automate"></span>
+            <span id="subtitle" data-typed-text="Python|实现公文系统批量收藏"></span>
           
         </div>
 
@@ -243,8 +243,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-08 10:16" pubdate>
-          2023-03-08 10:16
+        <time datetime="2023-12-07 14:47" pubdate>
+          2023-12-07 14:47
         </time>
       </span>
     
@@ -255,7 +255,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          665 字
+          3.7k 字
         
       </span>
     
@@ -266,7 +266,7 @@ WIDGET = {
         
         
         
-          6 分钟
+          31 分钟
         
       </span>
     
@@ -314,33 +314,24 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Power Automate</h1>
+            <h1 style="display: none">Python|实现公文系统批量收藏</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。<br />
-近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。</p>
-<h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1>
-<p>登录并打开待处理的列表界面。<br />
-<img src="https://i.328888.xyz/2023/03/08/5Sy23.png" srcset="/img/loading.gif" lazyload alt="登录过程" /><br />
-获取未点赞的链接，并打开进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SVqv.png" srcset="/img/loading.gif" lazyload alt="点赞、收藏过程" /><br />
-运行登录，并循环进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SidU.png" srcset="/img/loading.gif" lazyload alt="循环遍历" /><br />
-测试结果基本满足需要，后续可发掘更丰富的应用场景。</p>
-<h1 id="总结一下"><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h1>
-<p>Microsoft Power Automate是一个低代码平台的RPA工具，可以辅助用户进行流程自动化办公，提升工作效率。相比我之前接触过的UIPath，个人感觉相对具有优势。</p>
-<div class="note note-primary">
-            <p>优势一：Power Automate对终端个人用户免费，从win11系统预装就可以看出微软还是诚意满满的。相比UIPath作为一款需授权使用的软件，使用门槛较高。</p>
-          </div>
-<div class="note note-primary">
-            <p>优势二：系统集成较好，作为微软出品，Power Automate对微软环境下的应用交互做的比较好。除office全家桶都能很好的交互外，对http、FTP等服务支持也比较友好，甚至Power Automate还支持python、JS、VB、shell等脚本。真香！</p>
-          </div>
-<div class="note note-primary">
-            <p>优势三：你见过自动帮你进行流程设计的RPA工具吗？Power Automate可以！即便你不会自己设计流程，你可以打开Power Automate的捕获功能。然后你只需要给它演示下你要怎么做，Power Automate便会自动帮你生成流程（当然一般情况下还是要在此基础上再优化调整的）。</p>
-          </div> 
-
+                <p>我们公司公文系统开发过一个【收藏】的功能，当点击【收藏】按钮的时候，系统会将当前收文/发文/签报里的正文、附件、审批表单打包成一个.zip文件下载到本地。<br />
+这几天在做档案系统的迁移工作，需要把公文系统一年的内容批量下载下来。时间比较着急，也来不急找供应商再单独做个功能了。这次我的处理方式如下：</p>
+<ul>
+<li>在浏览器中随便打开一个签报，点击【收藏】，F12跟一下请求，发现会通过POST请求调用 /api/onekeysave/save 接口。请求体主要是当前签报的字号、标题、id。</li>
+<li>在上一步的POST请求中，返回的响应体中会有个 loadlink 字段，该字段就是下载链接。点击下载就能把.zip文件下载到本地。</li>
+<li>找到了上面的接口，我只需要从数据库中查询出来要下载的文件清单，从浏览器中复制下cookies，然后遍历调用接口下载文件即可。</li>
+</ul>
+<p>最终七百多份文件（大小约1.5G）仅十几分钟就完成了下载。</p>
+<h1 id="源码"><a class="markdownIt-Anchor" href="#源码"></a> 源码</h1>
+<h2 id="待下载清单"><a class="markdownIt-Anchor" href="#待下载清单"></a> 待下载清单</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  <span class="hljs-string">&#x27;签报&#x27;</span> <span class="hljs-keyword">as</span> 类别,a.fwzh <span class="hljs-keyword">as</span> fwzh,a.fwtm <span class="hljs-keyword">as</span> fwtm,a.requestid <span class="hljs-keyword">as</span> requestid ,a.ngrq <span class="hljs-keyword">as</span> ngrq <span class="hljs-keyword">from</span> formtable_main_5 a <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> workflow_requestbase b <span class="hljs-keyword">on</span> a.requestid<span class="hljs-operator">=</span>b.requestid <span class="hljs-keyword">where</span> a.ngrq<span class="hljs-operator">&lt;=</span><span class="hljs-string">&#x27;2022-12-31&#x27;</span> <span class="hljs-keyword">and</span> b.status <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;部门综合&#x27;</span>,<span class="hljs-string">&#x27;结束&#x27;</span>) <br><span class="hljs-keyword">union</span> <span class="hljs-keyword">all</span> <br><span class="hljs-keyword">select</span>  <span class="hljs-string">&#x27;发文&#x27;</span><span class="hljs-keyword">as</span> 类别,c.fwzh <span class="hljs-keyword">as</span> fwzh,c.fwtm <span class="hljs-keyword">as</span> fwtm,c.requestid <span class="hljs-keyword">as</span> requestid,c.ngrq <span class="hljs-keyword">as</span> ngrq <span class="hljs-keyword">from</span> formtable_main_4 c <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> workflow_requestbase d <span class="hljs-keyword">on</span> c.requestid<span class="hljs-operator">=</span>d.requestid  <span class="hljs-keyword">where</span> c.ngrq<span class="hljs-operator">&lt;=</span><span class="hljs-string">&#x27;2022-12-31&#x27;</span> <span class="hljs-keyword">and</span> d.status <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;部门综合&#x27;</span>,<span class="hljs-string">&#x27;结束&#x27;</span>,<span class="hljs-string">&#x27;强制归档&#x27;</span>)  <br><span class="hljs-keyword">union</span> <span class="hljs-keyword">all</span> <br><span class="hljs-keyword">select</span>   <span class="hljs-string">&#x27;收文&#x27;</span> <span class="hljs-keyword">as</span> 类别,e.fwzh <span class="hljs-keyword">as</span> fwzh,e.fwtm <span class="hljs-keyword">as</span> fwtm,e.requestid <span class="hljs-keyword">as</span> requestid ,e.cwrq <span class="hljs-keyword">as</span> ngrq  <span class="hljs-keyword">from</span> formtable_main_3 e  <span class="hljs-keyword">where</span> e.cwrq<span class="hljs-operator">&lt;=</span><span class="hljs-string">&#x27;2022-12-31&#x27;</span> <span class="hljs-keyword">and</span> djr<span class="hljs-operator">=</span><span class="hljs-number">102</span><br></code></pre></td></tr></table></figure>
+<h2 id="python代码"><a class="markdownIt-Anchor" href="#python代码"></a> python代码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>headers = &#123;<br>    <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0&#x27;</span>,<br>    <span class="hljs-string">&#x27;Accept&#x27;</span>: <span class="hljs-string">&#x27;*/*&#x27;</span>,<br>    <span class="hljs-string">&#x27;Accept-Encoding&#x27;</span>: <span class="hljs-string">&#x27;gzip, deflate&#x27;</span>,<br>    <span class="hljs-string">&#x27;Cache-Control&#x27;</span>: <span class="hljs-string">&#x27;no-cache&#x27;</span>,<br>    <span class="hljs-string">&#x27;Connection&#x27;</span>: <span class="hljs-string">&#x27;keep-alive&#x27;</span>,<br>    <span class="hljs-string">&#x27;Host&#x27;</span>: <span class="hljs-string">&#x27;portal.jictrust.cn&#x27;</span>,<br>    <span class="hljs-string">&#x27;Pragma&#x27;</span>: <span class="hljs-string">&#x27;no-cache&#x27;</span>,<br>&#125;<br><br><span class="hljs-comment"># 将cookie字符串转为字典</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getCookies</span>(<span class="hljs-params">cookie_str</span>):<br>    cookie_items = cookie_str.split(<span class="hljs-string">&#x27;;&#x27;</span>)   <br>    cookie_dict = &#123;&#125;  <br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> cookie_items:  <br>        key, value = item.strip().split(<span class="hljs-string">&#x27;=&#x27;</span>, <span class="hljs-number">1</span>)  <br>        cookie_dict[key] = value  <br>    <span class="hljs-keyword">return</span> cookie_dict<br><br><span class="hljs-comment"># 获取文件下载链接</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getDownloadPath</span>(<span class="hljs-params">cookies,params</span>):<br>    url = <span class="hljs-string">r&#x27;http://xxx/api/onekeysave/save&#x27;</span><br>    result = requests.post(url=url,headers=headers,cookies=cookies,json=params)<br>    <span class="hljs-keyword">return</span> result.text<br><br><span class="hljs-comment"># 获取文件内容</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getFiles</span>(<span class="hljs-params">cookies,downloadPath</span>) :<br>    response = requests.get(downloadPath, headers=headers, cookies=cookies)<br>    <span class="hljs-keyword">return</span>(response)<br><br><span class="hljs-comment"># 下载到本地</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">downloadFiles</span>(<span class="hljs-params">response,filetype,filename</span>):<br>    path = <span class="hljs-string">r&#x27;D:\workspace\新公文系统\2022年\&#123;&#125;\&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(filetype,filename)<br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path ,<span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        f.write(response.content)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;文件下载完成&#x27;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    df = pd.read_excel(<span class="hljs-string">r&#x27;C:\新公文系统.xlsx&#x27;</span>,sheet_name=<span class="hljs-string">&#x27;Sheet1&#x27;</span>,engine=<span class="hljs-string">&#x27;openpyxl&#x27;</span>)<br>    cookie_str = <span class="hljs-string">r&#x27;ecology_JSessionid=aaaxxx8Ok_L7Vy; JSESSIONID=aaaLxxxOk_L7Vy; loginxxxaver=xxx; languxxxaver=xx; __randcode__=c9165f7d-9xxxxxxdf62bb4b&#x27;</span><br>    cookie_dict = getCookies(cookie_str)<br>    <span class="hljs-keyword">for</span> index,row <span class="hljs-keyword">in</span> df.iterrows():<br>        <span class="hljs-built_in">print</span>(index,<span class="hljs-string">&#x27;_&#x27;</span>,row[<span class="hljs-number">1</span>],<span class="hljs-string">&#x27;_下载开始:&#x27;</span>)<br>        fwzh = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">if</span> pd.isnull(row[<span class="hljs-number">1</span>]):<br>            fwzh = <span class="hljs-string">&quot;&quot;</span><br>        <span class="hljs-keyword">else</span>:<br>            fwzh = row[<span class="hljs-number">1</span>]<br>        params = &#123;<span class="hljs-string">&quot;fwzh&quot;</span>:fwzh,<span class="hljs-string">&quot;fwtm&quot;</span>:row[<span class="hljs-number">2</span>],<span class="hljs-string">&quot;requestid&quot;</span>:<span class="hljs-built_in">str</span>(row[<span class="hljs-number">3</span>]),<span class="hljs-string">&quot;maintable&quot;</span>:<span class="hljs-string">&quot;formtable_main_233&quot;</span>,<span class="hljs-string">&quot;zw&quot;</span>:<span class="hljs-string">&quot;zw&quot;</span>,<span class="hljs-string">&quot;fj&quot;</span>:<span class="hljs-string">&quot;fj&quot;</span>,<span class="hljs-string">&quot;path&quot;</span>:<span class="hljs-string">&quot;D:/weaver/ecology/page/resource/userfile/other/&quot;</span>,<span class="hljs-string">&quot;configip_target&quot;</span>:<span class="hljs-string">&quot;80&quot;</span>,<span class="hljs-string">&quot;OA_APPID&quot;</span>:<span class="hljs-string">&quot;b81a21daxxxf2d5bd&quot;</span>,<span class="hljs-string">&quot;category&quot;</span>:<span class="hljs-string">&quot;1&quot;</span>&#125;<br>        <span class="hljs-comment"># 获取文件压缩信息</span><br>        download_path = getDownloadPath(cookie_dict,params)<br>        download_path = json.loads(download_path)<br>        downloadUrl = <span class="hljs-string">&#x27;http://xxx&#x27;</span> + download_path[<span class="hljs-string">&#x27;data&#x27;</span>][<span class="hljs-string">&#x27;loadlink&#x27;</span>]<br>        response = getFiles(cookie_dict,downloadUrl)<br>        downloadFiles(response,row[<span class="hljs-number">0</span>],<span class="hljs-built_in">str</span>(row[<span class="hljs-number">3</span>])+<span class="hljs-string">&#x27;_&#x27;</span>+download_path[<span class="hljs-string">&#x27;data&#x27;</span>][<span class="hljs-string">&#x27;filename&#x27;</span>])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;--------------------&#x27;</span>)<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -360,8 +351,15 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/PowerAutomate/" class="category-chain-item">PowerAutomate</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Python/requests/" class="category-chain-item">requests</a>
+  
+  
+
   
 
       </span>
@@ -375,11 +373,11 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/PowerAutomate/">#PowerAutomate</a>
+        <a href="/tags/Python/">#Python</a>
       
-        <a href="/tags/RPA/">#RPA</a>
+        <a href="/tags/requests/">#requests</a>
       
-        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
+        <a href="/tags/pandas/">#pandas</a>
       
     </div>
   
@@ -403,8 +401,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Power Automate</div>
-      <div>http://hncd1024.github.io/2023/03/08/PowerAutomate/</div>
+      <div>Python|实现公文系统批量收藏</div>
+      <div>http://hncd1024.github.io/2023/12/07/Python_ecologyFileDownload2/</div>
     </div>
     <div class="license-meta">
       
@@ -416,7 +414,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-03-08</div>
+          <div>2023-12-07</div>
         </div>
       
       
@@ -448,18 +446,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/09/Python_NBU5230/" title="Python|实现NBU自动巡检">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|实现NBU自动巡检</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/03/LowerCpuUsage/" title="计算机|记一次CPU降频问题排查与修复">
-                        <span class="hidden-mobile">计算机|记一次CPU降频问题排查与修复</span>
+                      <a href="/2023/12/07/Python_pdfkit/" title="Python|word、html文件转pdf">
+                        <span class="hidden-mobile">Python|word、html文件转pdf</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
