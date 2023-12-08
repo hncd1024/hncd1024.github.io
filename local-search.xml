@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Python|批量移动文件并修改目录层级</title>
+    <link href="/2023/12/08/Python_FileMove/"/>
+    <url>/2023/12/08/Python_FileMove/</url>
+    
+    <content type="html"><![CDATA[<p>前面说过，最近在做档案的迁移。从其中一个系统导出的目录结构如下：</p><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-string">|-- 签报</span><br>    <span class="hljs-string">|-- 签报〔2022〕1号</span><br>        <span class="hljs-string">|-- 正文</span><br>            <span class="hljs-string">|-- 关于XXX的请示.DOC</span><br>        <span class="hljs-string">|-- 附件</span><br>            <span class="hljs-string">|-- 附件1.DOC</span><br>            <span class="hljs-string">|-- 附件2.PDF</span><br>        <span class="hljs-string">|-- 表单.HTML</span><br>    <span class="hljs-string">|-- 签报〔2022〕2号</span><br>        <span class="hljs-string">|-- 正文</span><br>            <span class="hljs-string">|-- 关于XXX的请示.DOC</span><br>        <span class="hljs-string">|-- 附件</span><br>            <span class="hljs-string">|-- 附件.DOC</span><br>        <span class="hljs-string">|-- 表单.HTML</span><br>    ……<br></code></pre></td></tr></table></figure><p>这种目录结构在迁移到新的系统中时阅读起来就比较麻烦，用户希望取消“附件”、“正文”的目录结构，把正文、附件、表单直接放到同一级目录下：</p><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">签报</span><br>    <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">签报〔2022〕1号</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">关于XXX的请示</span><span class="hljs-string">.</span><span class="hljs-comment">DOC</span><span class="hljs-literal">--</span> <span class="hljs-comment">附件</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">附件1</span><span class="hljs-string">.</span><span class="hljs-comment">DOC</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">附件2</span><span class="hljs-string">.</span><span class="hljs-comment">PDF</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">表单</span><span class="hljs-string">.</span><span class="hljs-comment">HTML</span><br>    <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">签报〔2022〕2号</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">关于XXX的请示</span><span class="hljs-string">.</span><span class="hljs-comment">DOC</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">附件</span><span class="hljs-string">.</span><span class="hljs-comment">DOC</span><br>        <span class="hljs-comment">|</span><span class="hljs-literal">--</span> <span class="hljs-comment">表单</span><span class="hljs-string">.</span><span class="hljs-comment">HTML</span><br>    <span class="hljs-comment">……</span><br></code></pre></td></tr></table></figure><h1 id="源码如下"><a class="markdownIt-Anchor" href="#源码如下"></a> 源码如下</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os  <br>  <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">move_and_delete</span>(<span class="hljs-params">directory</span>):  <br>    <span class="hljs-comment"># 遍历目录及其子目录  </span><br>    <span class="hljs-keyword">for</span> dirpath, dirnames, filenames <span class="hljs-keyword">in</span> os.walk(directory):  <br>        <span class="hljs-comment"># 检查文件夹名称是否为&quot;附件&quot;或&quot;正文&quot;  </span><br>        <span class="hljs-keyword">if</span> os.path.basename(dirpath) <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;附件&quot;</span>, <span class="hljs-string">&quot;正文&quot;</span>]:  <br>            <span class="hljs-comment"># 移动文件到上一级目录  </span><br>            <span class="hljs-keyword">for</span> filename <span class="hljs-keyword">in</span> filenames:  <br>                file_path = os.path.join(dirpath, filename)  <br>                new_file_path = os.path.join(os.path.dirname(dirpath), filename)  <br>                os.rename(file_path, new_file_path)  <br>            <span class="hljs-comment"># 删除目标文件夹  </span><br>            os.rmdir(dirpath)  <br>  <br><span class="hljs-comment"># 要处理的目录  </span><br>directory = <span class="hljs-string">r&#x27;D:\2021年旧公文系统&#x27;</span>  <br>  <br><span class="hljs-comment"># 开始处理  </span><br>move_and_delete(directory)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+      <category>os</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>os</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Python|实现公文系统批量收藏</title>
     <link href="/2023/12/07/Python_ecologyFileDownload2/"/>
     <url>/2023/12/07/Python_ecologyFileDownload2/</url>
@@ -715,9 +744,9 @@
       
       <tag>shutil</tag>
       
-      <tag>PyPDF2</tag>
-      
       <tag>os</tag>
+      
+      <tag>PyPDF2</tag>
       
     </tags>
     
@@ -777,11 +806,11 @@
     
     <tags>
       
+      <tag>自动化</tag>
+      
       <tag>PowerAutomate</tag>
       
       <tag>RPA</tag>
-      
-      <tag>自动化</tag>
       
     </tags>
     
