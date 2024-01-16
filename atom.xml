@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>啊芫荽</title>
+  <icon>http://hncd1024.github.io/icon.png</icon>
+  
+  <link href="http://hncd1024.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://hncd1024.github.io/"/>
+  <updated>2023-12-19T09:07:24.806Z</updated>
+  <id>http://hncd1024.github.io/</id>
+  
+  <author>
+    <name>CHEN DI</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python|解析excel自动创建业务系统凭证</title>
+    <link href="http://hncd1024.github.io/2023/12/18/Python_createEnfoVoucher/"/>
+    <id>http://hncd1024.github.io/2023/12/18/Python_createEnfoVoucher/</id>
+    <published>2023-12-18T08:42:28.000Z</published>
+    <updated>2023-12-19T09:07:24.806Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;财务同事近期提了一个需求：公司有一类产品，定期需要从网上银行下载交易流水。筛选出符合条件的到账流水后，要逐笔在业务系统中录入凭证。这个凭证逻辑比较简单，每月需要集中做几次。项目自成立以来已经累计做了八百多张凭证了。同事希望可以通过系统实现excel的解析和凭证的自动录入。&lt;</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="pandas,requests" scheme="http://hncd1024.github.io/categories/Python/pandas-requests/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="pandas" scheme="http://hncd1024.github.io/tags/pandas/"/>
+    
+    <category term="requests" scheme="http://hncd1024.github.io/tags/requests/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|批量移动文件并修改目录层级</title>
+    <link href="http://hncd1024.github.io/2023/12/08/Python_FileMove/"/>
+    <id>http://hncd1024.github.io/2023/12/08/Python_FileMove/</id>
+    <published>2023-12-08T09:36:06.000Z</published>
+    <updated>2023-12-08T10:05:26.624Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;前面说过，最近在做档案的迁移。从其中一个系统导出的目录结构如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight 1c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="os" scheme="http://hncd1024.github.io/categories/Python/os/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="os" scheme="http://hncd1024.github.io/tags/os/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|实现公文系统批量收藏</title>
+    <link href="http://hncd1024.github.io/2023/12/07/Python_ecologyFileDownload2/"/>
+    <id>http://hncd1024.github.io/2023/12/07/Python_ecologyFileDownload2/</id>
+    <published>2023-12-07T06:47:14.000Z</published>
+    <updated>2023-12-07T08:31:49.999Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;我们公司公文系统开发过一个【收藏】的功能，当点击【收藏】按钮的时候，系统会将当前收文/发文/签报里的正文、附件、审批表单打包成一个.zip文件下载到本地。&lt;br</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="requests" scheme="http://hncd1024.github.io/categories/Python/requests/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="pandas" scheme="http://hncd1024.github.io/tags/pandas/"/>
+    
+    <category term="requests" scheme="http://hncd1024.github.io/tags/requests/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|word、html文件转pdf</title>
+    <link href="http://hncd1024.github.io/2023/12/07/Python_pdfkit/"/>
+    <id>http://hncd1024.github.io/2023/12/07/Python_pdfkit/</id>
+    <published>2023-12-07T03:28:00.000Z</published>
+    <updated>2023-12-07T08:16:05.270Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;最近在做一个文档迁移的工作，源文件比较多，有大量的目录，其中包含word文档、html文件。在新系统中，希望将文件格式转换为PDF以实现在线预览。&lt;br</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="pdfkit,win32com" scheme="http://hncd1024.github.io/categories/Python/pdfkit-win32com/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="UiApdfkit" scheme="http://hncd1024.github.io/tags/UiApdfkit/"/>
+    
+    <category term="win32comuto" scheme="http://hncd1024.github.io/tags/win32comuto/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|泛微Ecology附件下载接口</title>
+    <link href="http://hncd1024.github.io/2023/11/13/Ecology_FileDownload/"/>
+    <id>http://hncd1024.github.io/2023/11/13/Ecology_FileDownload/</id>
+    <published>2023-11-13T02:10:06.000Z</published>
+    <updated>2023-11-13T02:50:21.823Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;公司有一类流程，需要把所有的附件打包下载下来。手工下载会比较耗时，这里我们常尝试下通过脚本简单实现下附件的批量下载。&lt;br /&gt;
+其实在《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/categories/Python/Ecology/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/tags/Ecology/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|泛微Ecology附件上传接口</title>
+    <link href="http://hncd1024.github.io/2023/09/01/Ecology_apiUpload/"/>
+    <id>http://hncd1024.github.io/2023/09/01/Ecology_apiUpload/</id>
+    <published>2023-09-01T01:53:02.000Z</published>
+    <updated>2023-09-01T03:14:13.929Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/categories/Python/Ecology/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/tags/Ecology/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ecology|泛微ecology9流程新建接口</title>
+    <link href="http://hncd1024.github.io/2023/08/29/Ecology_apidoCreateRequest/"/>
+    <id>http://hncd1024.github.io/2023/08/29/Ecology_apidoCreateRequest/</id>
+    <published>2023-08-29T06:29:49.000Z</published>
+    <updated>2023-09-01T01:51:59.686Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;最近发现泛微ecology9的接口文档，这篇文章我们简单测试下流程创建的场景。&lt;/p&gt;
+&lt;h1 id=&quot;参考文档&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#参考文档&quot;&gt;&lt;/a&gt; 参考文档&lt;/h1&gt;
+&lt;p&gt;《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/categories/Python/Ecology/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/tags/Ecology/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ecology|泛微ecology9获取token信息</title>
+    <link href="http://hncd1024.github.io/2023/08/25/Ecology_apiToken/"/>
+    <id>http://hncd1024.github.io/2023/08/25/Ecology_apiToken/</id>
+    <published>2023-08-25T02:39:04.000Z</published>
+    <updated>2023-08-28T07:19:13.285Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在泛微系统（Ecology9）的后端接口中，需要在请求体中加上token的参数。这篇文章记录下泛微Ecology9的token获取方式。&lt;/p&gt;
+&lt;h1 id=&quot;token获取步骤&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/categories/Python/Ecology/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="Ecology" scheme="http://hncd1024.github.io/tags/Ecology/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|VBA|实现word中表格的复制粘贴</title>
+    <link href="http://hncd1024.github.io/2023/07/21/VBA_tableInsertWord/"/>
+    <id>http://hncd1024.github.io/2023/07/21/VBA_tableInsertWord/</id>
+    <published>2023-07-21T15:23:07.000Z</published>
+    <updated>2023-07-26T03:10:07.523Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="VBA" scheme="http://hncd1024.github.io/categories/Python/VBA/"/>
+    
+    <category term="win32com" scheme="http://hncd1024.github.io/categories/Python/VBA/win32com/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="VBA" scheme="http://hncd1024.github.io/tags/VBA/"/>
+    
+    <category term="win32com" scheme="http://hncd1024.github.io/tags/win32com/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|VBA|在word中插入脚注</title>
+    <link href="http://hncd1024.github.io/2023/07/13/VBA_wordfootnote/"/>
+    <id>http://hncd1024.github.io/2023/07/13/VBA_wordfootnote/</id>
+    <published>2023-07-13T08:44:05.000Z</published>
+    <updated>2023-07-21T15:33:23.350Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="VBA" scheme="http://hncd1024.github.io/categories/Python/VBA/"/>
+    
+    <category term="win32com" scheme="http://hncd1024.github.io/categories/Python/VBA/win32com/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="VBA" scheme="http://hncd1024.github.io/tags/VBA/"/>
+    
+    <category term="win32com" scheme="http://hncd1024.github.io/tags/win32com/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|文件自动下载、解压、核对</title>
+    <link href="http://hncd1024.github.io/2023/07/07/Python_fileCheck/"/>
+    <id>http://hncd1024.github.io/2023/07/07/Python_fileCheck/</id>
+    <published>2023-07-07T09:00:55.000Z</published>
+    <updated>2023-07-22T05:43:47.107Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;需求概述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#需求概述&quot;&gt;&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|实现泛微E-Mobile消息发送对接</title>
+    <link href="http://hncd1024.github.io/2023/06/30/Python_emobileapi/"/>
+    <id>http://hncd1024.github.io/2023/06/30/Python_emobileapi/</id>
+    <published>2023-06-30T02:36:02.000Z</published>
+    <updated>2023-06-30T08:28:39.747Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  前面已经研究过如何通过微信、钉钉进行消息通知，但公司内部还在使用泛微的E-Mobile通讯工具，部分涉密信息还是通过内部通讯工具发送比较合适。今天研究下如何通过python实现E-Mobile的消息通知。&lt;/p&gt;
+&lt;h1 id=&quot;分析过程&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="requests" scheme="http://hncd1024.github.io/categories/Python/requests/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="requests" scheme="http://hncd1024.github.io/tags/requests/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|钉钉消息通知对接</title>
+    <link href="http://hncd1024.github.io/2023/06/29/Python_dingtalk/"/>
+    <id>http://hncd1024.github.io/2023/06/29/Python_dingtalk/</id>
+    <published>2023-06-29T07:08:24.000Z</published>
+    <updated>2023-06-30T08:35:39.966Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;钉钉相比微信的好处在于接口丰富（《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="dingtalk" scheme="http://hncd1024.github.io/categories/Python/dingtalk/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="dingtalk" scheme="http://hncd1024.github.io/tags/dingtalk/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|实现PC端微信对接</title>
+    <link href="http://hncd1024.github.io/2023/06/26/Python_wechatapi/"/>
+    <id>http://hncd1024.github.io/2023/06/26/Python_wechatapi/</id>
+    <published>2023-06-26T08:43:02.000Z</published>
+    <updated>2023-06-30T08:34:57.084Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  今天介绍一个免费开源的微信HOOK和框架，提供HTTPAPI接口和封装好的框架，可基于此通过python对接微信。&lt;/p&gt;
+&lt;h1 id=&quot;项目地址&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#项目地址&quot;&gt;&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="Hook" scheme="http://hncd1024.github.io/categories/Python/Hook/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="Hook" scheme="http://hncd1024.github.io/tags/Hook/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|实现公司周报的自动生成</title>
+    <link href="http://hncd1024.github.io/2023/06/25/Python_docx/"/>
+    <id>http://hncd1024.github.io/2023/06/25/Python_docx/</id>
+    <published>2023-06-25T08:34:46.000Z</published>
+    <updated>2023-09-01T03:28:42.944Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  如果每周要给领导发一个公司周报，你会怎么做？考虑到美观性和一致性，我想应该是制定一个格式规范，设计好页眉、页脚、页边距、字体、段落、表格框等各类的样式，之后按照规范要求定期撰写公司周报。这是一个很不错的主意，只需要汇总各部门周报内容后，复制粘贴到模板文件里，就可以生成一</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="docx" scheme="http://hncd1024.github.io/categories/Python/docx/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="docx" scheme="http://hncd1024.github.io/tags/docx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UiAuto|泛微Ecology系统附件下载插件</title>
+    <link href="http://hncd1024.github.io/2023/06/21/UiAuto_ecologyFileDownload/"/>
+    <id>http://hncd1024.github.io/2023/06/21/UiAuto_ecologyFileDownload/</id>
+    <published>2023-06-21T06:03:50.000Z</published>
+    <updated>2023-06-30T08:34:44.011Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  在《&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="UiAuto" scheme="http://hncd1024.github.io/categories/Python/UiAuto/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="UiAuto" scheme="http://hncd1024.github.io/tags/UiAuto/"/>
+    
+    <category term="suds" scheme="http://hncd1024.github.io/tags/suds/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|PDF转图像</title>
+    <link href="http://hncd1024.github.io/2023/06/09/Python_pdf2image/"/>
+    <id>http://hncd1024.github.io/2023/06/09/Python_pdf2image/</id>
+    <published>2023-06-09T02:44:31.000Z</published>
+    <updated>2023-06-30T08:35:21.364Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  在前面通过百度文字识别实现了图片的文字提取。但在测试中发现我们实际中文件大多是PDF的扫描件。所以需要先把PDF转为图片，之后进行遍历调用百度文字识别接口即可。这里我使用的是pdf2image库实现PDF转图片。。&lt;/p&gt;
+&lt;h1 id=&quot;pdf转图片源码&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="pdf2image" scheme="http://hncd1024.github.io/categories/Python/pdf2image/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="pdf2image" scheme="http://hncd1024.github.io/tags/pdf2image/"/>
+    
+    <category term="PDF" scheme="http://hncd1024.github.io/tags/PDF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python|通过百度OCR实现图片文字识别</title>
+    <link href="http://hncd1024.github.io/2023/06/09/Python_baidu_aip/"/>
+    <id>http://hncd1024.github.io/2023/06/09/Python_baidu_aip/</id>
+    <published>2023-06-09T01:56:36.000Z</published>
+    <updated>2023-06-30T08:37:03.046Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  昨天需要测试OCR的文字识别功能，需要从提供的图片或PDF扫描件中提取出文本信息。本来我想使用python的开源库（如pytesseract、OCRopus、OpenCV之类的库），考虑到公司数字员工的使用场景，未来图像识别会对识别率有较高的要求，所以还是用第三方提供的</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="aip" scheme="http://hncd1024.github.io/categories/Python/aip/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="aip" scheme="http://hncd1024.github.io/tags/aip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UiAuto|泛微Ecology系统附件上传插件</title>
+    <link href="http://hncd1024.github.io/2023/06/02/UiAuto_ecologyFileUpload/"/>
+    <id>http://hncd1024.github.io/2023/06/02/UiAuto_ecologyFileUpload/</id>
+    <published>2023-06-02T14:07:56.000Z</published>
+    <updated>2023-06-30T08:34:39.454Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;  此次场景需求是上传文件到公司内网门户系统（泛微Ecology），通过UIAUTO的键盘鼠标功能模拟登录后再上传虽然也是可以的。但不高级，也不高效，而且执行时对服务器界面也有一定要求。这里我通过调用泛微Ecology的接口从后台实现了文件的上传，测试效果十分稳定。插件源码</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="UiAuto" scheme="http://hncd1024.github.io/categories/Python/UiAuto/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="UiAuto" scheme="http://hncd1024.github.io/tags/UiAuto/"/>
+    
+    <category term="suds" scheme="http://hncd1024.github.io/tags/suds/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UiAuto|Word插件</title>
+    <link href="http://hncd1024.github.io/2023/06/02/UiAuto_word/"/>
+    <id>http://hncd1024.github.io/2023/06/02/UiAuto_word/</id>
+    <published>2023-06-02T13:07:56.000Z</published>
+    <updated>2023-06-30T08:34:17.363Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;关于word的插件其实有很多种使用需求，该篇博文后续会根据实际使用情况再更新。&lt;br /&gt;
+本次是需要对一篇word的内容进行检索，判断是否涉及某个字符串，代码比较简单，插件源码如下：&lt;/p&gt;
+&lt;h1 id=&quot;packagejson&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="UiAuto" scheme="http://hncd1024.github.io/categories/Python/UiAuto/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="docx" scheme="http://hncd1024.github.io/tags/docx/"/>
+    
+    <category term="UiAuto" scheme="http://hncd1024.github.io/tags/UiAuto/"/>
+    
+  </entry>
+  
+</feed>
