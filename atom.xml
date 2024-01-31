@@ -6,7 +6,7 @@
   <link href="http://hncd1024.github.io/atom.xml" rel="self"/>
   
   <link href="http://hncd1024.github.io/"/>
-  <updated>2023-12-19T09:07:24.806Z</updated>
+  <updated>2024-01-31T09:07:36.341Z</updated>
   <id>http://hncd1024.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python|DrissionPage实现某网站点赞收藏</title>
+    <link href="http://hncd1024.github.io/2024/01/31/Python_DrissionPage/"/>
+    <id>http://hncd1024.github.io/2024/01/31/Python_DrissionPage/</id>
+    <published>2024-01-31T08:23:24.000Z</published>
+    <updated>2024-01-31T09:07:36.341Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在《&lt;a href=&quot;https://hncd1024.github.io/2022/08/26/Python%20selenium/&quot;&gt;Python|selenium实现自动点赞收藏(进阶版)&lt;/a&gt;》中，我通过 selenium 实现了某网站积分的自动获取。作为</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="DrissionPage" scheme="http://hncd1024.github.io/categories/Python/DrissionPage/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="DrissionPage" scheme="http://hncd1024.github.io/tags/DrissionPage/"/>
+    
+  </entry>
   
   <entry>
     <title>Python|解析excel自动创建业务系统凭证</title>
@@ -588,39 +617,6 @@
     <category term="UiAuto" scheme="http://hncd1024.github.io/tags/UiAuto/"/>
     
     <category term="suds" scheme="http://hncd1024.github.io/tags/suds/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UiAuto|Word插件</title>
-    <link href="http://hncd1024.github.io/2023/06/02/UiAuto_word/"/>
-    <id>http://hncd1024.github.io/2023/06/02/UiAuto_word/</id>
-    <published>2023-06-02T13:07:56.000Z</published>
-    <updated>2023-06-30T08:34:17.363Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;关于word的插件其实有很多种使用需求，该篇博文后续会根据实际使用情况再更新。&lt;br /&gt;
-本次是需要对一篇word的内容进行检索，判断是否涉及某个字符串，代码比较简单，插件源码如下：&lt;/p&gt;
-&lt;h1 id=&quot;packagejson&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
-    
-    <category term="UiAuto" scheme="http://hncd1024.github.io/categories/Python/UiAuto/"/>
-    
-    
-    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
-    
-    <category term="docx" scheme="http://hncd1024.github.io/tags/docx/"/>
-    
-    <category term="UiAuto" scheme="http://hncd1024.github.io/tags/UiAuto/"/>
     
   </entry>
   

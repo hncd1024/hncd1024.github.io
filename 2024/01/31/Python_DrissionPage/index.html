@@ -16,28 +16,27 @@
   <meta name="author" content="CHEN DI">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+    <meta name="description" content="在《Python|selenium实现自动点赞收藏(进阶版)》中，我通过 selenium 实现了某网站积分的自动获取。作为 Web 自动化测试工具库， selenium 还是比较流行的，但它的非标准内核机制使用时实在令人难受，因为你不得不关注本机浏览器的版本，需要定期下载对应的webdriver。今天介绍一个比较好用的库：DrissionPage，而且是国产开源的库！  介绍 DrissionP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Power Automate">
-<meta property="og:url" content="http://hncd1024.github.io/2023/03/08/PowerAutomate/index.html">
+<meta property="og:title" content="Python|DrissionPage实现某网站点赞收藏">
+<meta property="og:url" content="http://hncd1024.github.io/2024/01/31/Python_DrissionPage/index.html">
 <meta property="og:site_name" content="啊芫荽">
-<meta property="og:description" content="在上一篇文章《Python|selenium实现自动点赞收藏(进阶版)》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。 近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。  测试过程 登录并打开待处理的列表界面。  获取未点赞的链接，并打开进行点赞、收藏。  运行登">
+<meta property="og:description" content="在《Python|selenium实现自动点赞收藏(进阶版)》中，我通过 selenium 实现了某网站积分的自动获取。作为 Web 自动化测试工具库， selenium 还是比较流行的，但它的非标准内核机制使用时实在令人难受，因为你不得不关注本机浏览器的版本，需要定期下载对应的webdriver。今天介绍一个比较好用的库：DrissionPage，而且是国产开源的库！  介绍 DrissionP">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
-<meta property="article:published_time" content="2023-03-08T02:16:36.000Z">
-<meta property="article:modified_time" content="2023-03-08T03:25:45.213Z">
+<meta property="og:image" content="http://hncd1024.github.io/image/python.png">
+<meta property="article:published_time" content="2024-01-31T08:23:24.000Z">
+<meta property="article:modified_time" content="2024-01-31T09:07:36.341Z">
 <meta property="article:author" content="CHEN DI">
-<meta property="article:tag" content="PowerAutomate">
-<meta property="article:tag" content="RPA">
-<meta property="article:tag" content="自动化">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="DrissionPage">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://hncd1024.github.io/image/PowerAutomate.png">
+<meta name="twitter:image" content="http://hncd1024.github.io/image/python.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Power Automate - 啊芫荽</title>
+  <title>Python|DrissionPage实现某网站点赞收藏 - 啊芫荽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -233,7 +232,7 @@ WIDGET = {
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Power Automate"></span>
+            <span id="subtitle" data-typed-text="Python|DrissionPage实现某网站点赞收藏"></span>
           
         </div>
 
@@ -244,8 +243,8 @@ WIDGET = {
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-08 10:16" pubdate>
-          2023-03-08 10:16
+        <time datetime="2024-01-31 16:23" pubdate>
+          2024-01-31 16:23
         </time>
       </span>
     
@@ -256,7 +255,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          665 字
+          3.8k 字
         
       </span>
     
@@ -267,7 +266,7 @@ WIDGET = {
         
         
         
-          6 分钟
+          32 分钟
         
       </span>
     
@@ -315,33 +314,30 @@ WIDGET = {
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Power Automate</h1>
+            <h1 style="display: none">Python|DrissionPage实现某网站点赞收藏</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在上一篇文章《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中写过利用 python 的selenium 实现网页自动化点赞+收藏的功能，但使用上需要有一定 python 基础。<br />
-近期在电脑上发现了微软win11系统预装的 Power Automate，就用同样的某网站点赞的案例进行了体验。</p>
-<h1 id="测试过程"><a class="markdownIt-Anchor" href="#测试过程"></a> 测试过程</h1>
-<p>登录并打开待处理的列表界面。<br />
-<img src="https://i.328888.xyz/2023/03/08/5Sy23.png" srcset="/img/loading.gif" lazyload alt="登录过程" /><br />
-获取未点赞的链接，并打开进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SVqv.png" srcset="/img/loading.gif" lazyload alt="点赞、收藏过程" /><br />
-运行登录，并循环进行点赞、收藏。<br />
-<img src="https://i.328888.xyz/2023/03/08/5SidU.png" srcset="/img/loading.gif" lazyload alt="循环遍历" /><br />
-测试结果基本满足需要，后续可发掘更丰富的应用场景。</p>
-<h1 id="总结一下"><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h1>
-<p>Microsoft Power Automate是一个低代码平台的RPA工具，可以辅助用户进行流程自动化办公，提升工作效率。相比我之前接触过的UIPath，个人感觉相对具有优势。</p>
-<div class="note note-primary">
-            <p>优势一：Power Automate对终端个人用户免费，从win11系统预装就可以看出微软还是诚意满满的。相比UIPath作为一款需授权使用的软件，使用门槛较高。</p>
+                <p>在《<a href="https://hncd1024.github.io/2022/08/26/Python%20selenium/">Python|selenium实现自动点赞收藏(进阶版)</a>》中，我通过 selenium 实现了某网站积分的自动获取。作为 Web 自动化测试工具库， selenium 还是比较流行的，但它的非标准内核机制使用时实在令人难受，因为你不得不关注本机浏览器的版本，需要定期下载对应的webdriver。今天介绍一个比较好用的库：DrissionPage，而且是国产开源的库！</p>
+<h1 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h1>
+<p>DrissionPage的官方介绍是：</p>
+<div class="note note-info">
+            <p>DrissionPage 是一个基于 python 的网页自动化工具。<br />它既能控制浏览器，也能收发数据包，还能把两者合而为一。<br />可兼顾浏览器自动化的便利性和 requests 的高效率。<br />它功能强大，内置无数人性化设计和便捷功能。<br />它的语法简洁而优雅，代码量少，对新手友好。</p>
           </div>
-<div class="note note-primary">
-            <p>优势二：系统集成较好，作为微软出品，Power Automate对微软环境下的应用交互做的比较好。除office全家桶都能很好的交互外，对http、FTP等服务支持也比较友好，甚至Power Automate还支持python、JS、VB、shell等脚本。真香！</p>
-          </div>
-<div class="note note-primary">
-            <p>优势三：你见过自动帮你进行流程设计的RPA工具吗？Power Automate可以！即便你不会自己设计流程，你可以打开Power Automate的捕获功能。然后你只需要给它演示下你要怎么做，Power Automate便会自动帮你生成流程（当然一般情况下还是要在此基础上再优化调整的）。</p>
-          </div> 
-
+<p>官网链接：<a target="_blank" rel="noopener" href="https://g1879.gitee.io/drissionpagedocs/">https://g1879.gitee.io/drissionpagedocs/</a><br />
+在使用时，DrissionPage 有三种页面类。如果只需要控制浏览器，可以使用 ChromiumPage ；如果只需要收发数据包，可以使用 SessionPage ；如果既要控制浏览器又需要收发数据包，可以使用 WebPage 。</p>
+<ul>
+<li>drissionpage 源代码的注释全中文，很详细。相比于有很多国人开发的包文档写的英文，这个通篇中文注释的 drissionpage 理应被狠狠点赞。</li>
+<li>无需 selenium 使用的 chromedriver ，再也不用担心针对driver的反爬了，也不用考虑 driver.exe 的版本适配, 跨平台更方便, 真的开心。</li>
+<li>兼顾浏览器自动化的便利性和 requests 的高效率。它整合了requests, 甚至可以无缝切换。</li>
+<li>语法便利。真的厌倦了对selenium的各种罗里吧嗦的封装，而 drissionpage 可以跨 查找元素，无需切入切出。可同时操作多个 tab 标签页，无需切换。</li>
+<li>更快的运行速度。</li>
+</ul>
+<p>最令人惊喜的是 DrissionPage 不依赖 webdriver ，且运行时对屏幕没有依赖。也就是说：你在使用前只需要确保本机有chrome内核浏览器即可，不需要定期下载插件，而且在 DrissionPage 运行时你还能正常操作其他软件。<br />
+我们这次还以某网站的积分获取为例，因为只需要进行浏览器页面操作，我们本地使用 ChromiumPage 类。</p>
+<h1 id="源码"><a class="markdownIt-Anchor" href="#源码"></a> 源码</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> DrissionPage <span class="hljs-keyword">import</span> ChromiumPage,ChromiumOptions<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> flet <span class="hljs-keyword">as</span> ft<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">webChick</span>():<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:<br>        co = ChromiumOptions(read_file=<span class="hljs-literal">False</span>)<br>        co.set_paths(browser_path=<span class="hljs-string">&#x27;C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe&#x27;</span>)<br>        self.webpage = ChromiumPage(addr_or_opts=co)<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;打开浏览器&#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">homePage</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            self.webpage.get(<span class="hljs-string">&#x27;https://xxxx/&#x27;</span>)<br>            self.webpage.<span class="hljs-built_in">set</span>.window.maximized()<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;成功打开首页&#x27;</span><br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> e<br>        <br>    <span class="hljs-string">&#x27;&#x27;&#x27;准备登录&#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">login</span>(<span class="hljs-params">self</span>):<br>        time.sleep(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">if</span> self.webpage.ele(<span class="hljs-string">&#x27;xpath://img[@alt=&quot;资讯&quot;]&#x27;</span>):<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;浏览器已有登录信息&#x27;</span><br>            <span class="hljs-keyword">else</span> :<br>                time.sleep(<span class="hljs-number">30</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;请在30秒内完成登录，登录后请等待系统自动处理&#x27;</span><br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> e<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;网页处理前的准备工作&#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mainPage</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            self.webpage.ele(<span class="hljs-string">&#x27;xpath://img[@alt=&quot;资讯&quot;]&#x27;</span>).click()<br>            time.sleep(<span class="hljs-number">1</span>)<br>            self.webpage.ele(<span class="hljs-string">&#x27;xpath://div[text()=&quot;推荐&quot;]&#x27;</span>).click()<br>            time.sleep(<span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;打开资讯页面，进入推荐页签&#x27;</span><br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> e<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;处理具体文章的点赞和收藏&#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">auto_click</span>(<span class="hljs-params">self,num</span>):<br>        <span class="hljs-keyword">try</span>:<br>            msg = <span class="hljs-string">&#x27;&#x27;</span><br>            self.webpage.ele(<span class="hljs-string">&#x27;xpath://span[text()=&quot;热度优先&quot;]&#x27;</span>).click()<br>            time.sleep(<span class="hljs-number">1</span>)<br>            self.webpage.ele(<span class="hljs-string">&#x27;xpath://span[text()=&quot;时间优先&quot;]&#x27;</span>).click()<br>            time.sleep(<span class="hljs-number">1</span>)<br>            <span class="hljs-comment"># 打开第一篇文章</span><br>            self.webpage.ele(<span class="hljs-string">&#x27;xpath://div [@class=&quot;home-main-partyNews&quot; and  @style=&quot;margin-top: 0px;&quot;]//div [@class=&quot;dynamic-left-title&quot;]&#x27;</span>).click()<br>            <span class="hljs-comment"># time.sleep(1)</span><br>            <span class="hljs-comment"># 切换标签</span><br>            self.webpage.wait.new_tab()<br>            new_tab = self.webpage.get_tab(<span class="hljs-number">0</span>)<br>            new_tab.wait.load_start()<br>            <span class="hljs-comment"># 收藏</span><br>            <span class="hljs-keyword">try</span> :<br>                new_tab.ele(<span class="hljs-string">&#x27;xpath://div[@class=&quot;icon&quot;]/span[@class=&quot;pointer&quot;]/i[@class=&quot;iconfont icon-shoucanghuise&quot;]&#x27;</span>).click()<br>                msg = <span class="hljs-string">&#x27;第[&#123;&#125;]篇文章收藏成功&#x27;</span>.<span class="hljs-built_in">format</span>(num)<br>            <span class="hljs-keyword">except</span> :<br>                <span class="hljs-keyword">try</span>:<br>                    new_tab.ele(<span class="hljs-string">&#x27;xpath://div[@style=&quot;display: block;&quot;]/span[@class=&quot;header-icon&quot;]/i[@class=&quot;iconfont icon-weishoucang&quot;]&#x27;</span>).click()<br>                    msg = <span class="hljs-string">&#x27;第[&#123;&#125;]篇文章收藏成功&#x27;</span>.<span class="hljs-built_in">format</span>(num)<br>                <span class="hljs-keyword">except</span> :<br>                    msg = new_tab.title + <span class="hljs-string">&#x27;_收藏未成功&#x27;</span><br>            time.sleep(<span class="hljs-number">1</span>)<br>            <span class="hljs-comment"># 点赞</span><br>            <span class="hljs-keyword">try</span> :<br>                new_tab.ele(<span class="hljs-string">&#x27;xpath://div[@class=&quot;icon&quot;]/span[@class=&quot;pointer&quot;]/i[@class=&quot;iconfont icon-dianzanhuise&quot;]&#x27;</span>).click()<br>                msg = msg + <span class="hljs-string">&#x27;\n第[&#123;&#125;]篇文章点赞成功&#x27;</span>.<span class="hljs-built_in">format</span>(num)<br>            <span class="hljs-keyword">except</span> :<br>                <span class="hljs-keyword">try</span>:<br>                    new_tab.ele(<span class="hljs-string">&#x27;xpath://div[@style=&quot;display: block;&quot;]/span[@class=&quot;header-icon&quot;]/i[@class=&quot;iconfont icon-dianzanhuise&quot;]&#x27;</span>).click()<br>                    msg = msg + <span class="hljs-string">&#x27;\n第[&#123;&#125;]篇文章点赞成功&#x27;</span>.<span class="hljs-built_in">format</span>(num)<br>                <span class="hljs-keyword">except</span> :<br>                    msg = msg + <span class="hljs-string">&#x27;\n&#x27;</span> + new_tab.title + <span class="hljs-string">&#x27;_点赞未成功&#x27;</span><br>            time.sleep(<span class="hljs-number">1</span>)<br>            <span class="hljs-comment"># 关闭当前标签</span><br>            self.webpage.close_other_tabs()<br>            time.sleep(<span class="hljs-number">0.5</span>)<br>            <span class="hljs-keyword">return</span> msg<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> e<br><br>    <span class="hljs-comment"># 退出浏览器</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">close_web</span>(<span class="hljs-params">self</span>):<br>        self.webpage.quit()<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -361,8 +357,15 @@ WIDGET = {
     
       <span class="category-chain">
         
-  <a href="/categories/PowerAutomate/" class="category-chain-item">PowerAutomate</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Python/DrissionPage/" class="category-chain-item">DrissionPage</a>
+  
+  
+
   
 
       </span>
@@ -376,11 +379,9 @@ WIDGET = {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/PowerAutomate/">#PowerAutomate</a>
+        <a href="/tags/Python/">#Python</a>
       
-        <a href="/tags/RPA/">#RPA</a>
-      
-        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
+        <a href="/tags/DrissionPage/">#DrissionPage</a>
       
     </div>
   
@@ -404,8 +405,8 @@ WIDGET = {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Power Automate</div>
-      <div>http://hncd1024.github.io/2023/03/08/PowerAutomate/</div>
+      <div>Python|DrissionPage实现某网站点赞收藏</div>
+      <div>http://hncd1024.github.io/2024/01/31/Python_DrissionPage/</div>
     </div>
     <div class="license-meta">
       
@@ -417,7 +418,7 @@ WIDGET = {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023-03-08</div>
+          <div>2024-01-31</div>
         </div>
       
       
@@ -449,18 +450,12 @@ WIDGET = {
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/09/Python_NBU5230/" title="Python|实现NBU自动巡检">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Python|实现NBU自动巡检</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/03/LowerCpuUsage/" title="计算机|记一次CPU降频问题排查与修复">
-                        <span class="hidden-mobile">计算机|记一次CPU降频问题排查与修复</span>
+                      <a href="/2023/12/18/Python_createEnfoVoucher/" title="Python|解析excel自动创建业务系统凭证">
+                        <span class="hidden-mobile">Python|解析excel自动创建业务系统凭证</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
