@@ -6,7 +6,7 @@
   <link href="http://hncd1024.github.io/atom.xml" rel="self"/>
   
   <link href="http://hncd1024.github.io/"/>
-  <updated>2024-01-31T09:07:36.341Z</updated>
+  <updated>2024-02-06T07:17:59.895Z</updated>
   <id>http://hncd1024.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python|发现一个好用的GUI库-flet</title>
+    <link href="http://hncd1024.github.io/2024/02/06/Python_flet_point/"/>
+    <id>http://hncd1024.github.io/2024/02/06/Python_flet_point/</id>
+    <published>2024-02-06T06:44:42.000Z</published>
+    <updated>2024-02-06T07:17:59.895Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;前端时间发现了一个 python 库：&lt;strong&gt;flet&lt;/strong&gt;&lt;br /&gt;
+这是一个框架库，可以用来构建 web 系统，也能用来构建桌面端和移动端的程序。它的组件设计简约，UI</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    <category term="flet" scheme="http://hncd1024.github.io/categories/Python/flet/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+    <category term="flet" scheme="http://hncd1024.github.io/tags/flet/"/>
+    
+  </entry>
   
   <entry>
     <title>Python|DrissionPage实现某网站点赞收藏</title>
@@ -586,37 +616,6 @@
     <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
     
     <category term="aip" scheme="http://hncd1024.github.io/tags/aip/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UiAuto|泛微Ecology系统附件上传插件</title>
-    <link href="http://hncd1024.github.io/2023/06/02/UiAuto_ecologyFileUpload/"/>
-    <id>http://hncd1024.github.io/2023/06/02/UiAuto_ecologyFileUpload/</id>
-    <published>2023-06-02T14:07:56.000Z</published>
-    <updated>2023-06-30T08:34:39.454Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;  此次场景需求是上传文件到公司内网门户系统（泛微Ecology），通过UIAUTO的键盘鼠标功能模拟登录后再上传虽然也是可以的。但不高级，也不高效，而且执行时对服务器界面也有一定要求。这里我通过调用泛微Ecology的接口从后台实现了文件的上传，测试效果十分稳定。插件源码</summary>
-        
-      
-    
-    
-    
-    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
-    
-    <category term="UiAuto" scheme="http://hncd1024.github.io/categories/Python/UiAuto/"/>
-    
-    
-    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
-    
-    <category term="UiAuto" scheme="http://hncd1024.github.io/tags/UiAuto/"/>
-    
-    <category term="suds" scheme="http://hncd1024.github.io/tags/suds/"/>
     
   </entry>
   
