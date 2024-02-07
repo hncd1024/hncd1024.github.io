@@ -6,7 +6,7 @@
   <link href="http://hncd1024.github.io/atom.xml" rel="self"/>
   
   <link href="http://hncd1024.github.io/"/>
-  <updated>2024-02-06T07:17:59.895Z</updated>
+  <updated>2024-02-07T08:30:08.742Z</updated>
   <id>http://hncd1024.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python|开放式基金业务数据交换文件的自动解析</title>
+    <link href="http://hncd1024.github.io/2024/02/07/python_OFDread/"/>
+    <id>http://hncd1024.github.io/2024/02/07/python_OFDread/</id>
+    <published>2024-02-07T06:00:31.000Z</published>
+    <updated>2024-02-07T08:30:08.742Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;近日，我同事有个开放式基金业务数据文件读取的需求，大概背景是：&lt;br /&gt;
+人民银行制定了开放式基金业务数据交换协议的标准，规定场外开放式基金、证券公司大集合产品相关业务中机构之间进行数据交换时所采用的数据格式、数据定义和数据内容。&lt;br /&gt;
+在实际使用中，机构会发送</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python|发现一个好用的GUI库-flet</title>
     <link href="http://hncd1024.github.io/2024/02/06/Python_flet_point/"/>
     <id>http://hncd1024.github.io/2024/02/06/Python_flet_point/</id>
     <published>2024-02-06T06:44:42.000Z</published>
-    <updated>2024-02-06T07:17:59.895Z</updated>
+    <updated>2024-02-06T08:25:57.520Z</updated>
     
     
       
@@ -48,10 +75,10 @@
   
   <entry>
     <title>Python|DrissionPage实现某网站点赞收藏</title>
-    <link href="http://hncd1024.github.io/2024/01/31/Python_DrissionPage/"/>
-    <id>http://hncd1024.github.io/2024/01/31/Python_DrissionPage/</id>
-    <published>2024-01-31T08:23:24.000Z</published>
-    <updated>2024-01-31T09:07:36.341Z</updated>
+    <link href="http://hncd1024.github.io/2024/02/05/Python_DrissionPage/"/>
+    <id>http://hncd1024.github.io/2024/02/05/Python_DrissionPage/</id>
+    <published>2024-02-05T08:23:24.000Z</published>
+    <updated>2024-02-07T08:30:28.299Z</updated>
     
     
       
@@ -587,35 +614,6 @@
     <category term="pdf2image" scheme="http://hncd1024.github.io/tags/pdf2image/"/>
     
     <category term="PDF" scheme="http://hncd1024.github.io/tags/PDF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python|通过百度OCR实现图片文字识别</title>
-    <link href="http://hncd1024.github.io/2023/06/09/Python_baidu_aip/"/>
-    <id>http://hncd1024.github.io/2023/06/09/Python_baidu_aip/</id>
-    <published>2023-06-09T01:56:36.000Z</published>
-    <updated>2023-06-30T08:37:03.046Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;  昨天需要测试OCR的文字识别功能，需要从提供的图片或PDF扫描件中提取出文本信息。本来我想使用python的开源库（如pytesseract、OCRopus、OpenCV之类的库），考虑到公司数字员工的使用场景，未来图像识别会对识别率有较高的要求，所以还是用第三方提供的</summary>
-        
-      
-    
-    
-    
-    <category term="Python" scheme="http://hncd1024.github.io/categories/Python/"/>
-    
-    <category term="aip" scheme="http://hncd1024.github.io/categories/Python/aip/"/>
-    
-    
-    <category term="Python" scheme="http://hncd1024.github.io/tags/Python/"/>
-    
-    <category term="aip" scheme="http://hncd1024.github.io/tags/aip/"/>
     
   </entry>
   
